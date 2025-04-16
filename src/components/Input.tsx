@@ -95,7 +95,7 @@ export function Input(props: InputProps) {
 					aria-live="assertive"
 					className="error-message text-xs text-red-600 mt-px"
 				>
-					Este campo es obligatorio
+					{error}
 				</p>
 			)}
 		</>
