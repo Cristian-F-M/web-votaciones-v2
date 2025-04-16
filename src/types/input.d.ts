@@ -9,7 +9,7 @@ interface InputBaseProps {
 }
 
 type InputTextProps = InputBaseProps & {
-	type: React.HTMLInputTypeAttribute
+	type: React.InputHTMLAttributes<HTMLInputElement>['type']
 	typeInput: 'text'
 } & React.InputHTMLAttributes<HTMLInputElement>
 type InputSelectProps = {
