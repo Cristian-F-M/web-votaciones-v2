@@ -17,32 +17,30 @@ export function Input(props: InputProps) {
 		} = props
 
 		return (
-			<div className="input w-full">
-				<fieldset
-					className="relative flex flex-col"
-					aria-labelledby={`${id}-label`}
+			<div
+				className="input w-full relative flex flex-col"
+				aria-labelledby={`${id}-label`}
+			>
+				<select
+					{...rest}
+					id={id}
+					name={name}
+					required={required}
+					defaultValue={selectedItem}
+					className={twMerge([
+						'w-full text-gray-800 text-sm border-b border-gray-400 border-solid outline-none',
+						className
+					])}
 				>
-					<select
-						{...rest}
-						id={id}
-						name={name}
-						required={required}
-						defaultValue={selectedItem}
-						className={twMerge([
-							'w-full text-gray-800 text-sm border-b border-gray-400 border-solid outline-none',
-							className
-						])}
-					>
-						<option value="0" disabled>
-							{label}
+					<option value="0" disabled>
+						{label}
+					</option>
+					{items.map((item) => (
+						<option key={item.id} value={item.value}>
+							{item.name}
 						</option>
-						{items.map((item) => (
-							<option key={item.id} value={item.value}>
-								{item.name}
-							</option>
-						))}
-					</select>
-				</fieldset>
+					))}
+				</select>
 			</div>
 		)
 	}
@@ -61,9 +59,9 @@ export function Input(props: InputProps) {
 	} = props
 
 	return (
-		<div className="input w-full">
-			<fieldset
-				className="relative flex flex-col"
+		<>
+			<div
+				className="relative flex flex-col input w-full"
 				aria-labelledby={`${id}-label`}
 			>
 				<input
@@ -88,7 +86,7 @@ export function Input(props: InputProps) {
 						<span className="text-red-600 text-lg leading-3">*</span>
 					)}
 				</label>
-			</fieldset>
+			</div>
 
 			{error && (
 				<p
@@ -100,6 +98,6 @@ export function Input(props: InputProps) {
 					Este campo es obligatorio
 				</p>
 			)}
-		</div>
+		</>
 	)
 }
