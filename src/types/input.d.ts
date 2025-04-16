@@ -4,7 +4,7 @@ interface InputBaseProps {
 	id: string
 	error: string | null
 	required?: boolean
-	typeInput?: 'text' | 'select'
+	typeInput: 'text' | 'select'
 	className?: string
 }
 
