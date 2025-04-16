@@ -29,7 +29,7 @@ export function Input(props: InputProps) {
 						required={required}
 						defaultValue={selectedItem}
 						className={twMerge([
-							'w-full text-gray-800 text-sm border-b border-gray-600 border-solid outline-none',
+							'w-full text-gray-800 text-sm border-b border-gray-400 border-solid outline-none',
 							className
 						])}
 					>
@@ -74,7 +74,7 @@ export function Input(props: InputProps) {
 					required={required}
 					placeholder=" "
 					className={twMerge([
-						'w-full text-gray-800 text-sm border-b border-gray-600 border-solid outline-none',
+						'w-full text-gray-800 text-sm border-b border-gray-400 border-solid outline-none',
 						className
 					])}
 				/>
