@@ -1,2 +1,14 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+
+.input label {
+  transition-duration: 0.3s;
+  transition-property: transform, translate, font-size, color;
+  transition-timing-function: ease;
+}
+
+.input input:focus + label,
+.input input:not(:placeholder-shown) + label {
+  translate: 0 -100%;
+  color: light-dark(#1e2939, #f9fafb);
+}
