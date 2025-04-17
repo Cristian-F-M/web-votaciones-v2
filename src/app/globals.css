@@ -9,7 +9,7 @@
 
 .input input:focus + label,
 .input input:not(:placeholder-shown) + label {
-  translate: 0 -100%;
+  translate: 0 -110%;
   color: light-dark(#1e2939, #f9fafb);
 }
 
