@@ -4,18 +4,22 @@ import '@/assets/css/login.css'
 import { ToggleTheme } from '@/icons/ToggleThem'
 import { SelectServerWrapper } from '@/components/SelectServerWrapper'
 import type { SelectItem } from '@/types/input'
+import type { GetTypeDocumentsResponse } from '@/utils/api'
 
 export default function Login() {
 	const year = new Date().getFullYear()
 
-	async function getTypeDocumts(): Promise<SelectItem[]> {
+	async function getTypeDocumts(): Promise<GetTypeDocumentsResponse> {
 		return await new Promise((resolve) =>
 			setTimeout(
 				() =>
-					resolve([
-						{ id: '1', name: 'DNI', value: '1' },
-						{ id: '2', name: 'Pasaporte', value: '2' }
-					]),
+					resolve({
+						ok: true,
+						typesDocuments: [
+							{ id: '1', name: 'DNI', value: '1' },
+							{ id: '2', name: 'Pasaporte', value: '2' }
+						]
+					}),
 				5000
 			)
 		)
