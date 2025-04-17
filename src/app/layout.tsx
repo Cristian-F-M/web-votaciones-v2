@@ -17,7 +17,7 @@ export default function RootLayout({
 			<head>
 				<link rel="icon" type="image/svg+xml" href="./logo-sena.svg" />
 			</head>
-			<body>{children}</body>
+			<body className="dark:bg-gray-900">{children}</body>
 		</html>
 	)
 }
