@@ -52,6 +52,7 @@ export default function Login() {
 							error={null}
 							items={getTypeDocumts}
 							selectedItem="0"
+							dataKey="typesDocuments"
 						/>
 						<Input
 							label="Documento"
