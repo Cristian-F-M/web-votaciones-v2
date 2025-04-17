@@ -2,10 +2,24 @@ import { Input } from '@/components/Input'
 import LogoSena from '@/icons/LogoSena'
 import '@/assets/css/login.css'
 import { ToggleTheme } from '@/icons/ToggleThem'
-import { Select } from '@/components/Select'
+import { SelectServerWrapper } from '@/components/SelectServerWrapper'
+import type { SelectItem } from '@/types/input'
 
 export default function Login() {
 	const year = new Date().getFullYear()
+
+	async function getTypeDocumts(): Promise<SelectItem[]> {
+		return await new Promise((resolve) =>
+			setTimeout(
+				() =>
+					resolve([
+						{ id: '1', name: 'DNI', value: '1' },
+						{ id: '2', name: 'Pasaporte', value: '2' }
+					]),
+				5000
+			)
+		)
+	}
 
 	return (
 		<main className="flex items-center justify-center w-full h-screen">
@@ -26,16 +40,13 @@ export default function Login() {
 						</p>
 					</header>
 					<form action="" className="w-full mt-10 space-y-9">
-						<Select
+						<SelectServerWrapper
 							label="Tipo de documento"
 							id="typeDocument"
 							name="typeDocument"
 							required
 							error={null}
-							items={[
-								{ id: '1', name: 'DNI', value: '1' },
-								{ id: '2', name: 'Pasaporte', value: '2' }
-							]}
+							items={getTypeDocumts}
 							selectedItem="0"
 						/>
 						<Input
