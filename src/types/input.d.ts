@@ -1,22 +1,29 @@
+type SelectItem = {
+	value: string
+	name: string
+	[key: string]: any
+}
+
 interface InputBaseProps {
 	label: string
 	name: string
 	id: string
 	error: string | null
 	required?: boolean
-	typeInput: 'text' | 'select'
 	className?: string
 }
 
-type InputTextProps = InputBaseProps & {
+export type InputTextProps = InputBaseProps & {
 	type: React.InputHTMLAttributes<HTMLInputElement>['type']
-	typeInput: 'text'
 } & React.InputHTMLAttributes<HTMLInputElement>
-type InputSelectProps = {
-	typeInput: 'select'
+
+export type InputSelectProps = {
 	selectedItem: string
-	items: { value: string; name: string; id: string }[]
+	items: SelectItem[]
 } & InputBaseProps &
 	React.SelectHTMLAttributes<HTMLSelectElement>
 
-export type InputProps = InputTextProps | InputSelectProps
+export type InputSelectWrapperProps = Omit<InputSelectProps, 'items'> & {
+	items: () => Promise<{ [key: string]: SelectItem[] | any }>
+	dataKey?: string
+}
