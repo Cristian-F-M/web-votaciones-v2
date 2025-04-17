@@ -12,12 +12,16 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode
 }>) {
+	const color = '#ff8617'
+
 	return (
 		<html lang="es">
 			<head>
 				<link rel="icon" type="image/svg+xml" href="./logo-sena.svg" />
 			</head>
-			<body className="dark:bg-gray-900">{children}</body>
+			<body className="dark:bg-gray-900" style={{ '--color': color }}>
+				{children}
+			</body>
 		</html>
 	)
 }
