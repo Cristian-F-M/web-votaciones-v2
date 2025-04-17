@@ -7,12 +7,13 @@ export async function SelectServerWrapper<T>({
 	dataKey,
 	...props
 }: InputSelectWrapperProps) {
-	const resolvedItems = await Promise.resolve(items())
-	const mewItems = dataKey ? resolvedItems[dataKey] : []
-
 	return (
 		<Suspense fallback={<Select {...props} label="Cargando..." items={[]} />}>
-			<Select {...props} items={mewItems} />
+			{(async () => {
+				const resolvedItems = await Promise.resolve(items())
+				const mewItems = dataKey ? resolvedItems[dataKey] : []
+				return <Select {...props} items={mewItems} />
+			})()}
 		</Suspense>
 	)
 }
