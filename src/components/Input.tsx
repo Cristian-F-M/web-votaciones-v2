@@ -7,7 +7,6 @@ export function Input({
 	label,
 	required,
 	error,
-	typeInput,
 	className,
 	type,
 	...restProps
