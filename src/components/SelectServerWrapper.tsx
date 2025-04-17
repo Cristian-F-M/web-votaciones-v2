@@ -11,8 +11,8 @@ export async function SelectServerWrapper<T>({
 		<Suspense fallback={<Select {...props} label="Cargando..." items={[]} />}>
 			{(async () => {
 				const resolvedItems = await Promise.resolve(items())
-				const mewItems = dataKey ? resolvedItems[dataKey] : []
-				return <Select {...props} items={mewItems} />
+				const newItems = dataKey ? resolvedItems[dataKey] : []
+				return <Select {...props} items={newItems} />
 			})()}
 		</Suspense>
 	)
