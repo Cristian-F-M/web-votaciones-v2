@@ -29,7 +29,7 @@ export function Input({
 								required={required}
 								defaultValue={selectedItem}
 								className={twMerge([
-									'w-full text-gray-800 text-sm border-b border-gray-400 border-solid outline-none',
+									'w-full text-gray-800 text-sm border-b border-gray-400 border-solid outline-none dark:text-gray-300 [&>option]:dark:text-gray-800',
 									className
 								])}
 							>
@@ -62,14 +62,14 @@ export function Input({
 									required={required}
 									placeholder=" "
 									className={twMerge([
-										'w-full text-gray-600 text-sm border-b border-gray-400 border-solid outline-none',
+										'w-full text-gray-600 text-sm border-b border-gray-400 border-solid outline-none dark:text-gray-400',
 										className
 									])}
 								/>
 								<label
 									id={`${id}-label`}
 									htmlFor={id}
-									className="text-gray-500 text-sm pointer-events-none absolute bottom-px flex flex-row items-center gap-px"
+									className="text-gray-500 dark:text-gray-400 text-sm pointer-events-none absolute bottom-px flex flex-row items-center gap-px"
 								>
 									{label}
 									{required && (
