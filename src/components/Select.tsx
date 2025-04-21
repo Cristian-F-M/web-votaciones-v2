@@ -1,17 +1,36 @@
-import type { InputSelectProps } from '@/types/input'
+import type { SelectProps } from '@/types/input'
 import { twMerge } from 'tailwind-merge'
 
-export function Select({
-	id,
-	name,
-	label,
-	required,
-	error,
-	className,
-	selectedItem,
-	items,
-	...restProps
-}: InputSelectProps) {
+export function Select({ mode, className, label, ...restProps }: SelectProps) {
+	const selectClassName =
+		'w-full text-gray-800 text-sm border-b border-gray-400 border-solid outline-none dark:text-gray-300 [&>option]:dark:text-gray-800'
+
+	if (mode === 'fallback') {
+		return (
+			<div>
+				<div className="input w-full relative flex flex-col">
+					<select
+						{...restProps}
+						className={twMerge([selectClassName, className])}
+						defaultValue="0"
+					>
+						<option value="0" disabled>
+							{label}
+						</option>
+					</select>
+				</div>
+			</div>
+		)
+	}
+
+	const { id, name, required, error, items, selectedItem } =
+		restProps as Extract<
+			SelectProps,
+			{
+				mode: 'normal'
+			}
+		>
+
 	return (
 		<div>
 			<div
@@ -24,10 +43,7 @@ export function Select({
 					name={name}
 					required={required}
 					defaultValue={selectedItem}
-					className={twMerge([
-						'w-full text-gray-800 text-sm border-b border-gray-400 border-solid outline-none dark:text-gray-300 [&>option]:dark:text-gray-800',
-						className
-					])}
+					className={twMerge([selectClassName, className])}
 				>
 					<option value="0" disabled>
 						{label}
