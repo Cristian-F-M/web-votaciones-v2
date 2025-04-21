@@ -1,4 +1,4 @@
-type SelectItem = {
+export type SelectItem = {
 	value: string
 	name: string
 	[key: string]: any
