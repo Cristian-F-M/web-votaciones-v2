@@ -23,7 +23,7 @@ export function Select({ mode, className, label, ...restProps }: SelectProps) {
 		)
 	}
 
-	const { id, name, required, error, items, selectedItem } =
+	const { id, name, required, error, items, selectedItem, ...restPropsSelect } =
 		restProps as Extract<
 			SelectProps,
 			{
@@ -38,7 +38,7 @@ export function Select({ mode, className, label, ...restProps }: SelectProps) {
 				aria-labelledby={`${id}-label`}
 			>
 				<select
-					{...restProps}
+					{...restPropsSelect}
 					id={id}
 					name={name}
 					required={required}
