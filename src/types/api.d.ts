@@ -12,7 +12,7 @@ export type FetchError = {
 
 export type GETResponse<T> = FetchSuccess<T> | FetchError
 
-export interface typeDocument extends SelectItem {
+export interface TypeDocument extends SelectItem {
 	code: string
 	description: string
 }
