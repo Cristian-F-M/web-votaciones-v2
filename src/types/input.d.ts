@@ -1,4 +1,5 @@
 export type SelectItem = {
+	id: string
 	value: string
 	name: string
 	[key: string]: any
