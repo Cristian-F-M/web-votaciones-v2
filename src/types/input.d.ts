@@ -16,6 +16,7 @@ interface InputBaseProps {
 
 export type InputTextProps = InputBaseProps & {
 	type: React.InputHTMLAttributes<HTMLInputElement>['type']
+	onErrorChange?: (error: string | null) => void
 } & React.InputHTMLAttributes<HTMLInputElement>
 
 export type InputSelectProps = {
@@ -27,4 +28,5 @@ export type InputSelectProps = {
 export type InputSelectWrapperProps = Omit<InputSelectProps, 'items'> & {
 	items: () => Promise<{ [key: string]: SelectItem[] | any }>
 	dataKey: string
+	onErrorChange?: (error: string | null) => void
 }
