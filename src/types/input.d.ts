@@ -25,5 +25,5 @@ export type InputSelectProps = {
 
 export type InputSelectWrapperProps = Omit<InputSelectProps, 'items'> & {
 	items: () => Promise<{ [key: string]: SelectItem[] | any }>
-	dataKey?: string
+	dataKey: string
 }
