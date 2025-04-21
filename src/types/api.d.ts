@@ -1,6 +1,18 @@
+import type { SelectItem } from './input'
+
+export interface typeDocument extends SelectItem {
+	code: string
+	description: string
+}
+
+export interface Role extends SelectItem {
+	code: string
+	description: string
+}
+
 export interface GetTypeDocumentsResponse {
 	ok: boolean
-	typesDocuments: SelectItem[]
+	typesDocuments: typeDocument[]
 }
 
 export interface LoginResponse {
