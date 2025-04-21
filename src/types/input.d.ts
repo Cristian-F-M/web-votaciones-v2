@@ -14,18 +14,21 @@ interface InputBaseProps {
 	className?: string
 }
 
-export type InputTextProps = InputBaseProps & {
+export interface InputTextProps
+	extends InputBaseProps,
+		React.InputHTMLAttributes<HTMLInputElement> {
 	type: React.InputHTMLAttributes<HTMLInputElement>['type']
 	onErrorChange?: (error: string | null) => void
-} & React.InputHTMLAttributes<HTMLInputElement>
+}
 
-export type InputSelectProps = {
+export interface InputSelectProps
+	extends InputBaseProps,
+		React.SelectHTMLAttributes<HTMLSelectElement> {
 	selectedItem: string
 	items: SelectItem[]
-} & InputBaseProps &
-	React.SelectHTMLAttributes<HTMLSelectElement>
+}
 
-export type InputSelectWrapperProps = Omit<InputSelectProps, 'items'> & {
+export interface InputSelectWrapperProps extends InputSelectProps {
 	items: () => Promise<{ [key: string]: SelectItem[] | any }>
 	dataKey: string
 	onErrorChange?: (error: string | null) => void
