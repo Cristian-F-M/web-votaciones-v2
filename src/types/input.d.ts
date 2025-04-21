@@ -21,15 +21,22 @@ export interface InputTextProps
 	onErrorChange?: (error: string | null) => void
 }
 
-export interface InputSelectProps
-	extends InputBaseProps,
-		React.SelectHTMLAttributes<HTMLSelectElement> {
-	selectedItem: string
-	items: SelectItem[]
-}
-
-export interface InputSelectWrapperProps extends InputSelectProps {
+export interface InputSelectWrapperProps {
 	items: () => Promise<{ [key: string]: SelectItem[] | any }>
 	dataKey: string
 	onErrorChange?: (error: string | null) => void
 }
+
+export interface SelectFallbackProps
+	extends Pick<InputBaseProps, 'label' | 'className'> {
+	mode: 'fallback'
+}
+
+export interface SelectFullPropsProps extends InputBaseProps {
+	mode: 'normal'
+	selectedItem: string
+	items: SelectItem[]
+}
+
+export type SelectProps = (SelectFallbackProps | SelectFullPropsProps) &
+	React.SelectHTMLAttributes<HTMLSelectElement>
