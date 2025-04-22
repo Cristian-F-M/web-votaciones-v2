@@ -28,7 +28,7 @@ export interface InputSelectWrapperProps {
 }
 
 export interface SelectFallbackProps
-	extends Pick<InputBaseProps, 'label' | 'className'> {
+	extends Pick<InputBaseProps, 'label' | 'className' | 'error'> {
 	mode: 'fallback'
 }
 
