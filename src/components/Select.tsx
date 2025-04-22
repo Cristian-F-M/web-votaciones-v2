@@ -24,7 +24,7 @@ export function Select({
 						])}
 						defaultValue="0"
 					/>
-					<div className="absolute w-9/12 h-3 bg-gray-300 animate-pulse z-50 rounded" />
+					<div className="absolute w-9/12 h-3 bg-gray-300 dark:bg-gray-500 animate-pulse z-50 rounded" />
 				</div>
 				<p
 					id="document-error"
