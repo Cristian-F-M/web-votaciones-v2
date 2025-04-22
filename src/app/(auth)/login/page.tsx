@@ -1,29 +1,38 @@
+'use client'
 import { Input } from '@/components/Input'
 import LogoSena from '@/icons/LogoSena'
 import '@/assets/css/login.css'
 import { ToggleTheme } from '@/icons/ToggleThem'
-import { SelectServerWrapper } from '@/components/SelectServerWrapper'
-import type { SelectItem } from '@/types/input'
-import type { GetTypeDocumentsResponse } from '@/utils/api'
+import type { GetTypeDocumentsResponse, TypeDocument } from '@/types/api'
+import { useCallback, useEffect, useState } from 'react'
+import { Select } from '@/components/Select'
+import { doFetch } from '@/utils/fetch'
 
 export default function Login() {
 	const year = new Date().getFullYear()
+	const [errors, setErrors] = useState<{ [key: string]: string | null }>({})
+	const [typesDocuments, setTypesDocuments] = useState<TypeDocument[] | null>(
+		null
+	)
 
-	async function getTypeDocumts(): Promise<GetTypeDocumentsResponse> {
-		return await new Promise((resolve) =>
-			setTimeout(
-				() =>
-					resolve({
-						ok: true,
-						typesDocuments: [
-							{ id: '1', name: 'DNI', value: '1' },
-							{ id: '2', name: 'Pasaporte', value: '2' }
-						]
-					}),
-				5000
-			)
-		)
-	}
+	const getTypeDocuments = useCallback(async () => {
+		const res = await doFetch<GetTypeDocumentsResponse>('/typeDocument', {
+			method: 'GET',
+			cache: 'force-cache'
+		})
+
+		if (!res.ok)
+			return setErrors((prev) => ({
+				...prev,
+				typeDocument: 'Ocurrio un error al cargar los tipos de documento'
+			}))
+
+		setTypesDocuments(res.typesDocuments)
+	}, [])
+
+	useEffect(() => {
+		getTypeDocuments()
+	}, [getTypeDocuments])
 
 	return (
 		<main className="flex items-center justify-center w-full h-screen">
@@ -44,22 +53,32 @@ export default function Login() {
 						</p>
 					</header>
 					<form action="" className="w-full mt-10 space-y-9">
-						<SelectServerWrapper
-							label="Tipo de documento"
-							id="typeDocument"
-							name="typeDocument"
-							required
-							error={null}
-							items={getTypeDocumts}
-							selectedItem="0"
-							dataKey="typesDocuments"
-						/>
+						{!typesDocuments && (
+							<Select
+								mode="fallback"
+								label="Cargando..."
+								error={errors.typeDocument}
+							/>
+						)}
+						{typesDocuments && (
+							<Select
+								label="Tipo de documento"
+								id="typeDocument"
+								name="typeDocument"
+								required
+								error={errors.typeDocument}
+								items={typesDocuments}
+								selectedItem="0"
+								mode="normal"
+							/>
+						)}
+
 						<Input
 							label="Documento"
 							id="document"
 							name="document"
 							required
-							error={null}
+							error={errors.document}
 							type="number"
 						/>
 						<div className="flex flex-col">
@@ -68,7 +87,7 @@ export default function Login() {
 								id="password"
 								name="password"
 								required
-								error={null}
+								error={errors.password}
 								type="password"
 							/>
 							<a
