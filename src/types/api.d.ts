@@ -2,7 +2,6 @@ import type { SelectItem } from './input'
 
 export type FetchSuccess<T> = {
 	ok: true
-	data: T
 }
 
 export type FetchError = {
@@ -10,19 +9,27 @@ export type FetchError = {
 	message: string
 }
 
-export type GETResponse<T> = FetchSuccess<T> | FetchError
-
-export interface TypeDocument extends SelectItem {
+export interface TypeDocument {
+	id: string
+	value: string
+	name: string
 	code: string
 	description: string
 }
 
-export interface Role extends SelectItem {
+export interface Role {
+	id: string
+	value: string
+	name: string
 	code: string
 	description: string
 }
 
-export interface GetTypeDocumentsResponse extends GETResponse<typeDocument[]> {}
+export interface GetTypeDocumentsResponse {
+	ok: boolean
+	message?: string
+	typesDocuments: TypeDocument[]
+}
 
 export interface LoginResponse {
 	ok: boolean
