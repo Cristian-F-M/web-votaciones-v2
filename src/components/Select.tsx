@@ -14,16 +14,17 @@ export function Select({
 	if (mode === 'fallback') {
 		return (
 			<div>
-				<div className="input w-full relative flex flex-col">
+				<div className="input w-full relative flex flex-col justify-center">
 					<select
 						{...restProps}
-						className={twMerge([selectClassName, className])}
+						className={twMerge([
+							selectClassName,
+							'pointer-events-none',
+							className
+						])}
 						defaultValue="0"
-					>
-						<option value="0" disabled>
-							{label}
-						</option>
-					</select>
+					/>
+					<div className="absolute w-9/12 h-3 bg-gray-300 animate-pulse z-50 rounded" />
 				</div>
 				<p
 					id="document-error"
