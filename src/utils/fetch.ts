@@ -1,11 +1,11 @@
-import type { GETResponse } from '@/types/api'
+import type { FetchError } from '@/types/api'
 
-const { API_URL } = process.env
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export async function doFetch<T>(
 	url: `/${string}`,
 	options: RequestInit
-): Promise<GETResponse<T>> {
+): Promise<T | FetchError> {
 	try {
 		const response = await fetch(`${API_URL}${url}`, options)
 
@@ -20,10 +20,7 @@ export async function doFetch<T>(
 				message: responseData?.message || 'Error desconocido'
 			}
 
-		return {
-			ok: true,
-			data: responseData as T
-		}
+		return responseData
 	} catch (error: any) {
 		return {
 			ok: false,
