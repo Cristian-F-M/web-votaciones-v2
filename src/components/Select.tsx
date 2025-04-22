@@ -1,7 +1,13 @@
 import type { SelectProps } from '@/types/input'
 import { twMerge } from 'tailwind-merge'
 
-export function Select({ mode, className, label, ...restProps }: SelectProps) {
+export function Select({
+	mode,
+	className,
+	label,
+	error,
+	...restProps
+}: SelectProps) {
 	const selectClassName =
 		'w-full text-gray-800 text-sm border-b border-gray-400 border-solid outline-none dark:text-gray-300 [&>option]:dark:text-gray-800'
 
@@ -19,11 +25,19 @@ export function Select({ mode, className, label, ...restProps }: SelectProps) {
 						</option>
 					</select>
 				</div>
+				<p
+					id="document-error"
+					role="alert"
+					aria-live="assertive"
+					className={`error-message text-xs text-red-600 mt-px ${error ? 'opacity-100' : 'opacity-0'}`}
+				>
+					{error}
+				</p>
 			</div>
 		)
 	}
 
-	const { id, name, required, error, items, selectedItem, ...restPropsSelect } =
+	const { id, name, required, items, selectedItem, ...restPropsSelect } =
 		restProps as Extract<
 			SelectProps,
 			{
@@ -55,6 +69,14 @@ export function Select({ mode, className, label, ...restProps }: SelectProps) {
 					))}
 				</select>
 			</div>
+			<p
+				id="document-error"
+				role="alert"
+				aria-live="assertive"
+				className={`error-message text-xs text-red-600 mt-px ${error ? 'opacity-100' : 'opacity-0'}`}
+			>
+				{error}
+			</p>
 		</div>
 	)
 }
