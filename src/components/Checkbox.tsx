@@ -9,6 +9,7 @@ interface CheckboxControlledProps {
 interface CheckboxBaseProps {
 	label: string
 	id: string
+	name: string
 	checkboxClassName?: string
 }
 
@@ -19,6 +20,7 @@ type CheckboxProps =
 export function Checkbox({
 	label,
 	id,
+	name,
 	checked,
 	onChange,
 	checkboxClassName,
@@ -55,6 +57,8 @@ export function Checkbox({
 				type="checkbox"
 				checked={isChecked}
 				onChange={handleChange}
+				name={name}
+				value={String(isChecked)}
 				{...props}
 			/>
 			<label
