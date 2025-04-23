@@ -101,7 +101,11 @@ export default function Login() {
 
 						<div className="">
 							<div className="mb-1">
-								<Checkbox label="Recordar sesión" id="remember" />
+								<Checkbox
+									label="Recordar sesión"
+									id="remember"
+									name="remember"
+								/>
 							</div>
 							<button
 								className="w-full h-10 px-4 py-2 rounded transition-all hover:brightness-95 active:brightness-95 cursor-pointer text-gray-950 dark:text-white bg-[var(--color)]"
