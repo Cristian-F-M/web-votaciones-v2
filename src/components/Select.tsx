@@ -64,7 +64,7 @@ export function Select({
 						{label}
 					</option>
 					{items.map((item) => (
-						<option key={item.id} value={item.value}>
+						<option key={item.id} value={item.value || item.code}>
 							{item.name}
 						</option>
 					))}
