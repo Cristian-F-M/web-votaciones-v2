@@ -41,7 +41,7 @@ export interface GetTypeDocumentsResponse {
 	typesDocuments: TypeDocument[]
 }
 
-export interface LoginResponse {
+export interface LoginSuccesResponse {
 	ok: boolean
 	message: string
 	urlRedirect: string
