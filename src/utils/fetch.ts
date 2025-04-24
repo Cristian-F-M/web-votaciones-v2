@@ -1,12 +1,38 @@
-import type { FetchError } from '@/types/api'
+import type { FetchError, FetchProps } from '@/types/api'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
-export async function doFetch<T>(
-	url: `/${string}`,
-	options: RequestInit
-): Promise<T | FetchError> {
+export async function doFetch<T>({
+	url,
+	method = 'GET',
+	body = null,
+	headers = {},
+	cache = 'default'
+}: FetchProps): Promise<T | FetchError> {
 	try {
+		let defaultBody: typeof body = null
+
+		const defaultHeaders: HeadersInit = {
+			Cookie: document.cookie || '',
+			...headers
+		}
+
+		if (
+			body &&
+			!(body instanceof FormData) &&
+			'Content-Type' in defaultHeaders
+		) {
+			defaultBody = JSON.stringify(body)
+			defaultHeaders['Content-Type'] = 'application/json'
+		}
+
+		const options: RequestInit = {
+			method: method,
+			headers: defaultHeaders,
+			body: defaultBody as BodyInit | null,
+			cache
+		}
+
 		const response = await fetch(`${API_URL}${url}`, options)
 
 		const contentType = response.headers.get('Content-Type')
