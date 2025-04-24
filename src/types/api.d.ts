@@ -1,5 +1,15 @@
 import type { SelectItem } from './input'
 
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
+
+export interface FetchProps {
+	url: `/${string}`
+	method?: HttpMethod
+	body?: FormData | Record<string, any> | string | null
+	headers?: HeadersInit
+	cache?: RequestInit['cache']
+}
+
 export type FetchSuccess<T> = {
 	ok: true
 }
