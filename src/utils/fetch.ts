@@ -17,14 +17,9 @@ export async function doFetch<T>({
 			...headers
 		}
 
-		if (
-			body &&
-			!(body instanceof FormData) &&
-			'Content-Type' in defaultHeaders
-		) {
-			defaultBody = JSON.stringify(body)
+		if (body && !(body instanceof FormData)) defaultBody = JSON.stringify(body)
+		if ('Content-Type' in defaultHeaders)
 			defaultHeaders['Content-Type'] = 'application/json'
-		}
 
 		const options: RequestInit = {
 			method: method,
