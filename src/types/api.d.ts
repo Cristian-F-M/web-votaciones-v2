@@ -46,3 +46,19 @@ export interface LoginSuccesResponse {
 	message: string
 	urlRedirect: string
 }
+
+export interface FieldError {
+	type: string
+	msg: string
+	path: string
+	location: string
+}
+
+export interface Errors {
+	[key: keyof LoginFormElements]: FieldError[]
+}
+
+export interface LoginFailedResponse {
+	ok: boolean
+	errors: Errors
+}
