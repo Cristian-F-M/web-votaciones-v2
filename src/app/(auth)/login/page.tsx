@@ -17,8 +17,8 @@ export default function Login() {
 	)
 
 	const getTypeDocuments = useCallback(async () => {
-		const res = await doFetch<GetTypeDocumentsResponse>('/typeDocument', {
-			method: 'GET',
+		const res = await doFetch<GetTypeDocumentsResponse>({
+			url: '/typeDocument',
 			cache: 'force-cache'
 		})
 
