@@ -18,10 +18,13 @@ export default function RootLayout({
 		<html lang="es">
 			<head>
 				<link rel="icon" type="image/svg+xml" href="./logo-sena.svg" />
+				<style>{`
+          body {
+            --color: ${color};
+          }
+        `}</style>
 			</head>
-			<body className="dark:bg-gray-900" style={{ '--color': color }}>
-				{children}
-			</body>
+			<body className="dark:bg-gray-900">{children}</body>
 		</html>
 	)
 }
