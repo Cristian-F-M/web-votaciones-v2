@@ -42,7 +42,7 @@ export interface GetTypeDocumentsResponse {
 }
 
 export interface LoginSuccesResponse {
-	ok: boolean
+	ok: true
 	message: string
 	urlRedirect: string
 }
@@ -59,6 +59,9 @@ export interface Errors {
 }
 
 export interface LoginFailedResponse {
-	ok: boolean
+	ok: false
+	message: string
 	errors: Errors
 }
+
+export type LoginResponse = LoginSuccesResponse | LoginFailedResponse
