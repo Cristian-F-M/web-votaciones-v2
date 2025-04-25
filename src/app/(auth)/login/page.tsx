@@ -108,7 +108,7 @@ export default function Login() {
 								/>
 							</div>
 							<button
-								className="w-full h-10 px-4 py-2 rounded transition-all hover:brightness-95 active:brightness-95 cursor-pointer text-gray-950 dark:text-white bg-[var(--color)]"
+								className="w-full h-10 px-4 py-2 rounded transition-all hover:brightness-95 active:brightness-95 cursor-pointer text-gray-950 dark:text-white bg-[var(--color)]/90 active:scale-95"
 								type="submit"
 							>
 								Iniciar sesión
