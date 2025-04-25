@@ -12,14 +12,13 @@ export async function doFetch<T>({
 	try {
 		let defaultBody: typeof body = null
 
-		const defaultHeaders: HeadersInit = {
-			Cookie: document.cookie || '',
-			...headers
-		}
+		const defaultHeaders = new Headers(headers)
+		defaultHeaders.set('Cookie', document.cookie)
 
-		if (body && !(body instanceof FormData)) defaultBody = JSON.stringify(body)
-		if ('Content-Type' in defaultHeaders)
-			defaultHeaders['Content-Type'] = 'application/json'
+		const isBodyFormData = body && body instanceof FormData
+
+		if (method !== 'GET' && !isBodyFormData) defaultBody = JSON.stringify(body)
+		if (!isBodyFormData) defaultHeaders.set('Content-Type', 'application/json')
 
 		const options: RequestInit = {
 			method: method,
@@ -35,7 +34,7 @@ export async function doFetch<T>({
 
 		const responseData = isJson ? await response.json() : null
 
-		if (!response.ok)
+		if (!response.ok && !responseData)
 			return {
 				ok: false,
 				message: responseData?.message || 'Error desconocido'
