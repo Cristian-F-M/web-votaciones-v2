@@ -3,11 +3,17 @@ import { Input } from '@/components/Input'
 import LogoSena from '@/icons/LogoSena'
 import '@/assets/css/login.css'
 import { ToggleTheme } from '@/icons/ToggleThem'
-import type { GetTypeDocumentsResponse, TypeDocument } from '@/types/api'
+import type {
+	GetTypeDocumentsResponse,
+	TypeDocument,
+	LoginResponse
+} from '@/types/api'
 import { useCallback, useEffect, useState } from 'react'
 import { Select } from '@/components/Select'
 import { doFetch } from '@/utils/fetch'
 import { Checkbox } from '@/components/Checkbox'
+import type { LoginFormElements } from '@/types/forms'
+import { getErrorEntries, getProcessedErrors } from '@/utils/form'
 
 export default function Login() {
 	const year = new Date().getFullYear()
@@ -15,6 +21,7 @@ export default function Login() {
 	const [typesDocuments, setTypesDocuments] = useState<TypeDocument[] | null>(
 		null
 	)
+	const [isLogginIn, setIsLogginIn] = useState(false)
 
 	const getTypeDocuments = useCallback(async () => {
 		const res = await doFetch<GetTypeDocumentsResponse>({
@@ -29,6 +36,62 @@ export default function Login() {
 			}))
 
 		setTypesDocuments(res.typesDocuments)
+	}, [])
+
+	const handleSubmit = useCallback(
+		async (event: React.SyntheticEvent<HTMLFormElement>) => {
+			event.preventDefault()
+			const target = event.target as HTMLFormElement
+
+			const { typeDocument, document, password, remember } =
+				target.elements as LoginFormElements
+
+			const locallyErrors: typeof errors = {}
+
+			if (typeDocument.value === '0')
+				locallyErrors.typeDocument = 'Selecciona una opción de la lista'
+
+			if (document.value.trim() === '')
+				locallyErrors.document = 'Este campo es requrido'
+			if (password.value.trim() === '')
+				locallyErrors.password = 'Este campo es requrido'
+
+			const locallyErrorsEntries = getErrorEntries(locallyErrors)
+
+			if (locallyErrorsEntries.length > 0)
+				return setErrors((prev) => ({ ...prev, ...locallyErrors }))
+
+			await login(target.elements as LoginFormElements)
+		},
+		[]
+	)
+
+	const login = useCallback(async (elements: LoginFormElements) => {
+		setIsLogginIn(true)
+		const { typeDocument, document, password, remember } = elements
+
+		const { ok, ...data } = await doFetch<LoginResponse>({
+			url: '/login',
+			method: 'POST',
+			body: {
+				typeDocumentCode: typeDocument.value,
+				document: document.value,
+				password: password.value,
+				remember: remember.value
+			}
+		})
+
+		setIsLogginIn(false)
+
+		if (!ok) {
+			if ('message' in data)
+				alert(data.message)
+			if ('errors' in data) {
+				const errors = getProcessedErrors(data.errors)
+				setErrors(errors)
+			}
+			return
+		}
 	}, [])
 
 	useEffect(() => {
@@ -53,7 +116,11 @@ export default function Login() {
 							Ingresa tus crendenciales para acceder
 						</p>
 					</header>
-					<form action="" className="w-full mt-10 space-y-9">
+					<form
+						action=""
+						className="w-full mt-10 space-y-9"
+						onSubmit={handleSubmit}
+					>
 						{!typesDocuments && (
 							<Select
 								mode="fallback"
@@ -111,7 +178,7 @@ export default function Login() {
 								className="w-full h-10 px-4 py-2 rounded transition-all hover:brightness-95 active:brightness-95 cursor-pointer text-gray-950 dark:text-white bg-[var(--color)]/90 active:scale-95"
 								type="submit"
 							>
-								Iniciar sesión
+								{isLogginIn ? 'Cargando...' : 'Iniciar sesión'}
 							</button>
 							<div className="space-x-1 text-sm mt-3 w-fit mx-auto">
 								<span className="text-gray-500 dark:text-gray-300">
