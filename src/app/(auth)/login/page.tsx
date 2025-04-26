@@ -16,6 +16,7 @@ import type { LoginFormElements } from '@/types/forms'
 import { getErrorEntries, getProcessedErrors } from '@/utils/form'
 import { enqueueSnackbar } from 'notistack'
 import { SnackbarProvider } from 'notistack'
+import { Loader } from '@/components/Loader'
 
 export default function Login() {
 	const year = new Date().getFullYear()
@@ -43,6 +44,12 @@ export default function Login() {
 	const handleSubmit = useCallback(
 		async (event: React.SyntheticEvent<HTMLFormElement>) => {
 			event.preventDefault()
+			if (isLogginIn)
+				return enqueueSnackbar('Espera un momento', {
+					variant: 'warning',
+					preventDuplicate: true,
+					autoHideDuration: 3000
+				})
 			const target = event.target as HTMLFormElement
 
 			const { typeDocument, document, password, remember } =
@@ -65,7 +72,7 @@ export default function Login() {
 
 			await login(target.elements as LoginFormElements)
 		},
-		[]
+		[isLogginIn]
 	)
 
 	const login = useCallback(async (elements: LoginFormElements) => {
@@ -203,8 +210,9 @@ export default function Login() {
 							<button
 								className="w-full h-10 px-4 py-2 rounded transition-all hover:brightness-95 active:brightness-95 cursor-pointer text-gray-950 dark:text-white bg-[var(--color)]/90 active:scale-95"
 								type="submit"
+								disabled={isLogginIn}
 							>
-								{isLogginIn ? 'Cargando...' : 'Iniciar sesión'}
+								{isLogginIn ? <Loader /> : 'Iniciar sesión'}
 							</button>
 							<div className="space-x-1 text-sm mt-3 w-fit mx-auto">
 								<span className="text-gray-500 dark:text-gray-300">
