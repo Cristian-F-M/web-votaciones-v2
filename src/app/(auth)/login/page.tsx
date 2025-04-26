@@ -14,6 +14,8 @@ import { doFetch } from '@/utils/fetch'
 import { Checkbox } from '@/components/Checkbox'
 import type { LoginFormElements } from '@/types/forms'
 import { getErrorEntries, getProcessedErrors } from '@/utils/form'
+import { enqueueSnackbar } from 'notistack'
+import { SnackbarProvider } from 'notistack'
 
 export default function Login() {
 	const year = new Date().getFullYear()
@@ -85,7 +87,11 @@ export default function Login() {
 
 		if (!ok) {
 			if ('message' in data)
-				alert(data.message)
+				enqueueSnackbar(data.message, {
+					variant: 'error',
+					preventDuplicate: true,
+					autoHideDuration: 5000
+				})
 			if ('errors' in data) {
 				const errors = getProcessedErrors(data.errors)
 				setErrors(errors)
@@ -104,6 +110,13 @@ export default function Login() {
 
 	return (
 		<main className="flex items-center justify-center w-full h-screen">
+			<SnackbarProvider
+				anchorOrigin={{
+					horizontal: 'right',
+					vertical: 'top'
+				}}
+				disableWindowBlurListener
+			/>
 			<div className="flex flex-row items-center rounded-sm max-h-10/12 md:h-full shadow shadow-gray-400 dark:shadow-gray-800 w-11/12 my-auto justify-center [&>div]:w-full [&>div]:p-4 [&>div]:md:min-w-[360px] max-w-[400px]  md:w-auto  md:max-w-[800px]">
 				<div className="login dark:bg-zinc-700 h-full overflow-y-auto">
 					<header className="w-full flex flex-col items-center justify-center">
