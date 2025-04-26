@@ -98,6 +98,10 @@ export default function Login() {
 		getTypeDocuments()
 	}, [getTypeDocuments])
 
+	const clearError = useCallback((key: keyof LoginFormElements) => {
+		setErrors((prev) => ({ ...prev, [key]: null }))
+	}, [])
+
 	return (
 		<main className="flex items-center justify-center w-full h-screen">
 			<div className="flex flex-row items-center rounded-sm max-h-10/12 md:h-full shadow shadow-gray-400 dark:shadow-gray-800 w-11/12 my-auto justify-center [&>div]:w-full [&>div]:p-4 [&>div]:md:min-w-[360px] max-w-[400px]  md:w-auto  md:max-w-[800px]">
@@ -138,6 +142,9 @@ export default function Login() {
 								items={typesDocuments}
 								selectedItem="0"
 								mode="normal"
+								onChange={() => {
+									clearError('typeDocument')
+								}}
 							/>
 						)}
 
@@ -148,6 +155,9 @@ export default function Login() {
 							required
 							error={errors.document}
 							type="number"
+							onChange={() => {
+								clearError('document')
+							}}
 						/>
 						<div className="flex flex-col">
 							<Input
@@ -157,6 +167,9 @@ export default function Login() {
 								required
 								error={errors.password}
 								type="password"
+								onChange={() => {
+									clearError('password')
+								}}
 							/>
 							<a
 								href="/reset-password"
