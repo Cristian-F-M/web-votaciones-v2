@@ -1,6 +1,16 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --animate-loader: loader 0.8s linear infinite;
+
+  @keyframes loader {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
 .input label {
   transition-duration: 0.3s;
   transition-property: transform, translate, font-size, color;
@@ -75,3 +85,4 @@ input[type="number"] {
     transform: scale(0.9);
   }
 }
+
