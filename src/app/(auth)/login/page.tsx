@@ -17,6 +17,7 @@ import { getErrorEntries, getProcessedErrors } from '@/utils/form'
 import { enqueueSnackbar } from 'notistack'
 import { SnackbarProvider } from 'notistack'
 import { Loader } from '@/components/Loader'
+import { useRouter } from 'next/navigation'
 
 export default function Login() {
 	const year = new Date().getFullYear()
@@ -25,6 +26,7 @@ export default function Login() {
 		null
 	)
 	const [isLogginIn, setIsLogginIn] = useState(false)
+	const router = useRouter()
 
 	const getTypeDocuments = useCallback(async () => {
 		const res = await doFetch<GetTypeDocumentsResponse>({
@@ -75,37 +77,44 @@ export default function Login() {
 		[isLogginIn]
 	)
 
-	const login = useCallback(async (elements: LoginFormElements) => {
-		setIsLogginIn(true)
-		const { typeDocument, document, password, remember } = elements
+	const login = useCallback(
+		async (elements: LoginFormElements) => {
+			setIsLogginIn(true)
+			const { typeDocument, document, password, remember } = elements
 
-		const { ok, ...data } = await doFetch<LoginResponse>({
-			url: '/login',
-			method: 'POST',
-			body: {
-				typeDocumentCode: typeDocument.value,
-				document: document.value,
-				password: password.value,
-				remember: remember.value
+			const { ok, ...data } = await doFetch<LoginResponse>({
+				url: '/login',
+				method: 'POST',
+				body: {
+					typeDocumentCode: typeDocument.value,
+					document: document.value,
+					password: password.value,
+					remember: remember.value
+				}
+			})
+
+			setIsLogginIn(false)
+
+			if (!ok) {
+				if ('message' in data)
+					enqueueSnackbar(data.message, {
+						variant: 'error',
+						preventDuplicate: true,
+						autoHideDuration: 5000
+					})
+				if ('errors' in data) {
+					const errors = getProcessedErrors(data.errors)
+					setErrors(errors)
+				}
+				password.value = ''
+				return
 			}
-		})
 
-		setIsLogginIn(false)
-
-		if (!ok) {
-			if ('message' in data)
-				enqueueSnackbar(data.message, {
-					variant: 'error',
-					preventDuplicate: true,
-					autoHideDuration: 5000
-				})
-			if ('errors' in data) {
-				const errors = getProcessedErrors(data.errors)
-				setErrors(errors)
-			}
-			return
-		}
-	}, [])
+			if ('urlRedirect' in data) return router.replace(data.urlRedirect)
+			router.replace('/')
+		},
+		[router]
+	)
 
 	useEffect(() => {
 		getTypeDocuments()
