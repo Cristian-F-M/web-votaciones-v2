@@ -13,8 +13,6 @@ export async function doFetch<T>({
 		let defaultBody: typeof body = null
 
 		const defaultHeaders = new Headers(headers)
-		defaultHeaders.set('Cookie', document.cookie)
-
 		const isBodyFormData = body && body instanceof FormData
 
 		if (method !== 'GET' && !isBodyFormData) defaultBody = JSON.stringify(body)
@@ -24,7 +22,8 @@ export async function doFetch<T>({
 			method: method,
 			headers: defaultHeaders,
 			body: defaultBody as BodyInit | null,
-			cache
+			cache,
+			credentials: 'include'
 		}
 
 		const response = await fetch(`${API_URL}${url}`, options)
