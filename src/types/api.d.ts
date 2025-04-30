@@ -45,6 +45,7 @@ export interface LoginSuccesResponse {
 	ok: true
 	message: string
 	urlRedirect: string
+  token?: string
 }
 
 export interface FieldError {
