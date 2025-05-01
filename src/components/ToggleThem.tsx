@@ -12,6 +12,7 @@ export function ToggleTheme() {
 
 		documentElement.classList.toggle('dark')
 		documentElement.style.colorScheme = isDarkTheme ? 'light' : 'dark'
+		localStorage.setItem('color-theme', isDarkTheme ? 'light' : 'dark')
 	}, [])
 
 	useEffect(() => {
