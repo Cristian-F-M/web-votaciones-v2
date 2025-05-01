@@ -5,6 +5,7 @@ import LogoSena from '@/icons/LogoSena'
 import { Loader } from '@/components/Loader'
 import { doFetch } from '@/utils/fetch'
 import type { VerifySessionResponse } from '@/types/api'
+import { enqueueSnackbar } from 'notistack'
 
 export default function Home() {
 	const verifySession = useCallback(async () => {
@@ -15,6 +16,9 @@ export default function Home() {
 		await new Promise((resolve) => setTimeout(resolve, 1000))
 
 		if (!data.ok) {
+			enqueueSnackbar(data.message, {
+				variant: 'info'
+			})
 			if ('urlRedirect' in data) return router.replace(data.urlRedirect)
 			router.replace('login')
 		}
