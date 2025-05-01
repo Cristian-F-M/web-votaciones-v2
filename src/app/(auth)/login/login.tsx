@@ -109,9 +109,6 @@ export default function Login() {
 				password.value = ''
 				return
 			}
-      
-			// This be defined in the browser and will be defined in firefox soon
-			if ('token' in data) await cookieStore.set('token', data.token)
 
 			if ('urlRedirect' in data) return router.replace(data.urlRedirect)
 			router.replace('/')
