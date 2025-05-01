@@ -45,7 +45,7 @@ export interface LoginSuccesResponse {
 	ok: true
 	message: string
 	urlRedirect: string
-  token?: string
+	token?: string
 }
 
 export interface FieldError {
@@ -66,3 +66,9 @@ export interface LoginFailedResponse {
 }
 
 export type LoginResponse = LoginSuccesResponse | LoginFailedResponse
+
+export interface VerifySessionResponse {
+	ok: boolean
+	message: string
+	urlRedirect: string
+}
