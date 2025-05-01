@@ -1,7 +1,7 @@
 'use client'
 import { Input } from '@/components/Input'
 import LogoSena from '@/icons/LogoSena'
-import { ToggleTheme } from '@/icons/ToggleThem'
+import { ToggleTheme } from '@/components/ToggleThem'
 import type {
 	GetTypeDocumentsResponse,
 	TypeDocument,
