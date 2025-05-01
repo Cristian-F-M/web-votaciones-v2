@@ -7,9 +7,11 @@ export function ToggleTheme() {
 	const toggleThemeRef = useRef<HTMLDivElement>(null)
 
 	const toggleTheme = useCallback((e: MouseEvent) => {
-		document.documentElement.classList.toggle('dark')
-		document.documentElement.style.colorScheme =
-			document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+		const documentElement = document.documentElement
+		const isDarkTheme = documentElement.classList.contains('dark')
+
+		documentElement.classList.toggle('dark')
+		documentElement.style.colorScheme = isDarkTheme ? 'light' : 'dark'
 	}, [])
 
 	useEffect(() => {
