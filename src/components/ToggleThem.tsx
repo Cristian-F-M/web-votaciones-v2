@@ -1,7 +1,7 @@
 'use client'
 import { useCallback, useEffect, useRef } from 'react'
-import Moon from '../icons/Moon'
-import Sun from '../icons/Sun'
+import Moon from '@/icons/Moon'
+import Sun from '@/icons/Sun'
 
 export function ToggleTheme() {
 	const toggleThemeRef = useRef<HTMLDivElement>(null)
