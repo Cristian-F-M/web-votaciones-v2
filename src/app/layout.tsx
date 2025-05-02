@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { SnackbarProvider } from '@/components/SnackbarProvider'
+import ClientLayout from '@/app/clientLayout'
 
 export const metadata: Metadata = {
 	title: 'Votaciones - Vota en línea por tu candidato preferido en CGAO',
@@ -26,7 +26,7 @@ export default function RootLayout({
         `}</style>
 			</head>
 			<body className="dark:bg-gray-900">
-				<SnackbarProvider />
+				<ClientLayout />
 				{children}
 			</body>
 		</html>
