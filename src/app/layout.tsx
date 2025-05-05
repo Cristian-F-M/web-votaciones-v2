@@ -16,7 +16,7 @@ export default function RootLayout({
 	const color = '#ff8617'
 
 	return (
-		<html lang="es">
+		<html lang="es" suppressHydrationWarning>
 			<head>
 				<link rel="icon" type="image/svg+xml" href="./logo-sena.svg" />
 				<style>{`
