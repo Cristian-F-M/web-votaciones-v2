@@ -228,17 +228,21 @@ export default function Login() {
 						</div>
 					</form>
 				</div>
-				<div className="information h-full hidden md:flex flex-col items-center justify-center bg-[var(--color)]/50">
-					<LogoSena className="size-28 text-[var(--color)]" />
-					<h2 className="text-2xl bold text-gray-900 text-center dark:text-gray-50">
-						Centro de Gestión Agroempresarial del Oriente
-					</h2>
-					<p className="text-center text-gray-700 text-sm mt-1 dark:text-gray-300">
-						Accede a nuestra plataforma para realizar la votación de el
-						candidato a representante de la jornada.
-					</p>
-					<div className="mt-auto text-xs text-gray-600 dark:text-gray-300">
-						&copy; {year} SENA. Todos los derechos reservados.
+				<div className="information h-full hidden md:flex flex-col items-center justify-center relative">
+					<div className="hidden dark:block absolute inset-0 bg-gray-700 z-0" />
+					<div className="absolute inset-0 bg-[var(--color)]/60 z-10" />
+					<div className="size-full z-50 md:flex flex-col items-center justify-center ">
+						<LogoSena className="size-28 text-[var(--color)]" />
+						<h2 className="text-2xl bold text-gray-900 text-center dark:text-gray-50">
+							Centro de Gestión Agroempresarial del Oriente
+						</h2>
+						<p className="text-center text-gray-700 text-sm mt-1 dark:text-gray-300">
+							Accede a nuestra plataforma para realizar la votación de el
+							candidato a representante de la jornada.
+						</p>
+						<div className="mt-auto text-xs text-gray-600 dark:text-gray-300">
+							&copy; {year} SENA. Todos los derechos reservados.
+						</div>
 					</div>
 				</div>
 			</div>
