@@ -46,7 +46,8 @@ export function Input({
 				</label>
 				{type === 'password' && buttonShowPassword && (
 					<button
-						className="size-fit p-1 rounded right-0 absolute -top-1/2 cursor-pointer hover:bg-gray-200 active:bg-gray-200 transition-colors duration-200"
+						className="size-fit p-1 rounded right-0 absolute -top-1/2 cursor-pointer hover:bg-gray-200
+             active:bg-gray-200 dark:hover:bg-gray-800 dark:active:bg-gray-800 transition-colors duration-200"
 						type="button"
 						title="Mostrar contraseña"
 						onClick={() => setShowPassword((prev) => !prev)}
