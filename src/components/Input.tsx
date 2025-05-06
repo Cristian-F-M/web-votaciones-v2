@@ -37,12 +37,9 @@ export function Input({
 				<label
 					id={`${id}-label`}
 					htmlFor={id}
-					className="text-gray-500 dark:text-gray-400 text-sm pointer-events-none absolute bottom-px flex flex-row items-center gap-px"
+					className={`text-gray-500 dark:text-gray-400 text-sm pointer-events-none absolute bottom-px flex flex-row items-center gap-px after:ml-0.5 after:text-red-500 ${required ? "after:content-['*']" : ''}`}
 				>
 					{label}
-					{required && (
-						<span className="text-red-600 text-lg leading-3">*</span>
-					)}
 				</label>
 				{type === 'password' && buttonShowPassword && (
 					<button
