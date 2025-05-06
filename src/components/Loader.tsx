@@ -7,7 +7,7 @@ export function Loader({
 		<span
 			role="status"
 			className={twMerge(
-				'loader size-6 inline-block box-border rounded-full border-r-4 border-r-transparent border-t-[3px] border-t-current border-solid animate-loader',
+				'loader text-gray-700 size-6 inline-block box-border rounded-full border-r-4 border-r-transparent border-t-[3px] border-t-current border-solid animate-loader',
 				className
 			)}
 		/>
