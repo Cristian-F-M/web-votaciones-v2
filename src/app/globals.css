@@ -58,6 +58,15 @@ input[type="number"] {
   box-shadow: 0 1px 1px rgba(0, 16, 75, 0.05);
 }
 .checkbox-wrapper .label span:first-child svg {
+  .eye-line {
+    stroke-dasharray: 30;
+    stroke-dashoffset: 30;
+    transition: stroke-dashoffset 0.3s ease;
+  }
+
+  .eye--off .eye-line {
+    stroke-dashoffset: 0;
+  }
   position: absolute;
   top: 50%;
   left: 50%;
@@ -96,4 +105,14 @@ input[type="number"] {
   50% {
     transform: scale(0.9);
   }
+}
+
+.eye-line {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  transition: stroke-dashoffset 0.3s ease;
+}
+
+.eye-off .eye-line {
+  stroke-dashoffset: 0;
 }
