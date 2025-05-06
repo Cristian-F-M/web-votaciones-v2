@@ -19,6 +19,7 @@ export interface InputTextProps
 		React.InputHTMLAttributes<HTMLInputElement> {
 	type: React.InputHTMLAttributes<HTMLInputElement>['type']
 	onErrorChange?: (error: string | null) => void
+	buttonShowPassword?: boolean
 }
 
 export interface InputSelectWrapperProps {
