@@ -1,5 +1,7 @@
 import { twMerge } from 'tailwind-merge'
 import type { InputTextProps } from '@/types/input'
+import { useState } from 'react'
+import { EyeAnimatedIcon } from '@/icons/EyeAnimatedIcon'
 
 export function Input({
 	id,
@@ -9,8 +11,11 @@ export function Input({
 	error,
 	className,
 	type,
+	buttonShowPassword = false,
 	...restProps
 }: InputTextProps) {
+	const [showPassword, setShowPassword] = useState(false)
+
 	return (
 		<div>
 			<div
@@ -21,7 +26,7 @@ export function Input({
 					{...restProps}
 					id={id}
 					name={name}
-					type={type}
+					type={showPassword ? 'text' : type}
 					required={required}
 					placeholder=" "
 					className={twMerge([
@@ -39,6 +44,20 @@ export function Input({
 						<span className="text-red-600 text-lg leading-3">*</span>
 					)}
 				</label>
+				{type === 'password' && buttonShowPassword && (
+					<button
+						className="size-fit p-1 rounded right-0 absolute -top-1/2 cursor-pointer hover:bg-gray-200 active:bg-gray-200 transition-colors duration-200"
+						type="button"
+						title="Mostrar contraseña"
+						onClick={() => setShowPassword((prev) => !prev)}
+					>
+						<EyeAnimatedIcon
+							isShowingPassword={showPassword}
+							width={18}
+							height={18}
+						/>
+					</button>
+				)}
 			</div>
 			<p
 				id="document-error"
