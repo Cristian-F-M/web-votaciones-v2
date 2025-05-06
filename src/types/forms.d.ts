@@ -5,6 +5,12 @@ export interface LoginFormElements extends HTMLFormControlsCollection {
 	remember: HTMLInputElement
 }
 
+export interface LoginErrors {
+	typeDocument: string | null
+	document: string | null
+	password: string | null
+	remember: string | null
+}
 
 export interface RegisterFormElements extends HTMLFormControlsCollection {
 	name: HTMLInputElement
