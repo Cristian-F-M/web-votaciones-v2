@@ -193,7 +193,7 @@ export default function Login() {
 							/>
 							<a
 								href="/reset-password"
-								className="text-sm md:text-xs transition-colors text-blue-500 visited:text-indigo-800 dark:text-blue-400 underline md:no-underline md:hover:underline self-end"
+								className="text-sm md:text-xs transition-colors text-blue-500 dark:text-blue-400 underline md:no-underline md:hover:underline self-end"
 							>
 								¿Olvidaste tu contraseña?
 							</a>
@@ -219,7 +219,7 @@ export default function Login() {
 									¿No tienes una cuenta?
 								</span>
 								<a
-									className="visited:text-indigo-800 underline md:no-underline md:hover:underline text-[var(--color)]"
+									className="underline md:no-underline md:hover:underline text-[var(--color)]"
 									href="/register"
 								>
 									Registrate
