@@ -1,0 +1,115 @@
+@supports (appearance: base-select) {
+  .custom-select {
+    transition: all 0.2s ease;
+    appearance: base-select;
+
+    button {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  .custom-select:focus {
+    outline-color: color-mix(in srgb, var(--color) 60%, transparent);
+    outline-offset: 5px;
+  }
+
+  .custom-select ::checkmark,
+  .custom-select::picker-icon {
+    display: none;
+  }
+
+  .custom-select::picker(select) {
+    appearance: base-select;
+    border: 1px solid light-dark(#bbc1caaf, #5a5a66);
+    border-radius: 4px;
+    background-color: light-dark(white, #3f3f46);
+    box-shadow: 0 0 10px 0 light-dark(#6b72804f, rgba(0, 0, 0, 0.2));
+    overflow: hidden;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+
+  .custom-select option {
+    padding: 10px;
+    cursor: pointer;
+    color: light-dark(black, #d1d5db);
+
+    @media (width >= 48rem /* 768px */) {
+      padding: 6px 10px;
+    }
+  }
+
+  .custom-select option:focus {
+    outline-color: color-mix(in srgb, var(--color) 60%, transparent);
+  }
+
+  .custom-select option:is(:checked) {
+    background-color: light-dark(
+      color-mix(in srgb, var(--color) 70%, transparent),
+      color-mix(in srgb, var(--color) 60%, transparent)
+    );
+  }
+
+  .custom-select option:hover {
+    background-color: color-mix(in srgb, var(--color) 30%, transparent);
+    transition: background-color 0.3s ease;
+  }
+
+  .custom-select option:disabled {
+    background-color: #cfd3da;
+    color: #536885;
+    cursor: not-allowed;
+  }
+
+  .custom-select:open option {
+    transition-property: transform, opacity;
+    transition-duration: 0.4s;
+    transform: translateY(0);
+    transition-delay: var(--delay);
+    opacity: 1;
+
+    @starting-style {
+      transform: translateY(-6px);
+      opacity: 0;
+    }
+  }
+
+  .custom-select .picker-icon {
+    align-self: center;
+    transition: transform 0.3s;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(1);
+    width: 15px;
+    height: 15px;
+    background-color: light-dark(#6a7282, #99a1af);
+    mask: url("/assets/icons/caret-down.svg");
+
+    .custom-select:open & {
+      transform: rotate(180deg);
+    }
+  }
+
+  .custom-select:has(option:checked:not([disabled])) .text-label {
+    display: none;
+  }
+
+  selectedcontent > * {
+    transition: transform 0.4s cubic-bezier(0.24, 0.85, 0.21, 1.43),
+      opacity 0.2s;
+    opacity: 1;
+
+    @starting-style {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+}
