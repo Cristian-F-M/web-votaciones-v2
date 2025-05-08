@@ -8,8 +8,16 @@ export function Select({
 	error,
 	...restProps
 }: SelectProps) {
+	const userAgent = navigator.userAgent
+	const isChromium = userAgent.toLowerCase().includes('chrome')
+
 	const selectClassName =
-		'w-full text-gray-800 text-sm border-b border-gray-400 border-solid outline-none dark:text-gray-300 [&>option]:dark:text-gray-800'
+		'custom-select w-full text-gray-800 text-sm border-b border-gray-400 border-solid outline-none dark:text-gray-300 [&>option]:dark:text-gray-800'
+
+	const optionStyle = (index: number) =>
+		({ '--delay': `${index * 0.02}s` }) as React.CSSProperties & {
+			[key: string]: any
+		}
 
 	if (mode === 'fallback') {
 		return (
@@ -48,6 +56,7 @@ export function Select({
 
 	return (
 		<div>
+			<link rel="stylesheet" href="/assets/css/form-ntw.css" />
 			<div
 				className="input w-full relative flex flex-col"
 				aria-labelledby={`${id}-label`}
@@ -60,12 +69,36 @@ export function Select({
 					defaultValue={selectedItem}
 					className={twMerge([selectClassName, className])}
 				>
-					<option value="0" disabled>
-						{label}
+					<button className="relative" type="button">
+						<selectedcontent />
+						<span className="picker-icon z-50" />
+						<span
+							className={`text-label text-gray-400 z-10 block absolute size-full after:ml-0.5 after:text-red-500 ${required ? "after:content-['*']" : ''}`}
+						>
+							{label}
+						</span>
+					</button>
+					<option
+						value="0"
+						disabled
+						hidden
+						className={
+							'text-label-fallback after:ml-0.5 after:text-red-500 chrome:after:content-none'
+						}
+					>
+						{!isChromium && (
+							<div>
+								<span>{label}</span>
+							</div>
+						)}
 					</option>
-					{items.map((item) => (
-						<option key={item.id} value={item.value || item.code}>
-							{item.name}
+					{items.map((item, index) => (
+						<option
+							key={item.id}
+							value={item.value || item.code}
+							style={optionStyle(index)}
+						>
+							<div>{item.name}</div>
 						</option>
 					))}
 				</select>
