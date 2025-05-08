@@ -24,6 +24,11 @@
   }
 }
 
+
+* {
+  scrollbar-gutter: stable;
+}
+
 .input label {
   transition-duration: 0.3s;
   transition-property: transform, translate, font-size, color;
