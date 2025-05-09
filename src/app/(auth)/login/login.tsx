@@ -57,7 +57,7 @@ export default function Login() {
 
 			const locallyErrors: typeof errors = {}
 
-			if (typeDocument.value === '0')
+			if (typeDocument.value === 'default-value')
 				locallyErrors.typeDocument = 'Selecciona una opción de la lista'
 
 			if (document.value.trim() === '')
@@ -157,7 +157,6 @@ export default function Login() {
 								onChange={() => {
 									clearError('typeDocument')
 								}}
-                selectedItem=''
 							/>
 
 							<Input
