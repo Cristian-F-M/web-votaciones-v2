@@ -47,6 +47,10 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 	const { id, name, required, selectedItem, label, ...restPropsSelect } =
 		restProps
 
+	const isDefaultValueSelected = ['', undefined, 'default-value'].includes(
+		selectedItem
+	)
+
 	return (
 		<div>
 			<div
@@ -58,7 +62,6 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 					id={id}
 					name={name}
 					required={required}
-					value={selectedItem || 'default-value'}
 					className={twMerge([selectClassName, className])}
 				>
 					<button className="relative" type="button">
@@ -74,9 +77,10 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 						value="default-value"
 						disabled
 						hidden
-						className={
-							'text-label-fallback after:ml-0.5 after:text-red-500 chrome:after:content-none'
+            className={
+              'text-label-fallback after:ml-0.5 after:text-red-500'
 						}
+            selected={isDefaultValueSelected}
 					>
 						{!isChromium && (
 							<div>
@@ -89,6 +93,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 							key={item.id}
 							value={item.value || item.code}
 							style={optionStyle(index)}
+							selected={[item.name, item.code].includes(selectedItem)}
 						>
 							<div>{item.name}</div>
 						</option>
