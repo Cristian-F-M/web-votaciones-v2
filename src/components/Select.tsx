@@ -1,13 +1,7 @@
 import type { SelectProps } from '@/types/input'
 import { twMerge } from 'tailwind-merge'
 
-export function Select({
-	mode,
-	className,
-	label,
-	error,
-	...restProps
-}: SelectProps) {
+export function Select({ className, error, items, ...restProps }: SelectProps) {
 	const userAgent = navigator.userAgent
 	const isChromium = userAgent.toLowerCase().includes('chrome')
 
@@ -19,7 +13,7 @@ export function Select({
 			[key: string]: any
 		}
 
-	if (mode === 'fallback') {
+	if (!items) {
 		return (
 			<div>
 				<div className="input w-full relative flex flex-col justify-center">
@@ -30,7 +24,6 @@ export function Select({
 							'pointer-events-none',
 							className
 						])}
-						defaultValue="0"
 					>
 						<button className="relative" type="button">
 							<selectedcontent />
@@ -51,13 +44,8 @@ export function Select({
 		)
 	}
 
-	const { id, name, required, items, selectedItem, ...restPropsSelect } =
-		restProps as Extract<
-			SelectProps,
-			{
-				mode: 'normal'
-			}
-		>
+	const { id, name, required, selectedItem, label, ...restPropsSelect } =
+		restProps
 
 	return (
 		<div>
@@ -70,7 +58,7 @@ export function Select({
 					id={id}
 					name={name}
 					required={required}
-					defaultValue={selectedItem}
+					value={selectedItem || 'default-value'}
 					className={twMerge([selectClassName, className])}
 				>
 					<button className="relative" type="button">
@@ -83,7 +71,7 @@ export function Select({
 						</span>
 					</button>
 					<option
-						value="0"
+						value="default-value"
 						disabled
 						hidden
 						className={
