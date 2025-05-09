@@ -28,16 +28,11 @@ export interface InputSelectWrapperProps {
 	onErrorChange?: (error: string | null) => void
 }
 
-export interface SelectFallbackProps
-	extends Pick<InputBaseProps, 'label' | 'className' | 'error'> {
-	mode: 'fallback'
-}
 
 export interface SelectFullPropsProps extends InputBaseProps {
-	mode: 'normal'
-	selectedItem: string
-	items: SelectItem[]
+	selectedItem?: 'default-value' | (string & {})
+	items: SelectItem[] | null
 }
 
-export type SelectProps = (SelectFallbackProps | SelectFullPropsProps) &
+export type SelectProps = SelectFullPropsProps &
 	React.SelectHTMLAttributes<HTMLSelectElement>
