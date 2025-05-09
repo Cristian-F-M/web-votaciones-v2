@@ -147,28 +147,18 @@ export default function Login() {
 							className="w-full mt-10 space-y-9"
 							onSubmit={handleSubmit}
 						>
-							{!typesDocuments && (
-								<Select
-									mode="fallback"
-									label="Cargando..."
-									error={errors.typeDocument}
-								/>
-							)}
-							{typesDocuments && (
-								<Select
-									label="Tipo de documento"
-									id="typeDocument"
-									name="typeDocument"
-									required
-									error={errors.typeDocument}
-									items={typesDocuments}
-									selectedItem="0"
-									mode="normal"
-									onChange={() => {
-										clearError('typeDocument')
-									}}
-								/>
-							)}
+							<Select
+								label="Tipo de documento"
+								id="typeDocument"
+								name="typeDocument"
+								required
+								error={errors.typeDocument}
+								items={typesDocuments}
+								onChange={() => {
+									clearError('typeDocument')
+								}}
+                selectedItem=''
+							/>
 
 							<Input
 								label="Documento"
