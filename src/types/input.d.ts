@@ -9,7 +9,7 @@ interface InputBaseProps {
 	label: string
 	name: string
 	id: string
-	error: string | null
+	error: string | null | undefined
 	required?: boolean
 	className?: string
 }
