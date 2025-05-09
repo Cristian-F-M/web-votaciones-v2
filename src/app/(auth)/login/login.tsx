@@ -11,7 +11,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Select } from '@/components/Select'
 import { doFetch } from '@/utils/fetch'
 import { Checkbox } from '@/components/Checkbox'
-import type { LoginFormElements } from '@/types/forms'
+import type { LoginErrors, LoginFormElements } from '@/types/forms'
 import { getErrorEntries, getProcessedErrors } from '@/utils/form'
 import { enqueueSnackbar } from 'notistack'
 import { Loader } from '@/components/Loader'
@@ -19,7 +19,7 @@ import { useRouter } from 'next/navigation'
 
 export default function Login() {
 	const year = new Date().getFullYear()
-	const [errors, setErrors] = useState<{ [key: string]: string | null }>({})
+	const [errors, setErrors] = useState<LoginErrors>({})
 	const [typesDocuments, setTypesDocuments] = useState<TypeDocument[] | null>(
 		null
 	)
