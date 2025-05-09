@@ -1,6 +1,11 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+html {
+  scroll-behavior: smooth;
+  scroll-margin-block: 50px;
+}
+
 @theme {
   --animate-loader: loader 0.8s linear infinite;
   --animate-fadeIn: fade-in 0.6s ease-out;
