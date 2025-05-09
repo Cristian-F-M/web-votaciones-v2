@@ -6,10 +6,10 @@ export interface LoginFormElements extends HTMLFormControlsCollection {
 }
 
 export interface LoginErrors {
-	typeDocument: string | null
-	document: string | null
-	password: string | null
-	remember: string | null
+	typeDocument?: string | null
+	document?: string | null
+	password?: string | null
+	remember?: string | null
 }
 
 export interface RegisterFormElements extends HTMLFormControlsCollection {
@@ -24,12 +24,12 @@ export interface RegisterFormElements extends HTMLFormControlsCollection {
 }
 
 export interface RegisterErrors {
-	name: string | null
-	lastname: string | null
-	typeDocumentCode: string | null
-	document: string | null
-	phone: string | null
-	email: string | null
-	password: string | null
-	confirmPassword: string | null
+	name?: string | null
+	lastname?: string | null
+	typeDocumentCode?: string | null
+	document?: string | null
+	phone?: string | null
+	email?: string | null
+	password?: string | null
+	confirmPassword?: string | null
 }
