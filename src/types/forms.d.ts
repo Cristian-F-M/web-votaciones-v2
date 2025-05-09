@@ -1,3 +1,8 @@
+export type ValidateFieldsProps = HTMLFormControlsCollection & {
+	[key: string]: HTMLInputElement | HTMLSelectElement
+}
+export type ValidateFieldsReturnType = Record<string, string>
+
 export interface LoginFormElements extends HTMLFormControlsCollection {
 	typeDocument: HTMLInputElement
 	document: HTMLInputElement
