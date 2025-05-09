@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
-@plugin "@igorkowalczyk/is-browser";
 
 @theme {
   --animate-loader: loader 0.8s linear infinite;
