@@ -31,7 +31,12 @@ export function Select({
 							className
 						])}
 						defaultValue="0"
-					/>
+					>
+						<button className="relative" type="button">
+							<selectedcontent />
+							<span className="picker-icon z-50" />
+						</button>
+					</select>
 					<div className="absolute w-9/12 h-3 bg-gray-300 dark:bg-gray-500 animate-pulse z-50 rounded" />
 				</div>
 				<p
@@ -56,7 +61,6 @@ export function Select({
 
 	return (
 		<div>
-			<link rel="stylesheet" href="/assets/css/form-ntw.css" />
 			<div
 				className="input w-full relative flex flex-col"
 				aria-labelledby={`${id}-label`}
