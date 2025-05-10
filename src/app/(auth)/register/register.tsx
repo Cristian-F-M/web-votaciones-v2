@@ -84,16 +84,17 @@ export default function Register() {
 				locallyErrors.password = 'Las contraseñas no coinciden'
 			}
 
-			const errorsEntries = getErrorEntries(locallyErrors)
+			const fullErrors = { ...errors, ...locallyErrors }
+			const errorsEntries = getErrorEntries(fullErrors)
 
 			if (errorsEntries.length >= 1) {
 				const inputName = errorsEntries[0][0]
 				scrollSmooth(`[name=${inputName}]`)
-				setErrors(locallyErrors)
+				setErrors(fullErrors)
 				return
 			}
 		},
-		[isRegistering]
+		[isRegistering, errors]
 	)
 
 	const clearError = useCallback((key: keyof RegisterFormElements) => {
