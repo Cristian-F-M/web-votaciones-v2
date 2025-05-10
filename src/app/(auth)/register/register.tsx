@@ -16,6 +16,7 @@ import { enqueueSnackbar } from 'notistack'
 import {
 	getErrorEntries,
 	isEmailValid,
+	isPasswordValid,
 	validateFieldsNotEmpty
 } from '@/utils/form'
 import { scrollSmooth } from '@/utils/dom'
@@ -78,6 +79,11 @@ export default function Register() {
 
 			if (!locallyErrors.email && !isEmailValid(email.value))
 				locallyErrors.email = 'Ingresa un correo electronico válido '
+
+			if (!locallyErrors.password && !isPasswordValid(password.value)) {
+				locallyErrors.password =
+					'Debe contener entre 8 y 20 caracteres, al menos 1 mayúscula, 1 minúscula, 1 número y 1 símbolo especial.'
+			}
 
 			if (!locallyErrors.password && password.value !== confirmPassword.value) {
 				locallyErrors.confirmPassword = 'Las contraseñas no coinciden'
