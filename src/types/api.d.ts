@@ -55,8 +55,8 @@ export interface FieldError {
 	location: string
 }
 
-export interface Errors {
-	[key: keyof LoginFormElements]: FieldError[]
+export interface Errors<T> {
+	[key: keyof T]: FieldError[]
 }
 
 export interface LoginFailedResponse {
