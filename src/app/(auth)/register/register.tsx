@@ -17,6 +17,7 @@ import {
 	getErrorEntries,
 	isEmailValid,
 	isPasswordValid,
+	PASSWORD_REGEX,
 	validateFieldsNotEmpty
 } from '@/utils/form'
 import { scrollSmooth } from '@/utils/dom'
@@ -213,6 +214,8 @@ export default function Register() {
 							onChange={() => {
 								clearError('password')
 							}}
+							pattern={String(PASSWORD_REGEX)}
+							title="Debe contener entre 8 y 20 caracteres, al menos 1 mayúscula, 1 minúscula, 1 número y 1 símbolo especial."
 						/>
 						<Input
 							label="Confirmar contraseña"
