@@ -13,7 +13,7 @@ export function getErrorEntries(errors: Record<string, any>) {
 }
 
 export function getProcessedErrors(
-	errors: Errors
+	errors: ApiErrors
 ): Record<string, string | null> {
 	const errorsEntries = Object.entries(errors)
 	const locallyErrors: Record<string, string | null> = {}
