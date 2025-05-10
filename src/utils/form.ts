@@ -5,8 +5,11 @@ import type {
 } from '@/types/forms'
 
 export const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+export const PASSWORD_REGEX =
+	/^(?=(.*[A-Z]))(?=(.*[a-z]))(?=(.*\d))(?=(.*[\W_]))[A-Za-z\d\W_]{8,20}$/
 
 export const isEmailValid = (email: string) => EMAIL_REGEX.test(email)
+export const isPasswordValid = (text: string) => PASSWORD_REGEX.test(text)
 
 export function getErrorEntries(errors: Record<string, any>) {
 	return Object.entries(errors).filter(([_, value]) => value)
