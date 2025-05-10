@@ -2,6 +2,8 @@ import type { SelectItem } from './input'
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
 
+export type GetProcessedErrorsReturnType = Record<string, string | null | undefined>
+
 export interface FetchProps {
 	url: `/${string}`
 	method?: HttpMethod
