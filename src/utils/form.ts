@@ -19,8 +19,8 @@ export function getProcessedErrors(
 	const locallyErrors: GetProcessedErrorsReturnType = {}
 
 	for (const [_, error] of errorsEntries) {
-		const { path, msg } = error[0]
-		locallyErrors[path] = msg
+		const { path, msg, message } = error[0]
+		locallyErrors[path] = msg || message
 	}
 	return locallyErrors
 }
