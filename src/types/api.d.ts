@@ -1,3 +1,4 @@
+import type { LoginErrors, RegisterErrors } from './forms'
 import type { SelectItem } from './input'
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
