@@ -69,7 +69,7 @@ export interface ApiErrors {
 export interface LoginFailedResponse {
 	ok: false
 	message: string
-	errors: Errors<LoginErrors>
+	errors: ApiErrors
 }
 
 export type LoginResponse = LoginSuccesResponse | LoginFailedResponse
