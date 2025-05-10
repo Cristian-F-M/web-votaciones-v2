@@ -53,6 +53,7 @@ export interface FieldError {
 	msg: string
 	path: string
 	location: string
+  message?: string
 }
 
 export interface Errors<T> {
