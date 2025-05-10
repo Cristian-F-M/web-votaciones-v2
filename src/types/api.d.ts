@@ -79,3 +79,17 @@ export interface VerifySessionResponse {
 	message: string
 	urlRedirect: string
 }
+
+export interface ResponseSuccesResponse {
+	ok: true
+	message: string
+	urlRedirect: string
+}
+
+export interface ResponseFailedResponse {
+	ok: false
+	message: string
+	errors?: ApiErrors
+}
+
+export type RegisterResponse = ResponseSuccesResponse | ResponseFailedResponse
