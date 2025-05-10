@@ -18,6 +18,7 @@ import {
 	isEmailValid,
 	validateFieldsNotEmpty
 } from '@/utils/form'
+import { scrollSmooth } from '@/utils/dom'
 
 export default function Register() {
 	const [isRegistering, setIsRegistering] = useState(false)
@@ -85,7 +86,12 @@ export default function Register() {
 
 			const errorsEntries = getErrorEntries(locallyErrors)
 
-			if (errorsEntries.length >= 1) return setErrors(locallyErrors)
+			if (errorsEntries.length >= 1) {
+				const inputName = errorsEntries[0][0]
+				scrollSmooth(`[name=${inputName}]`)
+				setErrors(locallyErrors)
+				return
+			}
 		},
 		[isRegistering]
 	)
