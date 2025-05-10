@@ -10,19 +10,26 @@ import type {
 	RegisterFormElements,
 	ValidateFieldsProps
 } from '@/types/forms'
-import type { GetTypeDocumentsResponse, TypeDocument } from '@/types/api'
+import type {
+	RegisterResponse,
+	GetTypeDocumentsResponse,
+	TypeDocument
+} from '@/types/api'
 import { doFetch } from '@/utils/fetch'
 import { enqueueSnackbar } from 'notistack'
 import {
 	getErrorEntries,
+	getProcessedErrors,
 	isEmailValid,
 	isPasswordValid,
 	PASSWORD_REGEX,
 	validateFieldsNotEmpty
 } from '@/utils/form'
 import { scrollSmooth } from '@/utils/dom'
+import { useRouter } from 'next/navigation'
 
 export default function Register() {
+	const router = useRouter()
 	const [isRegistering, setIsRegistering] = useState(false)
 	const [typesDocuments, setTypesDocuments] = useState<TypeDocument[] | null>(
 		null
@@ -49,7 +56,7 @@ export default function Register() {
 	}, [getTypeDocuments])
 
 	const handleSubmit = useCallback(
-		(event: React.SyntheticEvent<HTMLFormElement>) => {
+		async (event: React.SyntheticEvent<HTMLFormElement>) => {
 			event.preventDefault()
 
 			if (isRegistering)
@@ -100,9 +107,59 @@ export default function Register() {
 				setErrors(fullErrors)
 				return
 			}
+      
+      register(target.elements as RegisterFormElements)
 		},
 		[isRegistering, errors]
 	)
+
+	const register = useCallback(async (elements: RegisterFormElements) => {
+		setIsRegistering(true)
+		const {
+			name,
+			lastname,
+			typeDocumentCode,
+			document,
+			email,
+			phone,
+			password,
+			confirmPassword
+		} = elements
+		const { ok, ...data } = await doFetch<RegisterResponse>({
+			url: '/register',
+			method: 'POST',
+			body: {
+				name: name.value,
+				lastname: lastname.value,
+				typeDocumentCode: typeDocumentCode.value,
+				document: document.value,
+				email: email.value,
+				phone: phone.value,
+				password: password.value,
+				confirmPassword: confirmPassword.value
+			}
+		})
+		setIsRegistering(false)
+
+		if (!ok) {
+			if (data.message)
+				enqueueSnackbar(data.message, {
+					variant: 'error'
+				})
+
+			if ('errors' in data && data.errors) {
+				const errors = getProcessedErrors(data.errors)
+				setErrors(errors)
+			}
+			return
+		}
+
+		enqueueSnackbar(data.message, {
+			variant: 'success'
+		})
+
+		router.push('/login')
+	}, [router])
 
 	const clearError = useCallback((key: keyof RegisterFormElements) => {
 		setErrors((prev) => ({ ...prev, [key]: null }))
