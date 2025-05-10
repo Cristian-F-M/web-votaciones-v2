@@ -62,7 +62,7 @@ export interface Errors<T> {
 export interface LoginFailedResponse {
 	ok: false
 	message: string
-	errors: Errors
+	errors: Errors<LoginErrors>
 }
 
 export type LoginResponse = LoginSuccesResponse | LoginFailedResponse
