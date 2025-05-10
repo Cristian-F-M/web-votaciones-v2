@@ -59,6 +59,10 @@ export interface Errors<T> {
 	[key: keyof T]: FieldError[]
 }
 
+export interface ApiErrors {
+	[key: string]: FieldError[]
+}
+
 export interface LoginFailedResponse {
 	ok: false
 	message: string
