@@ -1,4 +1,4 @@
-import type { Errors } from '@/types/api'
+import type { ApiErrors, GetProcessedErrorsReturnType } from '@/types/api'
 import type {
 	ValidateFieldsProps,
 	ValidateFieldsReturnType
@@ -14,9 +14,9 @@ export function getErrorEntries(errors: Record<string, any>) {
 
 export function getProcessedErrors(
 	errors: ApiErrors
-): Record<string, string | null> {
+): GetProcessedErrorsReturnType {
 	const errorsEntries = Object.entries(errors)
-	const locallyErrors: Record<string, string | null> = {}
+	const locallyErrors: GetProcessedErrorsReturnType = {}
 
 	for (const [_, error] of errorsEntries) {
 		const { path, msg } = error[0]
