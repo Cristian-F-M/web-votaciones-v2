@@ -42,7 +42,8 @@ html {
 .input input:focus + label,
 .input input:not(:placeholder-shown) + label {
   translate: 0 -110%;
-  color: light-dark(#1e2939, #f9fafb);
+  color: light-dark(#6a7282, #9ca3af);
+  font-size: 13px;
 }
 
 input[type="number"]::-webkit-inner-spin-button,

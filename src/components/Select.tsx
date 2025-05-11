@@ -68,7 +68,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 						<selectedcontent />
 						<span className="picker-icon z-50" />
 						<span
-							className={`text-label text-gray-400 z-10 block absolute size-full after:ml-0.5 after:text-red-500 ${required ? "after:content-['*']" : ''}`}
+							className={`text-label text-gray-800 dark:text-gray-300 z-10 block absolute size-full after:ml-0.5 after:text-red-500 ${required ? "after:content-['*']" : ''}`}
 						>
 							{label}
 						</span>
@@ -77,10 +77,8 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 						value="default-value"
 						disabled
 						hidden
-            className={
-              'text-label-fallback after:ml-0.5 after:text-red-500'
-						}
-            selected={isDefaultValueSelected}
+						className={'text-label-fallback after:ml-0.5 after:text-red-500'}
+						selected={isDefaultValueSelected}
 					>
 						{!isChromium && (
 							<div>
@@ -90,6 +88,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 					</option>
 					{items.map((item, index) => (
 						<option
+							className="text-black dark:text-gray-300"
 							key={item.id}
 							value={item.value || item.code}
 							style={optionStyle(index)}

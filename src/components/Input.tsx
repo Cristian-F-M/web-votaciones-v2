@@ -30,14 +30,14 @@ export function Input({
 					required={required}
 					placeholder=" "
 					className={twMerge([
-						'w-full text-gray-600 text-sm border-b border-gray-400 border-solid outline-none dark:text-gray-400',
+						'w-full text-gray-8 00 text-sm border-b border-gray-400 border-solid outline-none dark:text-gray-200',
 						className
 					])}
 				/>
 				<label
 					id={`${id}-label`}
 					htmlFor={id}
-					className={`text-gray-500 dark:text-gray-400 text-sm pointer-events-none absolute bottom-px flex flex-row items-center gap-px after:ml-0.5 after:text-red-500 ${required ? "after:content-['*']" : ''}`}
+					className={`text-gray-800 dark:text-gray-300 text-sm pointer-events-none absolute bottom-px flex flex-row items-center gap-px after:ml-0.5 after:text-red-500 ${required ? "after:content-['*']" : ''}`}
 				>
 					{label}
 				</label>
