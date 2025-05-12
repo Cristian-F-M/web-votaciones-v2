@@ -126,7 +126,8 @@
     transition: background-color 0.1s ease;
   }
 
-  .custom-select:focus .picker-icon {
+  .custom-select:focus .picker-icon,
+  .custom-select:open .picker-icon {
     --light-color: color-mix(in srgb, var(--color) 80%, transparent);
     --dark-color: color-mix(in srgb, var(--color) 80%, transparent);
 
