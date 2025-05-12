@@ -112,4 +112,17 @@
       transform: translateY(10px);
     }
   }
+
+  :where(.custom-select, selectedcontent, .text-label) {
+    transition: color 0.2s;
+  }
+
+  .custom-select:open {
+    border-color: color-mix(in srgb, var(--color) 90%, transparent);
+  }
+
+  .custom-select option:focus {
+    background-color: color-mix(in srgb, var(--color) 30%, transparent);
+    transition: background-color 0.1s ease;
+  }
 }

@@ -6,7 +6,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 	const isChromium = userAgent.toLowerCase().includes('chrome')
 
 	const selectClassName =
-		'custom-select w-full text-gray-800 text-sm border-b border-gray-400 border-solid outline-none dark:text-gray-300 [&>option]:dark:text-gray-800'
+		'custom-select w-full text-gray-800 text-sm border-b border-gray-400 border-solid outline-none dark:text-gray-300 [&>option]:dark:text-gray-800 focus:border-(--color)'
 
 	const optionStyle = (index: number) =>
 		({ '--delay': `${index * 0.02}s` }) as React.CSSProperties & {
@@ -64,14 +64,16 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 					required={required}
 					className={twMerge([selectClassName, className])}
 				>
-					<button className="relative" type="button">
+					<button className="relative" type="button" tabIndex={-1}>
 						<selectedcontent />
 						<span className="picker-icon z-50" />
-						<span
+						<label
+							id={`${id}-label`}
+							htmlFor={id}
 							className={`text-label text-gray-800 dark:text-gray-300 z-10 block absolute size-full after:ml-0.5 after:text-red-500 ${required ? "after:content-['*']" : ''}`}
 						>
 							{label}
-						</span>
+						</label>
 					</button>
 					<option
 						value="default-value"

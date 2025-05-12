@@ -28,7 +28,6 @@ html {
   }
 }
 
-
 * {
   scrollbar-gutter: stable;
 }
@@ -44,6 +43,13 @@ html {
   translate: 0 -110%;
   color: light-dark(#6a7282, #9ca3af);
   font-size: 13px;
+}
+
+.input input:focus + label {
+  color: light-dark(
+    var(--color),
+    color-mix(in srgb, var(--color) 90%, transparent)
+  );
 }
 
 input[type="number"]::-webkit-inner-spin-button,
