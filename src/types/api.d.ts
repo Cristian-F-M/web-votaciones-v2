@@ -79,3 +79,9 @@ export interface ResponseFailedResponse {
 }
 
 export type RegisterResponse = ResponseSuccesResponse | ResponseFailedResponse
+
+
+export type UserHomeResponse = (VerifySessionResponse) | {
+  ok: true
+  user: UserHome
+}
