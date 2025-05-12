@@ -19,7 +19,7 @@ export function Input({
 	return (
 		<div>
 			<div
-				className="input w-full relative flex flex-col"
+				className="input w-full relative flex flex-col justify-center"
 				aria-labelledby={`${id}-label`}
 			>
 				<input
@@ -43,7 +43,7 @@ export function Input({
 				</label>
 				{type === 'password' && buttonShowPassword && (
 					<button
-						className="size-fit p-1 rounded right-0 absolute -top-1/2 cursor-pointer hover:bg-gray-200
+						className="size-fit p-0.5 rounded right-0 absolute  cursor-pointer hover:bg-gray-200
              active:bg-gray-200 dark:hover:bg-gray-800 dark:active:bg-gray-800 transition-colors duration-200"
 						type="button"
 						title="Mostrar contraseña"
