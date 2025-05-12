@@ -1,5 +1,14 @@
 import type { SelectProps } from '@/types/input'
 import { twMerge } from 'tailwind-merge'
+import { InputError } from './InputError'
+
+function SelectWrapper({ children }: { children: React.ReactNode }) {
+	return (
+		<div className="input w-full relative flex flex-col justify-center">
+			{children}
+		</div>
+	)
+}
 
 export function Select({ className, error, items, ...restProps }: SelectProps) {
 	const userAgent = navigator.userAgent
@@ -16,7 +25,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 	if (!items) {
 		return (
 			<div>
-				<div className="input w-full relative flex flex-col justify-center">
+				<SelectWrapper>
 					<select
 						{...restProps}
 						className={twMerge([
@@ -31,7 +40,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 						</button>
 					</select>
 					<div className="absolute w-9/12 h-3 bg-gray-300 dark:bg-gray-500 animate-pulse z-50 rounded" />
-				</div>
+				</SelectWrapper>
 				<p
 					id="document-error"
 					role="alert"
@@ -53,10 +62,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 
 	return (
 		<div>
-			<div
-				className="input w-full relative flex flex-col"
-				aria-labelledby={`${id}-label`}
-			>
+			<SelectWrapper>
 				<select
 					{...restPropsSelect}
 					id={id}
@@ -100,15 +106,8 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 						</option>
 					))}
 				</select>
-			</div>
-			<p
-				id="document-error"
-				role="alert"
-				aria-live="assertive"
-				className={`error-message text-xs text-red-600 dark:text-[#ff7e81] mt-px ${error ? 'opacity-100' : 'opacity-0'}`}
-			>
-				{error}
-			</p>
+			</SelectWrapper>
+			<InputError error={error} id={id} />
 		</div>
 	)
 }
