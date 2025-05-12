@@ -271,7 +271,7 @@ export default function Register() {
 							onChange={() => {
 								clearError('password')
 							}}
-							pattern={String(PASSWORD_REGEX)}
+							pattern={PASSWORD_REGEX.source}
 							title="Debe contener entre 8 y 20 caracteres, al menos 1 mayúscula, 1 minúscula, 1 número y 1 símbolo especial."
 						/>
 						<Input
