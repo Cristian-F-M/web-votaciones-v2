@@ -1,5 +1,6 @@
 import type { LoginErrors, RegisterErrors } from './forms'
 import type { SelectItem } from './input'
+import type { TypeDocument, Role } from './models'
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
 
@@ -20,22 +21,6 @@ export type FetchSuccess<T> = {
 export type FetchError = {
 	ok: false
 	message: string
-}
-
-export interface TypeDocument {
-	id: string
-	value: string
-	name: string
-	code: string
-	description: string
-}
-
-export interface Role {
-	id: string
-	value: string
-	name: string
-	code: string
-	description: string
 }
 
 export interface GetTypeDocumentsResponse {
