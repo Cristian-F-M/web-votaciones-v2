@@ -23,6 +23,7 @@ export type UserHome = Pick<
 	| 'phone'
 	| 'voted'
 	| 'imageUrl'
+	| 'typeDocumentUser'
 >
 
 export interface TypeDocument {
