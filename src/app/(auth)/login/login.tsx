@@ -2,11 +2,7 @@
 import { Input } from '@/components/Input'
 import LogoSena from '@/icons/LogoSena'
 import { ToggleTheme } from '@/components/ToggleThem'
-import type {
-	GetTypeDocumentsResponse,
-	TypeDocument,
-	LoginResponse
-} from '@/types/api'
+import type { GetTypeDocumentsResponse, LoginResponse } from '@/types/api'
 import { useCallback, useEffect, useState } from 'react'
 import { Select } from '@/components/Select'
 import { doFetch } from '@/utils/fetch'
@@ -16,6 +12,7 @@ import { getErrorEntries, getProcessedErrors } from '@/utils/form'
 import { enqueueSnackbar } from 'notistack'
 import { Loader } from '@/components/Loader'
 import { useRouter } from 'next/navigation'
+import type { TypeDocument } from '@/types/models'
 
 export default function Login() {
 	const year = new Date().getFullYear()
