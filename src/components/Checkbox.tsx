@@ -79,25 +79,13 @@ export function Checkbox({
 					aria-checked={isChecked}
 					ref={checkboxRef}
 				>
-					<svg
-						className=""
-						width="calc(100% * 0.8)"
-						height="calc(100% * 0.8)"
-						// width="100%"
-						// height="100%"
-					>
+					<svg className="size-full" viewBox="0 0 12 10">
 						<title>Check</title>
-						<use xlinkHref="#check-4" />
+						<polyline points="1.5 6 4.5 9 10.5 1" />
 					</svg>
 				</span>
 				<span className="text-gray-600 dark:text-gray-300">{label}</span>
 			</label>
-			<svg className="inline-svg absolute size-0 pointer-events-none select-none">
-				<title>Check</title>
-				<symbol id="check-4" viewBox="0 0 12 10">
-					<polyline points="1.5 6 4.5 9 10.5 1" />
-				</symbol>
-			</svg>
 		</div>
 	)
 }
