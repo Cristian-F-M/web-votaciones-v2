@@ -1,16 +1,27 @@
 'use client'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Moon from '@/icons/Moon'
 import Sun from '@/icons/Sun'
 
-export function ToggleTheme() {
+export function ToggleTheme({ className }: { className?: string }) {
 	const toggleThemeRef = useRef<HTMLDivElement>(null)
+	const [theme, setTheme] = useState<typeof window.colorTheme>()
+
+  useEffect(() => {
+    setTheme(window.colorTheme)
+  }, [])
+  
 
 	const toggleTheme = useCallback((e: MouseEvent) => {
 		const documentElement = document.documentElement
 		const isDarkTheme = documentElement.classList.contains('dark')
 
+		const themeToSet = isDarkTheme ? 'light' : 'dark'
+		window.colorTheme = themeToSet
+    setTheme(themeToSet)
+
 		documentElement.classList.toggle('dark')
+		documentElement.style.colorScheme = themeToSet
 		documentElement.style.colorScheme = isDarkTheme ? 'light' : 'dark'
 		localStorage.setItem('color-theme', isDarkTheme ? 'light' : 'dark')
 	}, [])
@@ -26,10 +37,33 @@ export function ToggleTheme() {
 	return (
 		<div
 			ref={toggleThemeRef}
-			className="rounded-full p-2 bg-gray-300 hover:bg-gray-200 cursor-pointer border border-gray-400/50 dark:bg-gray-600 dark:hover:bg-gray-500 w-fit"
+			className="relative cursor-pointer size-6 p-1 rounded [&_svg]:size-4 flex flex-col items-center justify-center border border-gray-300/50 hover:bg-gray-200 dark:hover:bg-gray-700 [&_svg]:absolute"
 		>
-			<Moon className="size-4 hidden dark:block" />
-			<Sun className="size-4 block dark:hidden" />
+			<style>
+				{`
+        svg {
+          transition: all 0.3s allow-discrete;
+        }
+
+        svg.hidden {
+          scale: 0;
+          opacity: 0;
+        }
+        
+        svg.block {
+          scale: 1;
+          opacity: 1;
+
+          @starting-style {
+            scale: 0;
+            opacity: 0;
+          }
+        }
+      `}
+			</style>
+
+			<Moon className={`${theme === 'dark' ? 'block' : 'hidden'}`} />
+			<Sun className={`${theme === 'light' ? 'block' : 'hidden'}`} />
 		</div>
 	)
 }
