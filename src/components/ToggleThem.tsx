@@ -26,7 +26,7 @@ export function ToggleTheme() {
 	return (
 		<div
 			ref={toggleThemeRef}
-			className="rounded-full p-2 bg-gray-300 hover:bg-gray-200 cursor-pointer border border-gray-400/50 dark:bg-gray-600 dark:hover:bg-gray-500"
+			className="rounded-full p-2 bg-gray-300 hover:bg-gray-200 cursor-pointer border border-gray-400/50 dark:bg-gray-600 dark:hover:bg-gray-500 w-fit"
 		>
 			<Moon className="size-4 hidden dark:block" />
 			<Sun className="size-4 block dark:hidden" />
