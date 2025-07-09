@@ -25,7 +25,7 @@ export default function RootLayout({
           }
         `}</style>
 			</head>
-			<body className="dark:bg-gray-900">
+			<body className="dark:bg-gray-950">
 				<ClientLayout />
 				{children}
 			</body>
