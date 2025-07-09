@@ -10,11 +10,7 @@ import type {
 	RegisterFormElements,
 	ValidateFieldsProps
 } from '@/types/forms'
-import type {
-	RegisterResponse,
-	GetTypeDocumentsResponse,
-	TypeDocument
-} from '@/types/api'
+import type { RegisterResponse, GetTypeDocumentsResponse } from '@/types/api'
 import { doFetch } from '@/utils/fetch'
 import { enqueueSnackbar } from 'notistack'
 import {
@@ -27,6 +23,7 @@ import {
 } from '@/utils/form'
 import { scrollSmooth } from '@/utils/dom'
 import { useRouter } from 'next/navigation'
+import type { TypeDocument } from '@/types/models'
 
 export default function Register() {
 	const router = useRouter()
