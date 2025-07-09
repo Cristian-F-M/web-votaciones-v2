@@ -2,7 +2,7 @@
 import { Input } from '@/components/Input'
 import { Loader } from '@/components/Loader'
 import { Select } from '@/components/Select'
-import { ToggleTheme } from '@/components/ToggleThem'
+import { ToggleTheme } from '@/components/ToggleTheme'
 import LogoSena from '@/icons/LogoSena'
 import { useCallback, useEffect, useState } from 'react'
 import type {

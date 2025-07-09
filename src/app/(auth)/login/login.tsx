@@ -1,7 +1,7 @@
 'use client'
 import { Input } from '@/components/Input'
 import LogoSena from '@/icons/LogoSena'
-import { ToggleTheme } from '@/components/ToggleThem'
+import { ToggleTheme } from '@/components/ToggleTheme'
 import type { GetTypeDocumentsResponse, LoginResponse } from '@/types/api'
 import { useCallback, useEffect, useState } from 'react'
 import { Select } from '@/components/Select'
