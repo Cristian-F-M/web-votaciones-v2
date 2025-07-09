@@ -190,7 +190,7 @@ export default function Login() {
 							<div className="">
 								<div className="mb-1">
 									<Checkbox
-										label="Recordar sesión"
+										label="Recordar por 30 días"
 										id="remember"
 										name="remember"
 									/>
