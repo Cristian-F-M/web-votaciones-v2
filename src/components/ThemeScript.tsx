@@ -10,6 +10,7 @@ export default function ThemeScript() {
   
         documentElement.classList.add(themeToSet);
         documentElement.style.colorScheme = themeToSet
+        window.colorTheme = themeToSet
       }
   
       updateTheme()
