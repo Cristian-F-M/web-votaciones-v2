@@ -32,8 +32,8 @@ export function UserAvatar({ onClick, className }: UserAvatarProps) {
 			className={twMerge(commonClasses, 'cursor-pointer', className)}
 			onClick={onClick}
 		>
-			<span className="block size-fit uppercase text-sm select-none">
-				{user.name.slice(0, 1)}
+			<span className="block size-fit uppercase text-sm select-none dark:text-gray-200">
+				{user.name.slice(0, 1)}{user.lastname.slice(0, 1)}
 			</span>
 		</div>
 	)
