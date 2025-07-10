@@ -85,3 +85,9 @@ export type UserHomeResponse = (VerifySessionResponse) | {
   ok: true
   user: UserHome
 }
+
+export type LogoutResponse = FetchError | {
+  ok: true
+  message: string
+  urlRedirect: string
+}
