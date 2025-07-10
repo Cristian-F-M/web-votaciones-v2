@@ -41,7 +41,7 @@ export interface FieldError {
 	msg: string
 	path: string
 	location: string
-  message?: string
+	message?: string
 }
 
 export interface Errors<T> {
@@ -82,12 +82,12 @@ export type RegisterResponse = ResponseSuccesResponse | ResponseFailedResponse
 
 
 export type UserHomeResponse = (VerifySessionResponse) | {
-  ok: true
-  user: UserHome
+	ok: true
+	user: UserHome
 }
 
 export type LogoutResponse = FetchError | {
-  ok: true
-  message: string
-  urlRedirect: string
+	ok: true
+	message: string
+	urlRedirect: string
 }
