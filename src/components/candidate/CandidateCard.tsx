@@ -15,7 +15,7 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
 			<div className="py-2 px-4">
 				<div className="w-fit mx-auto flex flex-col items-center mb-4">
 					<h4 className="text-2xl">{candidate.user.name}</h4>
-					<p className="text-sm text-gray-700 text-center">Esta es una descripción del candidato</p>
+					<p className="text-xs text-gray-700 dark:text-gray-400 text-center">Esta es una descripción del candidato</p>
 				</div>
 
 				<button type='button' onClick={() => alert(`Votar por ${candidate.user.name}`)} className="bg-(--color) w-full px-3 py-1.5 rounded cursor-pointer hover:bg-(--color)/70 transition-colors">Votar</button>
