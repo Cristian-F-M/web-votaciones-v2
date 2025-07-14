@@ -91,3 +91,8 @@ export type LogoutResponse = FetchError | {
 	message: string
 	urlRedirect: string
 }
+
+export type GetCandidatesResponse = FetchError | {
+	ok: true
+	candidates: Candidate[]
+}
