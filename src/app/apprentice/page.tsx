@@ -24,6 +24,30 @@ export default function IndexPage() {
 					<UserSettings />
 				</div>
 			</header>
+
+			<main className="w-full mt-10">
+				<h1 className="w-fit mx-auto text-4xl">
+					Votaciones para representante {new Date().getFullYear()}
+				</h1>
+				<span className="block w-fit mx-auto text-gray-600">
+					Participa en el proceso democrático y elige a tu candidato preferido
+				</span>
+				<div className="remaining-time w-10/12 mx-auto mt-7">
+					<h3 className="flex flex-row gap-1 items-center w-fit mx-auto text-xl">
+						<Clock className="text-(--color) size-6" /> Tiempo restante para
+						votar
+					</h3>
+					<div className="mx-auto w-fit mt-2 flex flex-row gap-1 items-center justify-center border dark:border-(--color)/50 border-(--color) px-14 py-4 rounded">
+						<SingleTimeCard label="días" value={remainingTime.days} />
+						<span className="time-separator">:</span>
+						<SingleTimeCard label="horas" value={remainingTime.hours} />
+						<span className="time-separator">:</span>
+						<SingleTimeCard label="min" value={remainingTime.minutes} />
+						<span className="time-separator">:</span>
+						<SingleTimeCard label="seg" value={remainingTime.seconds} />
+					</div>
+				</div>
+			</main>
 		</>
 	)
 }
