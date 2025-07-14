@@ -7,7 +7,7 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
 		: `${API_URL}/candidate/image/${candidate.imageUrl}`
 
 	return (
-		<div className="w-[260px] h-[380px] border border-gray-400/60 rounded shadow">
+		<div className="w-[260px] max-h-[380px] border border-gray-400/60 rounded shadow">
 			<div className="w-11/12 h-auto mx-auto border-b border-gray-300">
 				<img alt={`Foto del candidate ${candidate.user.name}`} src={imageUrl} />
 			</div>
@@ -18,7 +18,7 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
 					<p className="text-xs text-gray-700 dark:text-gray-400 text-center">Esta es una descripción del candidato</p>
 				</div>
 
-				<button type='button' onClick={() => alert(`Votar por ${candidate.user.name}`)} className="bg-(--color) w-full px-3 py-1.5 rounded cursor-pointer hover:bg-(--color)/70 transition-colors">Votar</button>
+				<button type='button' onClick={() => alert(`Votar por ${candidate.user.name}`)} className="bg-(--color) w-full px-3 py-1.5 rounded cursor-pointer hover:bg-(--color)/70 transition-colors mb-3">Votar</button>
 			</div>
 		</div>
 	)
