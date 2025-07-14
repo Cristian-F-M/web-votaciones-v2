@@ -42,3 +42,13 @@ export interface Role {
 	code: string
 	description: string
 }
+
+
+export interface Candidate {
+	id: string
+	userId: Pick<User, 'id'>
+	imageUrl: string
+	description: string
+	votes: string
+	user: Pick<User, 'id' | 'name' | 'lastname' | 'document' | 'email'>
+}
