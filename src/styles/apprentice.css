@@ -1,0 +1,5 @@
+@reference 'tailwindcss';
+
+.time-separator {
+  @apply text-4xl mx-1.5;
+}
