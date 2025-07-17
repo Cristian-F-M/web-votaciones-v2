@@ -33,7 +33,7 @@ export async function doFetch<T>({
 
 		const responseData = isJson ? await response.json() : null
 
-		if (!response.ok && !responseData)
+		if (!response.ok || !responseData)
 			return {
 				ok: false,
 				message: responseData?.message || 'Error desconocido'
