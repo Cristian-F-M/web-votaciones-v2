@@ -96,3 +96,8 @@ export type GetCandidatesResponse = FetchError | {
 	ok: true
 	candidates: Candidate[]
 }
+
+export type ValidatePermissionsResponse = FetchError | VerifySessionResponse | {
+	ok: boolean
+	message: string
+}
