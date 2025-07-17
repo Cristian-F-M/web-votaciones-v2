@@ -1,8 +1,5 @@
 'use client'
-import { ToggleTheme } from '@/components/ToggleTheme'
-import LogoSena from '@/icons/LogoSena'
 import { useUser } from '@/states/useUser'
-import { UserSettings } from '@/components/user/menu'
 import '@/styles/apprentice.css'
 import Clock from '@/icons/Clock'
 import { useRemainingTime } from '@/hooks/useRemainingTime'
@@ -17,15 +14,7 @@ export default function IndexPage() {
 
 	return (
 		<>
-			<header className="px-2 py-2.5 flex flex-row items-center justify-between border-b border-gray-300/80 dark:border-gray-700/80">
-				<LogoSena className="text-(--color) size-14" />
-				<div className="flex flex-row gap-2 items-center ">
-					<ToggleTheme />
-					<UserSettings />
-				</div>
-			</header>
-
-			<main className="w-full mt-10">
+			<main className="w-full mt-10 mb-14">
 				<h1 className="w-fit mx-auto text-4xl">
 					Votaciones para representante {new Date().getFullYear()}
 				</h1>
