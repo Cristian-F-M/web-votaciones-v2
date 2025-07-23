@@ -24,7 +24,7 @@ export type UserHome = Pick<
 	| 'voted'
 	| 'imageUrl'
 	| 'typeDocumentUser'
-  | 'roleUser'
+	| 'roleUser'
 >
 
 export interface TypeDocument {
@@ -51,4 +51,20 @@ export interface Candidate {
 	description: string
 	votes: string
 	user: Pick<User, 'id' | 'name' | 'lastname' | 'document' | 'email'>
+}
+
+
+export interface Vote {
+	id: string
+	userId: Pick<User, 'id'>
+	cantVotes: number
+	totalVote: number
+	startDate: string
+	endDate: string
+	finishVoteInfo: {
+		totalVotes: number
+		cantVotesWinner: number
+		candidates: Candidate[]
+	}
+	isFinished: boolean
 }

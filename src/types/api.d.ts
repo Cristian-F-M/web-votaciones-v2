@@ -101,3 +101,8 @@ export type ValidatePermissionsResponse = FetchError | VerifySessionResponse | {
 	ok: boolean
 	message: string
 }
+
+export type GetVoteResponse = FetchError | {
+	ok: true
+	lastVote: Vote
+}
