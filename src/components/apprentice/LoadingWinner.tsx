@@ -3,7 +3,7 @@ import Check from '@/icons/Check'
 import { useRef } from 'react'
 import { ActivateNotificationsModal } from './ActivateNotificationsModal'
 
-export function VoteFinished() {
+export function LoadingWinner() {
 	const buttonTrigger = useRef<HTMLButtonElement>(null)
 
 	return (
