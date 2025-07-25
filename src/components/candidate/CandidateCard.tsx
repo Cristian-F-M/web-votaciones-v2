@@ -7,18 +7,18 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
 		: `${API_URL}/candidate/image/${candidate.imageUrl}`
 
 	return (
-		<div className="w-[260px] max-h-[380px] border border-gray-400/60 rounded shadow">
-			<div className="w-11/12 h-auto mx-auto border-b border-gray-300">
+		<div className="md:w-[260px] w-[220px] max-h-[380px] border border-gray-400/60 rounded shadow">
+			<div className="md:w-11/12 w-full h-auto mx-auto border-b border-gray-300">
 				<img alt={`Foto del candidate ${candidate.user.name}`} src={imageUrl} />
 			</div>
 
 			<div className="py-2 px-4">
-				<div className="w-fit mx-auto flex flex-col items-center mb-4">
-					<h4 className="text-2xl">{candidate.user.name}</h4>
+				<div className="md:w-fit w-full mx-auto flex flex-col items-center mb-4">
+					<h4 className="md:text-2xl text-xl">{candidate.user.name}</h4>
 					<p className="text-xs text-gray-700 dark:text-gray-400 text-center line-clamp-2">{candidate.description}</p>
 				</div>
 
-				<button type='button' onClick={() => alert(`Votar por ${candidate.user.name}`)} className="bg-(--color) w-full px-3 py-1.5 rounded cursor-pointer hover:bg-(--color)/70 transition-colors mb-3">Votar</button>
+				<button type='button' onClick={() => alert(`Votar por ${candidate.user.name}`)} className="bg-(--color) w-full px-3 md:py-1.5 py-1 rounded cursor-pointer hover:bg-(--color)/70 transition-colors mb-3">Votar</button>
 			</div>
 		</div>
 	)
