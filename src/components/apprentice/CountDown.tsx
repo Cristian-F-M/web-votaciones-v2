@@ -2,7 +2,7 @@ import Clock from '@/icons/Clock'
 import { SingleTimeCard } from '../SingleTimeCard'
 import { useRemainingTime } from '@/hooks/useRemainingTime'
 
-export function CountDown({ targetDate }: { targetDate: Date }) {
+export function CountDown({ targetDate }: { targetDate: Date | string | null }) {
 	const { remainingTime } = useRemainingTime(targetDate)
 
 	return (
