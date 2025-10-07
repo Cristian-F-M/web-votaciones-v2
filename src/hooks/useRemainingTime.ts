@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-type TargetDate = Date | string
+type TargetDate = Date | string | null
 
 
 type RemainingTime = Record<keyof typeof defaultRemainingTime, string>
@@ -24,6 +24,7 @@ export function useRemainingTime(targetDate: TargetDate): UseRemainingTimeReturn
 
 
   const calculateRamainingTime = useCallback((targetDate: TargetDate) => {
+    if (!targetDate) return setRemainingTime(defaultRemainingTime)
     const newTargetdate = new Date(targetDate)
     const targetTime = newTargetdate.getTime()
     const nowTime = new Date().getTime()
