@@ -9,6 +9,7 @@ export interface User {
 	imageUrl?: string
 	role: string
 	voted: boolean
+	votedCandidateId: Candidate['id']
 	typeDocumentUser: TypeDocument
 	roleUser: Role
 }
@@ -25,6 +26,7 @@ export type UserHome = Pick<
 	| 'imageUrl'
 	| 'typeDocumentUser'
 	| 'roleUser'
+	| 'votedCandidateId'
 >
 
 export interface TypeDocument {
@@ -43,7 +45,6 @@ export interface Role {
 	description: string
 }
 
-
 export interface Candidate {
 	id: string
 	userId: Pick<User, 'id'>
@@ -52,7 +53,6 @@ export interface Candidate {
 	votes: string
 	user: Pick<User, 'id' | 'name' | 'lastname' | 'document' | 'email'>
 }
-
 
 export interface Vote {
 	id: string
