@@ -106,3 +106,8 @@ export type GetVoteResponse = FetchError | {
 	ok: true
 	lastVote: Vote
 }
+
+export type VoteResponse = FetchError | {
+	ok: true,
+  message: string
+} 
