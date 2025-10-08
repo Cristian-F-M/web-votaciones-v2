@@ -1,7 +1,51 @@
+import type { VoteResponse } from '@/types/api'
 import type { Candidate } from '@/types/models'
+import { doFetch } from '@/utils/fetch'
+import { enqueueSnackbar } from 'notistack'
+import { useCallback, useEffect, useState } from 'react'
+import { Button } from '@/components/Button'
+import { useUser } from '@/states/useUser'
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export function CandidateCard({ candidate }: { candidate: Candidate }) {
+	const [isVoting, setIsVoting] = useState(false)
+	const [alreadyVoted, setAlreadyVoted] = useState(false)
+	const user = useUser((state) => state.user)
+
+	const handleVote = useCallback(async () => {
+		if (isVoting) return
+
+		setIsVoting(true)
+
+		const data = await doFetch<VoteResponse>({
+			url: '/candidate/vote',
+			method: 'POST',
+			body: {
+				id: candidate.id
+			}
+		})
+
+		setIsVoting(false)
+
+		if (!data.ok) {
+			enqueueSnackbar(data.message, {
+				variant: 'error'
+			})
+			return
+		}
+
+		setAlreadyVoted(true)
+		enqueueSnackbar(data.message, {
+			variant: 'success'
+		})
+	}, [candidate, isVoting])
+
+	useEffect(() => {
+		if (!user) return
+		setAlreadyVoted(user.voted)
+	}, [user])
+
+	const buttonText = alreadyVoted ? 'Ya votaste' : 'Votar'
 	const imageUrl = candidate.imageUrl?.startsWith('http')
 		? candidate.imageUrl
 		: `${API_URL}/candidate/image/${candidate.imageUrl}`
@@ -18,7 +62,16 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
 					<p className="text-xs text-gray-700 dark:text-gray-400 text-center line-clamp-2">{candidate.description}</p>
 				</div>
 
-				<button type='button' onClick={() => alert(`Votar por ${candidate.user.name}`)} className="bg-(--color) w-full px-3 md:py-1.5 py-1 rounded cursor-pointer hover:bg-(--color)/70 transition-colors mb-3">Votar</button>
+				<Button
+					type="button"
+					onClick={handleVote}
+					disabled={isVoting || alreadyVoted}
+					loading={isVoting}
+					showLoader={true}
+					className=""
+				>
+					{buttonText}
+				</Button>
 			</div>
 		</div>
 	)
