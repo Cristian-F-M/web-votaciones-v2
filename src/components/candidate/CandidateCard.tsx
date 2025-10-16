@@ -5,11 +5,14 @@ import { enqueueSnackbar } from 'notistack'
 import { useCallback, useEffect, useState } from 'react'
 import { Button } from '@/components/Button'
 import { useUser } from '@/states/useUser'
+import Sparkles from '@/icons/Sparkles'
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export function CandidateCard({ candidate }: { candidate: Candidate }) {
 	const [isVoting, setIsVoting] = useState(false)
 	const [alreadyVoted, setAlreadyVoted] = useState(false)
+	const [isThisCandidateVoted, setIsThisCandidateVoted] = useState(false)
 	const user = useUser((state) => state.user)
 
 	const handleVote = useCallback(async () => {
@@ -35,6 +38,7 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
 		}
 
 		setAlreadyVoted(true)
+    setIsThisCandidateVoted(true)
 		enqueueSnackbar(data.message, {
 			variant: 'success'
 		})
@@ -43,7 +47,10 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
 	useEffect(() => {
 		if (!user) return
 		setAlreadyVoted(user.voted)
-	}, [user])
+    setIsThisCandidateVoted(user.votedCandidateId === candidate.id)
+
+    console.log(user.votedCandidateId, candidate.id)
+	}, [user, candidate])
 
 	const buttonText = alreadyVoted ? 'Ya votaste' : 'Votar'
 	const imageUrl = candidate.imageUrl?.startsWith('http')
@@ -51,7 +58,13 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
 		: `${API_URL}/candidate/image/${candidate.imageUrl}`
 
 	return (
-		<div className="md:w-[260px] w-[220px] max-h-[380px] border border-gray-400/60 rounded shadow">
+		<div className="md:w-[260px] w-[220px] max-h-[380px] border border-gray-400/60 rounded shadow relative">
+      {isThisCandidateVoted && (
+        <div className="absolute -top-1 -left-4 px-1.5 py-0.5 -rotate-25 bg-green-600 rounded text-sm flex items-center gap-1 [&_svg]:size-5">
+          <Sparkles />
+          Tu voto
+          </div>
+      )}
 			<div className="md:w-11/12 w-full h-auto mx-auto border-b border-gray-300">
 				<img alt={`Foto del candidate ${candidate.user.name}`} src={imageUrl} />
 			</div>
