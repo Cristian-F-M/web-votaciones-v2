@@ -58,7 +58,7 @@ export interface Vote {
 	id: string
 	userId: Pick<User, 'id'>
 	cantVotes: number
-	totalVote: number
+	totalVotes: number
 	startDate: string
 	endDate: string
 	finishVoteInfo: {
