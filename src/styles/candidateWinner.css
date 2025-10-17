@@ -1,0 +1,24 @@
+@reference 'tailwindcss';
+
+.card-stat {
+	@apply bg-white shadow-md border border-gray-300/60 p-4 w-full rounded-lg dark:bg-gray-800 dark:border-gray-700/80;
+}
+
+.card-stat.single--card-stat {
+	@apply flex gap-3 items-center;
+}
+
+.card-stat .card-stat--icon {
+	@apply [&_svg]:size-7 p-1.5 rounded;
+}
+.card-stat h4 {
+	@apply text-sm text-gray-700 dark:text-gray-300;
+}
+
+.card-stat data {
+	@apply text-xl font-bold leading-4;
+}
+
+.grid-stats div header {
+  @apply mb-2 font-semibold text-lg;
+}
