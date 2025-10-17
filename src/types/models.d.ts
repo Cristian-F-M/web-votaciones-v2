@@ -50,7 +50,7 @@ export interface Candidate {
 	userId: Pick<User, 'id'>
 	imageUrl: string
 	description: string
-	votes: string
+	votes: number
 	user: Pick<User, 'id' | 'name' | 'lastname' | 'document' | 'email'>
 }
 
@@ -62,6 +62,7 @@ export interface Vote {
 	startDate: string
 	endDate: string
 	finishVoteInfo: {
+		cantApprentices: number,
 		totalVotes: number
 		cantVotesWinner: number
 		candidates: Candidate[]
