@@ -1,4 +1,4 @@
-@reference 'tailwindcss';
+@reference '../app/globals.css';
 
 .card-stat {
 	@apply bg-white shadow-md border border-gray-300/60 p-4 w-full rounded-lg dark:bg-gray-800 dark:border-gray-700/80;
