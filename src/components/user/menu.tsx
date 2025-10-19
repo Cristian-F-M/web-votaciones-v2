@@ -75,11 +75,11 @@ export function UserSettings() {
 					</div>
 				</header>
 				<main className="px-1">
-					<a href="/user/profile">
+					<a href="/apprentice/profile">
 						<UserIcon />
 						<span>Perfil</span>
 					</a>
-					<a href="/user/settings">
+					<a href="/apprentice/settings">
 						<SettingsIcon />
 						<span>Configuración</span>
 					</a>
