@@ -9,7 +9,7 @@
 }
 
 .card-stat .card-stat--icon {
-	@apply [&_svg]:size-7 p-1.5 rounded;
+	@apply md:[&_svg]:size-7 p-1.5 rounded [&_svg]:size-6;
 }
 .card-stat h4 {
 	@apply text-sm text-gray-700 dark:text-gray-300;

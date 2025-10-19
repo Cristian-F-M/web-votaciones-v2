@@ -132,7 +132,7 @@ export function CandidateWinner() {
 
 	return (
 		<main className="w-10/12 mx-auto mt-10">
-			<div className="flex flex-row gap-4">
+			<div className="flex flex-row gap-4 flex-wrap lg:flex-nowrap">
 				<div className="card-stat single--card-stat">
 					<div className="card-stat--icon bg-blue-200 text-blue-600">
 						<Users />
@@ -164,7 +164,7 @@ export function CandidateWinner() {
 				</div>
 			</div>
 
-			<div className="grid-stats grid grid-cols-8 grid-rows-8 gap-4 mt-10">
+			<div className="grid-stats lg:grid grid-cols-8 grid-rows-8 gap-4 mt-10 flex flex-col">
 				<div className="col-span-5 row-span-7 card-stat !p-0">
 					<header className="bg-blue-100/80 px-2 py-4 text-center !text-2xl rounded-t-lg dark:bg-blue-950/70">
 						<h1>Resultados de la votación</h1>
@@ -223,7 +223,7 @@ export function CandidateWinner() {
             <span className="text-center text-sm text-gray-500 block w-fit mx-auto mt-6 dark:text-gray-400">No hay más candidatos</span>
 					</main>
 				</div>
-				<div className="col-span-5 row-span-1 col-start-1 row-start-8 flex items-center gap-2 card-stat">
+				<div className="col-span-5 row-span-1 col-start-1 row-start-8 flex items-center gap-2 card-stat order-4">
 					<div className="text-(--color)">
 						<Calendar />
 					</div>
