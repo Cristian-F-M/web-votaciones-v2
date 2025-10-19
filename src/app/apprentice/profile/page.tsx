@@ -32,10 +32,10 @@ export default function ApprenticeProfilePage() {
 	return (
 		<>
 			<link rel="stylesheet" href="/assets/css/form-ntw.css" />
-			<main className="w-9/12 mx-auto mt-7">
-				<form action="" className="size-full flex flex-row gap-6 justify-center">
-					<div className="w-4/12 h-full border border-gray-400/60 shadow rounded p-7">
-						<div className=" aspect-square w-full rounded">
+			<main className="w-11/12 lg:w-9/12 mx-auto mt-7">
+				<form className="size-full flex flex-col lg:flex-row lg:gap-6 justify-center shadow lg:shadow-none mb-6">
+					<div className="w-full lg:w-4/12 h-full border border-gray-400/60 lg:shadow rounded p-7 lg:border-b rounded-b-none lg:rounded-b">
+						<div className="aspect-square w-11/12 h-auto mx-auto lg:w-full rounded">
 							<a
 								className="relative"
 								href={profileImageUrl || apprenticeImageUrl}
@@ -44,7 +44,7 @@ export default function ApprenticeProfilePage() {
 							>
 								{!confirmedImage && profileImageUrl && (
 									<div
-										className="absolute top-1 right-1 bg-red-600/70 p-1 rounded [&_svg]:size-5"
+										className="absolute top-1 right-1 bg-red-600/60 backdrop-blur z-50 p-1 rounded [&_svg]:size-5"
 										onClick={(event) => {
 											event.preventDefault()
 											event.stopPropagation()
@@ -55,13 +55,13 @@ export default function ApprenticeProfilePage() {
 									</div>
 								)}
 								<img
-									className="size-full object-cover rounded border-2 border-(--color)/70"
+									className="size-full object-cover rounded border-2 border-(--color)/70 mx-auto"
 									src={profileImageUrl || apprenticeImageUrl}
 									alt={`Foto de el usuario ${user?.name}`}
 								/>
 							</a>
 						</div>
-						<div className="mt-5 h-10">
+						<div className="w-11/12 mx-auto lg:w-full mt-5 h-10">
 							{(!profileImageUrl || (profileImageUrl && confirmedImage)) && (
 								<UploadFile
 									id="profile-image"
@@ -96,7 +96,7 @@ export default function ApprenticeProfilePage() {
 							)}
 						</div>
 					</div>
-					<div className="grid grid-cols-2 space-y-10 gap-x-7 w-8/12 border border-gray-400/60 shadow rounded px-9 py-10">
+					<div className="flex flex-col lg:grid grid-cols-2  space-y-10 gap-x-7 w-full lg:w-8/12 border border-gray-400/60 border-t-0 lg:border-t rounded-t-none lg:rounded-t lg:shadow rounded px-9 py-10">
 						<Input
 							label="Nombre"
 							name="name"
@@ -157,7 +157,7 @@ export default function ApprenticeProfilePage() {
 							selectedItem={user?.roleUser.code}
 						/>
 						<Button
-							className="col-span-2 mb-0"
+							className="col-span-2 mb-0 h-10"
 							showLoader={false}
 							onClick={() => {}}
 							type="submit"
