@@ -1,88 +1,105 @@
 'use client'
 import { useUser } from '@/states/useUser'
 import '@/styles/apprentice.css'
-import Clock from '@/icons/Clock'
-import { useRemainingTime } from '@/hooks/useRemainingTime'
-import { useEffect, useMemo, useState } from 'react'
-import { SingleTimeCard } from '@/components/SingleTimeCard'
-import AlertIcon from '@/icons/Alert'
-import type { Candidate } from '@/types/models'
+import { Vote } from '@/components/apprentice/vote'
+import { useCallback, useEffect, useState } from 'react'
 import { doFetch } from '@/utils/fetch'
-import type { GetCandidatesResponse } from '@/types/api'
-import { CandidateCard } from '@/components/candidate/CandidateCard'
-import { CandidateCardFallback } from '@/components/candidate/CandidateCardFallback'
 import { enqueueSnackbar } from 'notistack'
+import type { GetVoteResponse } from '@/types/api'
+import { useVote } from '@/states/useVote'
+import { LoaderVote } from '@/components/apprentice/LoaderVote'
+import { NoVote } from '@/components/apprentice/NoVote'
+import { LoadingWinner } from '@/components/apprentice/LoadingWinner'
+import { CandidateWinner } from '@/components/apprentice/CandidateWinner'
 
 export default function IndexPage() {
+	const [loading, setLoading] = useState(true)
+	const [isFinished, setIsFinished] = useState(false)
+	const [timeIsUp, setTimeIsUp] = useState(false)
 	const user = useUser((state) => state.user)
-	const targetDate = useMemo(() => new Date(1755710169727), [])
-	const { remainingTime } = useRemainingTime(targetDate)
-	const [candidates, setCandidates] = useState<Candidate[] | null>(null)
+	const setVote = useVote((state) => state.setVote)
+	const vote = useVote((state) => state.vote)
 
-	useEffect(() => {
-		async function getCandidates() {
-			const res = await doFetch<GetCandidatesResponse>({
-				url: '/candidate/all'
+	const getVote = useCallback(async () => {
+		const res = await doFetch<GetVoteResponse>({
+			url: '/vote'
+		})
+
+		setLoading(false)
+
+		if (!res.ok) {
+			enqueueSnackbar(res.message, {
+				variant: 'error',
+				autoHideDuration: 3000,
+				preventDuplicate: true
 			})
-
-			if (!res.ok) {
-				enqueueSnackbar(res.message, {
-					variant: 'error',
-					autoHideDuration: 3000,
-					preventDuplicate: true
-				})
-				return
-			}
-
-			setCandidates(res.candidates)
+			return
 		}
 
-		getCandidates()
-	}, [])
+		const finishVoteInfo = JSON.parse(res.lastVote.finishVoteInfo)
+
+		setVote({ ...res.lastVote, finishVoteInfo })
+	}, [setVote])
+
+	useEffect(() => {
+		getVote()
+	}, [getVote])
+
+	useEffect(() => {
+		if (!vote) return
+		const startDate = new Date(vote.startDate)
+		const endDate = new Date(vote.endDate)
+
+		const now = new Date()
+
+		setIsFinished(vote.isFinished)
+
+		if (now < startDate) {
+			return
+		}
+
+		if (now > endDate) {
+			setTimeIsUp(true)
+			return
+		}
+	}, [vote])
+
+	const loadingVote = !vote && loading
+	const loadingWinner = vote && timeIsUp && !isFinished
+	const voteNotStarted = vote && !timeIsUp
+	const voteFinished = vote && timeIsUp && isFinished
+
+	useEffect(() => {
+		const currentYear = new Date().getFullYear()
+
+		let newTitle = 'Votaciones - Vota en línea por tu candidato preferido en CGAO'
+    
+		if (loadingVote) newTitle = `Votaciones - Cargando votaciones para el año ${currentYear}`
+		if (loadingWinner)
+			newTitle = `Votaciones - Cargando resultados para conocer el ganador del año ${currentYear}`
+		if (voteNotStarted)
+			newTitle = 'Votaciones - Las votaciones aún no han iniciado, por favor vuelva pronto'
+		if (voteFinished)
+			newTitle = `Votaciones - Mira los resultados de la votación del año ${currentYear}`
+
+		document.title = newTitle
+	}, [loadingVote, loadingWinner, voteNotStarted, voteFinished])
 
 	return (
 		<>
-			<main className="w-full mt-10 mb-14">
-				<h1 className="w-fit mx-auto text-4xl">
+			<main className="md:w-full mt-10 mb-14 w-11/12 mx-auto">
+				<h1 className="w-fit mx-auto md:text-4xl text-2xl text-center">
 					Votaciones para representante {new Date().getFullYear()}
 				</h1>
-				<span className="block w-fit mx-auto text-gray-600">
+				<span className="block w-fit mx-auto text-gray-600 md:text-base text-sm text-center">
 					Participa en el proceso democrático y elige a tu candidato preferido
 				</span>
-				<div className="remaining-time w-10/12 mx-auto mt-7">
-					<h3 className="flex flex-row gap-1 items-center w-fit mx-auto text-xl">
-						<Clock className="text-(--color) size-6" /> Tiempo restante para
-						votar
-					</h3>
-					<div className="mx-auto w-fit mt-2 flex flex-row gap-1 items-center justify-center border dark:border-(--color)/50 border-(--color) px-14 py-4 rounded">
-						<SingleTimeCard label="días" value={remainingTime.days} />
-						<span className="time-separator">:</span>
-						<SingleTimeCard label="horas" value={remainingTime.hours} />
-						<span className="time-separator">:</span>
-						<SingleTimeCard label="min" value={remainingTime.minutes} />
-						<span className="time-separator">:</span>
-						<SingleTimeCard label="seg" value={remainingTime.seconds} />
-					</div>
-				</div>
 
-				<div className="[&_svg]:size-5 dark:[&_svg]:text-yellow-400 [&_svg]:text-red-700 w-fit mx-auto mt-10 flex flex-row gap-1.5 items-center ">
-					<AlertIcon />
-					<span className="block">Solo puedes votar una vez</span>
-				</div>
-
-				<div className="candidates w-10/12 mx-auto mt-6 flex flex-row gap-6 flex-wrap justify-center">
-					{candidates &&
-						candidates.length > 0 &&
-						candidates.map((candidate) => (
-							<CandidateCard key={candidate.id} candidate={candidate} />
-						))}
-
-					{(!candidates || candidates.length <= 0) &&
-						Array.from({ length: 4 }).map((_, index) => (
-							// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-							<CandidateCardFallback key={index} />
-						))}
-				</div>
+				{loadingVote && <LoaderVote />}
+				{!loadingVote && !vote && <NoVote />}
+				{voteNotStarted && <Vote />}
+				{loadingWinner && <LoadingWinner />}
+				{voteFinished && <CandidateWinner />}
 			</main>
 		</>
 	)
