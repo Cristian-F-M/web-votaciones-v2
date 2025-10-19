@@ -131,7 +131,7 @@ export function CandidateWinner() {
 		((candidateWinner.votes ?? 0) / (vote?.totalVotes ?? 0)) * 100
 
 	return (
-		<main className="w-10/12 mx-auto mt-10">
+		<main className="w-full md:w-10/12 mx-auto mt-10">
 			<div className="flex flex-row gap-4 flex-wrap lg:flex-nowrap">
 				<div className="card-stat single--card-stat">
 					<div className="card-stat--icon bg-blue-200 text-blue-600">
@@ -169,9 +169,10 @@ export function CandidateWinner() {
 					<header className="bg-blue-100/80 px-2 py-4 text-center !text-2xl rounded-t-lg dark:bg-blue-950/70">
 						<h1>Resultados de la votación</h1>
 					</header>
-					<main className="px-2 my-8 flex flex-col items-center gap-2 w-10/12 mx-auto">
-						<div className="candidate-image aspect-square w-5/12 border border-gray-300/70 rounded dark:border-gray-600/80">
+					<main className="px-2 my-8 flex flex-col items-center gap-2 w-full md:w-10/12 mx-auto">
+						<div className="candidate-image aspect-square w-9/12 md:w-5/12 border border-gray-300/70 rounded dark:border-gray-600/80">
 							<img
+								className="size-full object-cover"
 								src={`${API_URL}/candidate/image/${candidateWinner.id}`}
 								alt={`Foto de el candidato ganador ${candidateWinner.user.name}`}
 							/>
@@ -191,9 +192,9 @@ export function CandidateWinner() {
 									className="h-full rounded bg-(--color)"
 								/>
 							</div>
-							<div className="text-gray-500 flex flex-col items-center leading-4.5 dark:text-gray-400">
+							<div className="text-gray-500 flex flex-col items-center leading-4.5 dark:text-gray-400 text-sm md:text-base">
 								<p>{votesPercent}% de los votos totales</p>
-								<p className="text-sm">
+								<p className="text-xs md:text-sm">
 									{candidateWinner.votes ?? 0}{' '}
 									{candidateWinner.votes === 1 ? 'voto' : 'votos'}
 								</p>
@@ -209,8 +210,7 @@ export function CandidateWinner() {
 						<CandidateSingleCard candidate={candidateWinner} isWinner />
 
 						{candidates.map((candidate) => {
-							if (candidateWinner.id === candidate.id)
-								return null
+							if (candidateWinner.id === candidate.id) return null
 							return (
 								<CandidateSingleCard
 									candidate={candidate}
@@ -220,7 +220,9 @@ export function CandidateWinner() {
 							)
 						})}
 
-            <span className="text-center text-sm text-gray-500 block w-fit mx-auto mt-6 dark:text-gray-400">No hay más candidatos</span>
+						<span className="text-center text-sm text-gray-500 block w-fit mx-auto mt-6 dark:text-gray-400">
+							No hay más candidatos
+						</span>
 					</main>
 				</div>
 				<div className="col-span-5 row-span-1 col-start-1 row-start-8 flex items-center gap-2 card-stat order-4">
@@ -228,15 +230,17 @@ export function CandidateWinner() {
 						<Calendar />
 					</div>
 					<div>
-						<h3 className="text-gray-700 text-sm leading-3 dark:text-gray-400">
+						<h3 className="text-gray-700 text-xs md:text-sm leading-3 dark:text-gray-400">
 							El aprendiz será representante hasta
 						</h3>
-						<p className="font-semibold text-lg dark:text-gray-200">{endWinnerDateString}</p>
+						<p className="font-semibold text-lg dark:text-gray-200">
+							{endWinnerDateString}
+						</p>
 					</div>
 				</div>
 				<div className="col-span-3 row-span-2 col-start-6 row-start-7 card-stat">
 					<header>Información de la votación</header>
-					<main className="text-sm [&_li]:flex [&_li]:items-center [&_li]:justify-between [&_li_span:first-child]:text-gray-600 [&_li_span:nth-child(2)]:font-semibold dark:[&_li_span:first-child]:text-gray-400">
+					<main className="text-xs md:text-sm [&_li]:flex [&_li]:items-center [&_li]:justify-between [&_li_span:first-child]:text-gray-600 [&_li_span:nth-child(2)]:font-semibold dark:[&_li_span:first-child]:text-gray-400">
 						<ul className="space-y-1">
 							<li>
 								<span>Fecha de finalización</span>
