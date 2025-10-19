@@ -61,7 +61,7 @@ export function UserSettings() {
 		<div className="user-avatar relative">
 			<UserAvatar onClick={handleClickShowUserMenu} />
 
-			<div className="user-menu hidden w-64 absolute bg-white border border-gray-400/30 rounded-lg py-2 top-10 right-0 [&_svg]:size-4 dark:bg-slate-900">
+			<div className="user-menu hidden w-64 absolute bg-white border border-gray-400/30 rounded-lg py-2 top-10 right-0 [&_svg]:size-4 dark:bg-slate-900 z-1000">
 				<header className="flex flex-row items-center gap-2 [&_span]:leading-4 mb-1.5 border-b border-gray-400/30 p-1.5">
 					<UserAvatar className='cursor-default' />
 					<div className="flex flex-col">
