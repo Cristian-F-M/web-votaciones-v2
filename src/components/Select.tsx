@@ -72,7 +72,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 				>
 					<button className="relative" type="button" tabIndex={-1}>
 						<selectedcontent />
-						<span className="picker-icon z-50" />
+						<span className={`picker-icon z-50 ${restPropsSelect.disabled ? 'opacity-0' : ''}`} />
 						<label
 							id={`${id}-label`}
 							htmlFor={id}
