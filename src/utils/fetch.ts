@@ -31,12 +31,13 @@ export async function doFetch<T>({
 		const contentType = response.headers.get('Content-Type')
 		const isJson = contentType?.includes('application/json')
 
-		const responseData = isJson ? await response.json() : null
+		const responseData = isJson ? await response.json() : {}
 
-		if (!response.ok || !responseData)
+		if (!response.ok)
 			return {
 				ok: false,
-				message: responseData?.message || 'Error desconocido'
+				message: responseData?.message || 'Error desconocido',
+				...responseData
 			}
 
 		return responseData
