@@ -5,7 +5,15 @@ import { Select } from '@/components/Select'
 import { UploadFile } from '@/components/UploadFile'
 import X from '@/icons/X'
 import { useUser } from '@/states/useUser'
-import { useCallback, useState } from 'react'
+import type { UpdateProfileResponse } from '@/types/api'
+import type {
+	UpdateProfileErrors,
+	UpdateProfileFormElements
+} from '@/types/forms'
+import { doFetch } from '@/utils/fetch'
+import { getErrorEntries, getProcessedErrors } from '@/utils/form'
+import { enqueueSnackbar } from 'notistack'
+import { useCallback, useState, Activity, useRef, useEffect } from 'react'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -13,6 +21,8 @@ export default function ApprenticeProfilePage() {
 	const { user } = useUser((state) => state)
 	const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null)
 	const [confirmedImage, setConfirmedImage] = useState(false)
+	const [updatingProfile, setUpdatingProfile] = useState(false)
+	const [errors, setErrors] = useState<Partial<UpdateProfileErrors>>({})
 
 	const handleChangeProfileImage = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,13 +37,105 @@ export default function ApprenticeProfilePage() {
 		[]
 	)
 
+	const handleInputChange = useCallback(
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			const key = event.target.name as keyof UpdateProfileErrors
+
+			setErrors((prev) => ({ ...prev, [key]: null }))
+		},
+		[]
+	)
+
+	const handleUpdateProfile = useCallback(
+		async (event: React.SyntheticEvent<HTMLFormElement>) => {
+			event.preventDefault()
+
+			if (updatingProfile)
+				return enqueueSnackbar('Espera un momento', {
+					variant: 'info',
+					preventDuplicate: true,
+					autoHideDuration: 3000
+				})
+
+			if (profileImageUrl && !confirmedImage) {
+				return enqueueSnackbar('Debes confirmar la imagen', {
+					variant: 'warning',
+					preventDuplicate: true,
+					autoHideDuration: 3000
+				})
+			}
+
+			const target = event.currentTarget as HTMLFormElement
+
+			const { name, lastname, phone, email } =
+				target.elements as UpdateProfileFormElements
+
+			const locallyErrors: Partial<UpdateProfileErrors> = {}
+
+			for (const i of [name, lastname, phone, email]) {
+				const key = i.name as keyof UpdateProfileErrors
+				if (i.value.trim() === '') locallyErrors[key] = 'Campo requerido'
+			}
+
+			setErrors((prev) => ({ ...prev, ...locallyErrors }))
+
+			const locallyErrorsEntries = getErrorEntries(locallyErrors)
+			const errorsEntries = getErrorEntries(errors)
+
+			if (locallyErrorsEntries.length > 0 || errorsEntries.length > 0) return
+
+			setUpdatingProfile(true)
+
+			const formData = new FormData(target)
+
+			if (!confirmedImage) formData.delete('image')
+
+			const data = await doFetch<UpdateProfileResponse>({
+				url: '/user/profile',
+				method: 'PUT',
+				body: formData
+			})
+
+			setUpdatingProfile(false)
+
+			if (!data.ok) {
+				console.log({ data })
+
+				if ('errors' in data) {
+					const errors = getProcessedErrors(data.errors)
+					setErrors(errors)
+				}
+
+				if ('message' in data)
+					enqueueSnackbar(data.message, {
+						variant: 'error',
+						autoHideDuration: 3000,
+						preventDuplicate: true
+					})
+
+				return
+			}
+
+			enqueueSnackbar(data.message, {
+				variant: 'success',
+				autoHideDuration: 3000,
+				preventDuplicate: true
+			})
+		},
+		[updatingProfile, errors, profileImageUrl, confirmedImage]
+	)
+
 	const apprenticeImageUrl = `${API_URL}/user/image/${user?.id}`
+	const showUploadFile = !profileImageUrl || (profileImageUrl && confirmedImage)
 
 	return (
 		<>
 			<link rel="stylesheet" href="/assets/css/form-ntw.css" />
 			<main className="w-11/12 lg:w-9/12 mx-auto mt-7">
-				<form className="size-full flex flex-col lg:flex-row lg:gap-6 justify-center shadow lg:shadow-none mb-6">
+				<form
+					className="size-full flex flex-col lg:flex-row lg:gap-6 justify-center shadow lg:shadow-none mb-6"
+					onSubmit={handleUpdateProfile}
+				>
 					<div className="w-full lg:w-4/12 h-full border border-gray-400/60 lg:shadow rounded p-7 lg:border-b rounded-b-none lg:rounded-b">
 						<div className="aspect-square w-11/12 h-auto mx-auto lg:w-full rounded">
 							<a
@@ -65,7 +167,7 @@ export default function ApprenticeProfilePage() {
 							<Activity mode={showUploadFile ? 'visible' : 'hidden'}>
 								<UploadFile
 									id="profile-image"
-									name="profile-image"
+									name="image"
 									text="Cambiar foto"
 									inputProps={{ accept: 'image/*' }}
 									onChange={handleChangeProfileImage}
@@ -102,16 +204,18 @@ export default function ApprenticeProfilePage() {
 							name="name"
 							id="name"
 							type="text"
-							error={null}
-							value={user?.name}
+							error={errors.name}
+							defaultValue={user?.name}
+							onChange={handleInputChange}
 						/>
 						<Input
 							label="Apellido"
 							name="lastname"
 							id="lastname"
 							type="text"
-							error={null}
-							value={user?.lastname}
+							error={errors.lastname}
+							defaultValue={user?.lastname}
+							onChange={handleInputChange}
 						/>
 						<Select
 							error={null}
@@ -129,23 +233,26 @@ export default function ApprenticeProfilePage() {
 							id="document"
 							type="number"
 							error={null}
-							value={user?.document}
+							defaultValue={user?.document}
+							disabled
 						/>
 						<Input
 							label="Telefono"
 							name="phone"
 							id="phone"
 							type="number"
-							error={null}
-							value={user?.phone}
+							error={errors.phone}
+							defaultValue={user?.phone}
+							onChange={handleInputChange}
 						/>
 						<Input
 							label="Correo"
 							name="email"
 							id="email"
 							type="email"
-							error={null}
-							value={user?.email}
+							error={errors.email}
+							defaultValue={user?.email}
+							onChange={handleInputChange}
 						/>
 						<Select
 							disabled
@@ -157,8 +264,9 @@ export default function ApprenticeProfilePage() {
 							selectedItem={user?.roleUser.code}
 						/>
 						<Button
+							loading={updatingProfile}
 							className="col-span-2 mb-0 h-10"
-							showLoader={false}
+							showLoader={true}
 							onClick={() => {}}
 							type="submit"
 						>
