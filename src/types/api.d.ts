@@ -111,3 +111,12 @@ export type VoteResponse = FetchError | {
 	ok: true,
   message: string
 } 
+
+export type UpdateProfileResponse = FetchError | {
+  ok: true
+  message: string
+} | 
+{ 
+  ok: false 
+  errors: ApiErrors
+}
