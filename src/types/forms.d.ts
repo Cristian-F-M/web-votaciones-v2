@@ -38,3 +38,17 @@ export interface RegisterErrors {
 	password?: string | null
 	confirmPassword?: string | null
 }
+
+export interface UpdateProfileFormElements extends HTMLFormControlsCollection {
+	name: HTMLInputElement
+	lastname: HTMLInputElement
+	phone: HTMLInputElement
+	email: HTMLInputElement
+}
+
+export interface UpdateProfileErrors {
+	name: string | null
+	lastname: string | null
+	phone: string | null
+	email: string | null
+}
