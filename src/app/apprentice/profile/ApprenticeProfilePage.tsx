@@ -62,7 +62,7 @@ export default function ApprenticeProfilePage() {
 							</a>
 						</div>
 						<div className="w-11/12 mx-auto lg:w-full mt-5 h-10">
-							{(!profileImageUrl || (profileImageUrl && confirmedImage)) && (
+							<Activity mode={showUploadFile ? 'visible' : 'hidden'}>
 								<UploadFile
 									id="profile-image"
 									name="profile-image"
@@ -70,7 +70,7 @@ export default function ApprenticeProfilePage() {
 									inputProps={{ accept: 'image/*' }}
 									onChange={handleChangeProfileImage}
 								/>
-							)}
+							</Activity>
 
 							{!confirmedImage && profileImageUrl && (
 								<div className="flex flex-row gap-3 text-sm [&_button]:mb-0 size-full">
