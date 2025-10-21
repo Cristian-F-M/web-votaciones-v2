@@ -16,6 +16,7 @@ export async function doFetch<T>({
 		const isBodyFormData = body && body instanceof FormData
 
 		if (method !== 'GET' && !isBodyFormData) defaultBody = JSON.stringify(body)
+		if (isBodyFormData) defaultBody = body
 		if (!isBodyFormData) defaultHeaders.set('Content-Type', 'application/json')
 
 		const options: RequestInit = {
