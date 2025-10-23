@@ -2,13 +2,17 @@ import { useCallback } from 'react'
 import { SingleStep } from './SingleStep'
 import '@/styles/stepIndicator.css'
 
-export function StepIndicator({
-	steps,
-	currentStep
-}: {
-	steps: string[]
+type StepIndicatorProps = {
 	currentStep: number
-}) {
+} & ({ steps: string[] } | { cantSteps: number })
+
+export function StepIndicator({ currentStep, ...props }: StepIndicatorProps) {
+	const thereIsSteps = 'steps' in props
+
+	const steps = thereIsSteps
+		? props.steps
+		: Array.from({ length: props.cantSteps }, (_, i) => `Paso ${i + 1}`)
+
 	const cantSteps = steps.length
 	const value = 100 / cantSteps
 
@@ -36,12 +40,12 @@ export function StepIndicator({
 						/>
 					</div>
 				)}
-				{steps.map((text, index) => (
+				{steps.map((stepText, index) => (
 					<SingleStep
 						// biome-ignore lint/suspicious/noArrayIndexKey: Just beacuse
 						key={index}
 						step={index}
-						text={text}
+						text={stepText}
 						currentStep={currentStep}
 					/>
 				))}
