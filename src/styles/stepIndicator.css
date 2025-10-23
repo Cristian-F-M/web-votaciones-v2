@@ -1,0 +1,34 @@
+@reference "../app/globals.css";
+
+.step--circle {
+	@apply size-8 rounded-full transition-colors duration-400 border border-(--color) z-10 text-sm flex justify-center items-center font-semibold relative text-gray-800 bg-white;
+}
+
+.step--indicator[data-active="true"] .step--circle {
+	@apply bg-(--color) text-white;
+}
+
+.step--circle.pulse-animation {
+	@apply size-10 absolute top-1/2 left-1/2 -translate-1/2 bg-(--color)/50 border-none z-5;
+	animation: pulseScale 1.3s infinite, pulseOpacity 1.3s infinite;
+}
+
+/* Pulse Animation - Escala */
+@keyframes pulseScale {
+	0% {
+		transform: scale(0.8);
+	}
+	100% {
+		transform: scale(1.6);
+	}
+}
+
+/* Pulse Animation - Opacidad */
+@keyframes pulseOpacity {
+	0% {
+		opacity: 0.8;
+	}
+	100% {
+		opacity: 0;
+	}
+}
