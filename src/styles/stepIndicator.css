@@ -1,7 +1,7 @@
 @reference "../app/globals.css";
 
 .step--circle {
-	@apply size-8 rounded-full transition-colors duration-400 border border-(--color) z-10 text-sm flex justify-center items-center font-semibold relative text-gray-800 bg-white;
+	@apply size-8 rounded-full transition-colors duration-400 border border-(--color) z-10 text-sm flex justify-center items-center font-semibold relative text-gray-800 bg-white dark:bg-gray-800 dark:text-gray-300;
 }
 
 .step--indicator[data-active="true"] .step--circle {
