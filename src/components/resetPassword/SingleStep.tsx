@@ -1,3 +1,5 @@
+import Check from "@/icons/Check"
+
 export function SingleStep({
 	text,
 	currentStep,
@@ -9,11 +11,12 @@ export function SingleStep({
 }) {
 	const isActive = currentStep >= step
 	const isCurrentStep = currentStep === step
+  const isCompleted = currentStep > step
 
 	return (
 		<div className="single-step flex flex-col gap-y-1 justify-center items-center px-2 bg-white dark:bg-gray-800">
 			<div className="step--indicator relative" data-active={isActive}>
-				<div className="step--circle">{step}</div>
+				<div className="step--circle">{isCompleted ? <Check /> : step }</div>
 				{isCurrentStep && (
 					<>
 						<div className="step--circle pulse-animation" />
