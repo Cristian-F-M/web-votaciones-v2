@@ -28,6 +28,20 @@ html {
   }
 }
 
+@layer components {
+	.button {
+		@apply w-full px-3 md:py-1.5 py-1 rounded cursor-pointer disabled:text-white/90 flex flex-row gap-2 items-center justify-center not-disabled:active:scale-95 transition-all mb-3 disabled:cursor-not-allowed;
+	}
+
+	.primary-button {
+		@apply bg-(--color) hover:bg-(--color)/80 disabled:bg-(--color)/70;
+	}
+
+	.secondary-button {
+		@apply bg-transparent border border-gray-400 hover:bg-gray-200 dark:bg-gray-500/30 dark:border-gray-500/40 dark:hover:bg-gray-500/50;
+	}
+}
+
 * {
   scrollbar-gutter: stable;
 }
