@@ -1,7 +1,7 @@
 @reference "../app/globals.css";
 
 .step--circle {
-	@apply size-8 rounded-full transition-colors duration-400 border border-(--color) z-10 text-sm flex justify-center items-center font-semibold relative text-gray-800 bg-white dark:bg-gray-800 dark:text-gray-300 [&_svg]:size-5 [&_svg]:stroke-3;
+	@apply size-7 md:size-8 rounded-full transition-colors duration-400 border border-(--color) z-10 text-xs md:text-sm flex justify-center items-center font-semibold relative text-gray-800 bg-white dark:bg-gray-800 dark:text-gray-300 [&_svg]:size-4 [&_svg]:stroke-3 md:[&_svg]:size-5;
 }
 
 .step--indicator[data-active="true"] .step--circle {
@@ -9,7 +9,7 @@
 }
 
 .step--circle.pulse-animation {
-	@apply size-10 absolute top-1/2 left-1/2 -translate-1/2 bg-(--color)/50 border-none z-5;
+	@apply size-8 md:size-10 absolute top-1/2 left-1/2 -translate-1/2 bg-(--color)/50 border-none z-5;
 	animation: pulseScale 1.3s infinite, pulseOpacity 1.3s infinite;
 }
 
