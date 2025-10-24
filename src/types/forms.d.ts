@@ -52,3 +52,13 @@ export interface UpdateProfileErrors {
 	phone: string | null
 	email: string | null
 }
+
+export interface FindUserFormElements extends HTMLFormControlsCollection {
+	typeDocumentCode: HTMLSelectElement
+	document: HTMLInputElement
+}
+
+export interface FindUserErrors {
+	typeDocumentCode: string | null
+	document: string | null
+}

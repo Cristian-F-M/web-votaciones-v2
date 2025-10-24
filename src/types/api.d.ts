@@ -120,3 +120,18 @@ export type UpdateProfileResponse = FetchError | {
   ok: false 
   errors: ApiErrors
 }
+
+export interface FindUserUser {
+  email: string
+  id: string
+  timeNewCode: string
+}
+
+
+export type FindUserResponse = FetchError | {
+  ok: true
+  user: FindUserUser
+} | {
+  ok: false
+  errors: ApiErrors
+}
