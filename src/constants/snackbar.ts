@@ -1,4 +1,4 @@
-import { enqueueSnackbar, type OptionsObject } from 'notistack'
+import type { OptionsObject } from 'notistack'
 
 export const snackbarOptions: OptionsObject = {
 	variant: 'info',
