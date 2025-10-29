@@ -9,7 +9,7 @@ import type {
 	GetTypeDocumentsResponse
 } from '@/types/api'
 import type { TypeDocument } from '@/types/models'
-import { enqueueSnackbar } from 'notistack'
+import { snackbar } from '@/utils/dom'
 import type { FindUserErrors, FindUserFormElements } from '@/types/forms'
 import { getErrorEntries, getProcessedErrors } from '@/utils/form'
 
@@ -37,7 +37,7 @@ export function FindUser({ onComplete }: StepFindUserProps) {
 				url: '/typeDocument'
 			})
 
-			if (!data.ok) return enqueueSnackbar(data.message, { variant: 'error' })
+			if (!data.ok) return snackbar({ message: data.message, variant: 'error' })
 
 			setTypesDocuments(data.typesDocuments)
 		}
@@ -83,11 +83,7 @@ export function FindUser({ onComplete }: StepFindUserProps) {
 			setFindingUser(false)
 
 			if (!data.ok) {
-				if ('message' in data)
-					enqueueSnackbar(data.message, {
-						variant: 'error',
-						preventDuplicate: true
-					})
+				if ('message' in data) snackbar({ message: data.message, variant: 'error', })
 
 				if ('errors' in data) {
 					const errors = getProcessedErrors(data.errors)

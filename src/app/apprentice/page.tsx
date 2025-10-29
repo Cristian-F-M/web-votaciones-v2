@@ -4,7 +4,7 @@ import '@/styles/apprentice.css'
 import { Vote } from '@/components/apprentice/vote'
 import { useCallback, useEffect, useState } from 'react'
 import { doFetch } from '@/utils/fetch'
-import { enqueueSnackbar } from 'notistack'
+import { snackbar } from '@/utils/dom'
 import type { GetVoteResponse } from '@/types/api'
 import { useVote } from '@/states/useVote'
 import { LoaderVote } from '@/components/apprentice/LoaderVote'
@@ -28,11 +28,7 @@ export default function IndexPage() {
 		setLoading(false)
 
 		if (!res.ok) {
-			enqueueSnackbar(res.message, {
-				variant: 'error',
-				autoHideDuration: 3000,
-				preventDuplicate: true
-			})
+			snackbar({ message: res.message, variant: 'error' })
 			return
 		}
 

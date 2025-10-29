@@ -2,7 +2,6 @@
 import type { UserHomeResponse } from '@/types/api'
 import { doFetch } from '@/utils/fetch'
 import { useRouter } from 'next/navigation'
-import { enqueueSnackbar } from 'notistack'
 import { useCallback, useEffect } from 'react'
 import { useUser } from '@/states/useUser'
 import { ValidatePermission } from '@/utils/ValidatePermission'

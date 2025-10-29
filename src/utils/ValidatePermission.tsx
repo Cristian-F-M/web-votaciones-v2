@@ -4,7 +4,7 @@ import { doFetch } from './fetch'
 import type { ValidatePermissionsResponse } from '@/types/api'
 import { useEffect, useState } from 'react'
 import { Loader } from '@/components/Loader'
-import { enqueueSnackbar } from 'notistack'
+import { snackbar } from '@/utils/dom'
 import { Forbidden } from '@/components/user/Forbidden'
 
 type AllowRoles =
@@ -34,10 +34,7 @@ export function ValidatePermission({
 			setIsLoading(false)
 
 			if (!res.ok) {
-				enqueueSnackbar(res.message, {
-					variant: 'error',
-					autoHideDuration: 3000
-				})
+				snackbar({ message: res.message, variant: 'error' })
 				if ('urlRedirect' in res) {
 					router.replace(res.urlRedirect)
 					return setNeedLogin(true)

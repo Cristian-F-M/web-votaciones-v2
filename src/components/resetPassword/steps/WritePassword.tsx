@@ -6,7 +6,7 @@ import type { WritePasswordErrors, WritePasswordElements } from '@/types/forms'
 import { getErrorEntries, getProcessedErrors } from '@/utils/form'
 import { doFetch } from '@/utils/fetch'
 import type { FindUserUser, UpdatePasswordResponse } from '@/types/api'
-import { enqueueSnackbar } from 'notistack'
+import { snackbar } from '@/utils/dom'
 import { useRouter } from 'next/navigation'
 
 interface WritePasswordStepProps extends Omit<StepProps, 'onComplete'> {
@@ -65,19 +65,11 @@ export function WritePassword({ user, code }: WritePasswordStepProps) {
 					setErrors(newErrors)
 				}
 
-				enqueueSnackbar(data.message, {
-					variant: 'error',
-					autoHideDuration: 2000,
-					preventDuplicate: true
-				})
+				snackbar({ message: data.message, variant: 'error' })
 				return
 			}
 
-			enqueueSnackbar('Contraseña restablecida', {
-				variant: 'success',
-				autoHideDuration: 2000,
-				preventDuplicate: true
-			})
+			snackbar({ message: 'Contraseña restablecida', variant: 'success' })
 
 			if ('urlReturn' in data && data.urlReturn)
 				return router.push(data.urlReturn)

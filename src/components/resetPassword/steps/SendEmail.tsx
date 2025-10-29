@@ -3,7 +3,7 @@ import type { StepProps } from './FindUser'
 import Alert from '@/icons/Alert'
 import type { FindUserUser, SendPasswordResetCodeResponse } from '@/types/api'
 import { useCallback, useEffect, useState } from 'react'
-import { enqueueSnackbar } from 'notistack'
+import { snackbar } from '@/utils/dom'
 import { doFetch } from '@/utils/fetch'
 import { getStringTime } from '@/utils/dom'
 
@@ -19,22 +19,14 @@ export function SendEmail({ onComplete, onCancel, user }: StepSendEmailProps) {
 
 	const handleSendEmail = useCallback(async () => {
 		if (seconds > 0) {
-			return enqueueSnackbar(
-				`Esperando para enviar correo (${getStringTime(seconds)})`,
-				{
-					variant: 'warning',
-					autoHideDuration: 2000,
-					preventDuplicate: true
-				}
-			)
+			return snackbar({
+				message: `Esperando para enviar correo (${getStringTime(seconds)})`,
+				variant: 'warning'
+			})
 		}
 
 		if (sendingEmail || !user)
-			return enqueueSnackbar('Enviando correo', {
-				variant: 'warning',
-				autoHideDuration: 2000,
-				preventDuplicate: true
-			})
+			return snackbar({ message: 'Enviando correo', variant: 'warning', })
 
 		setSendingEmail(true)
 		const data = await doFetch<SendPasswordResetCodeResponse>({
@@ -44,11 +36,7 @@ export function SendEmail({ onComplete, onCancel, user }: StepSendEmailProps) {
 		})
 
 		if (!data.ok) {
-			enqueueSnackbar(data.message, {
-				variant: 'error',
-				autoHideDuration: 2000,
-				preventDuplicate: true
-			})
+			snackbar({ message: data.message, variant: 'error' })
 
 			// mostrar el tiempo restante
 			if ('timeNewCode' in data && data.timeNewCode) {

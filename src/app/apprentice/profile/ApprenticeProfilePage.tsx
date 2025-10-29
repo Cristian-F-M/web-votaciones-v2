@@ -12,7 +12,7 @@ import type {
 } from '@/types/forms'
 import { doFetch } from '@/utils/fetch'
 import { getErrorEntries, getProcessedErrors } from '@/utils/form'
-import { enqueueSnackbar } from 'notistack'
+import { snackbar } from '@/utils/dom'
 import { useCallback, useState, Activity, useRef, useEffect } from 'react'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
@@ -51,17 +51,12 @@ export default function ApprenticeProfilePage() {
 			event.preventDefault()
 
 			if (updatingProfile)
-				return enqueueSnackbar('Espera un momento', {
-					variant: 'info',
-					preventDuplicate: true,
-					autoHideDuration: 3000
-				})
+				return snackbar({ message: 'Espera un momento', variant: 'info' })
 
 			if (profileImageUrl && !confirmedImage) {
-				return enqueueSnackbar('Debes confirmar la imagen', {
-					variant: 'warning',
-					preventDuplicate: true,
-					autoHideDuration: 3000
+				return snackbar({
+					message: 'Debes confirmar la imagen',
+					variant: 'warning'
 				})
 			}
 
@@ -107,20 +102,12 @@ export default function ApprenticeProfilePage() {
 				}
 
 				if ('message' in data)
-					enqueueSnackbar(data.message, {
-						variant: 'error',
-						autoHideDuration: 3000,
-						preventDuplicate: true
-					})
+					snackbar({ message: data.message, variant: 'error' })
 
 				return
 			}
 
-			enqueueSnackbar(data.message, {
-				variant: 'success',
-				autoHideDuration: 3000,
-				preventDuplicate: true
-			})
+			snackbar({ message: data.message, variant: 'success' })
 		},
 		[updatingProfile, errors, profileImageUrl, confirmedImage]
 	)

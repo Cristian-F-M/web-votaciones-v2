@@ -10,17 +10,21 @@ import type {
 import { useCallback, useEffect, useState } from 'react'
 import { doFetch } from '@/utils/fetch'
 import { getStringTime } from '@/utils/dom'
-import { enqueueSnackbar } from 'notistack'
+import { snackbar } from '@/utils/dom'
 import type { WriteCodeErrors, WriteCodeFormElements } from '@/types/forms'
 import { getErrorEntries, getProcessedErrors } from '@/utils/form'
 
 interface WriteCodeProps extends Omit<StepProps, 'onComplete'> {
 	user: FindUserUser | null
-	onComplete: (code: string) => void,
-  dateNewCode: Date | null
+	onComplete: (code: string) => void
+	dateNewCode: Date | null
 }
 
-export function WriteCode({ onComplete, user, dateNewCode: dateNewCodeProp }: WriteCodeProps) {
+export function WriteCode({
+	onComplete,
+	user,
+	dateNewCode: dateNewCodeProp
+}: WriteCodeProps) {
 	const [seconds, setSeconds] = useState(0)
 	const [dateNewCode, setDateNewCode] = useState<Date | null>(dateNewCodeProp)
 	const [sendingEmail, setSendingEmail] = useState(false)
@@ -39,33 +43,21 @@ export function WriteCode({ onComplete, user, dateNewCode: dateNewCodeProp }: Wr
 
 	const handleSendEmail = useCallback(async () => {
 		if (seconds > 0) {
-			return enqueueSnackbar(
-				`Esperando para enviar correo (${getStringTime(seconds)})`,
-				{
-					variant: 'warning',
-					autoHideDuration: 2000,
-					preventDuplicate: true
-				}
-			)
+			return snackbar({
+				message: `Esperando para enviar correo (${getStringTime(seconds)})`,
+				variant: 'warning'
+			})
 		}
 
 		if (sendingEmail || !user)
-			return enqueueSnackbar('Enviando correo', {
-				variant: 'warning',
-				autoHideDuration: 2000,
-				preventDuplicate: true
-			})
+			return snackbar({ message: 'Enviando correo', variant: 'warning' })
 
 		setSendingEmail(true)
 		const data = await sendPasswordResetCode()
 		setSendingEmail(false)
 
 		if (!data.ok) {
-			enqueueSnackbar(data.message, {
-				variant: 'error',
-				autoHideDuration: 2000,
-				preventDuplicate: true
-			})
+			snackbar({ message: data.message, variant: 'error' })
 
 			// mostrar el tiempo restante
 			if ('timeNewCode' in data && data.timeNewCode) {
@@ -102,11 +94,7 @@ export function WriteCode({ onComplete, user, dateNewCode: dateNewCodeProp }: Wr
 			event.preventDefault()
 
 			if (sendingEmail || loading)
-				return enqueueSnackbar('Espera un momento', {
-					variant: 'warning',
-					autoHideDuration: 2000,
-					preventDuplicate: true
-				})
+				return snackbar({ message: 'Espera un momento', variant: 'warning' })
 
 			const form = event.currentTarget as HTMLFormElement
 			const { code } = form.elements as WriteCodeFormElements
@@ -138,11 +126,7 @@ export function WriteCode({ onComplete, user, dateNewCode: dateNewCodeProp }: Wr
 					setErrors(newErrors)
 				}
 
-				enqueueSnackbar(data.message, {
-					variant: 'error',
-					autoHideDuration: 2000,
-					preventDuplicate: true
-				})
+				snackbar({ message: data.message, variant: 'error' })
 				return
 			}
 

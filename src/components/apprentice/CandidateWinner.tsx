@@ -7,7 +7,7 @@ import { useVote } from '@/states/useVote'
 import Calendar from '@/icons/Calendar'
 import type { GetCandidatesResponse } from '@/types/api'
 import { doFetch } from '@/utils/fetch'
-import { enqueueSnackbar } from 'notistack'
+import { snackbar } from '@/utils/dom'
 import { useCallback, useEffect, useState } from 'react'
 import type { Candidate } from '@/types/models'
 
@@ -98,11 +98,7 @@ export function CandidateWinner() {
 			})
 
 			if (!res.ok) {
-				enqueueSnackbar(res.message, {
-					variant: 'error',
-					autoHideDuration: 3000,
-					preventDuplicate: true
-				})
+				snackbar({ message: res.message, variant: 'error' })
 				return
 			}
 

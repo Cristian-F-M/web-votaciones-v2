@@ -6,7 +6,8 @@ import SquareArrowRightIcon from '@/icons/SquareArrowRight'
 import { useCallback, useEffect } from 'react'
 import { doFetch } from '@/utils/fetch'
 import type { LogoutResponse } from '@/types/api'
-import { type BaseVariant, enqueueSnackbar } from 'notistack'
+import type { BaseVariant } from 'notistack'
+import { snackbar } from '@/utils/dom'
 import { useRouter } from 'next/navigation'
 import '@/styles/user-avatar.css'
 
@@ -23,11 +24,7 @@ export function UserSettings() {
 
 		const variant: BaseVariant = data.ok ? 'success' : 'error'
 
-		enqueueSnackbar(data.message, {
-			variant: variant,
-			preventDuplicate: true,
-			autoHideDuration: 3000
-		})
+		snackbar({ message: data.message, variant: variant })
 
 		if (!data.ok) return
 		if ('urlRedirect' in data) return router.replace(data.urlRedirect)

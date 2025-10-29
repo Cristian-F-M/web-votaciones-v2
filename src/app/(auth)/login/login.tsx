@@ -9,7 +9,7 @@ import { doFetch } from '@/utils/fetch'
 import { Checkbox } from '@/components/Checkbox'
 import type { LoginErrors, LoginFormElements } from '@/types/forms'
 import { getErrorEntries, getProcessedErrors } from '@/utils/form'
-import { enqueueSnackbar } from 'notistack'
+import { snackbar } from '@/utils/dom'
 import { Loader } from '@/components/Loader'
 import { useRouter } from 'next/navigation'
 import type { TypeDocument } from '@/types/models'
@@ -42,11 +42,7 @@ export default function Login() {
 		async (event: React.SyntheticEvent<HTMLFormElement>) => {
 			event.preventDefault()
 			if (isLogginIn)
-				return enqueueSnackbar('Espera un momento', {
-					variant: 'warning',
-					preventDuplicate: true,
-					autoHideDuration: 3000
-				})
+				return snackbar({ message: 'Espera un momento', variant: 'warning' })
 			const target = event.target as HTMLFormElement
 
 			const { typeDocument, document, password, remember } =
@@ -92,11 +88,7 @@ export default function Login() {
 
 			if (!ok) {
 				if ('message' in data)
-					enqueueSnackbar(data.message, {
-						variant: 'error',
-						preventDuplicate: true,
-						autoHideDuration: 5000
-					})
+					snackbar({ message: data.message, variant: 'error' })
 				if ('errors' in data) {
 					const errors = getProcessedErrors(data.errors)
 					setErrors(errors)

@@ -1,7 +1,7 @@
 import type { VoteResponse } from '@/types/api'
 import type { Candidate } from '@/types/models'
 import { doFetch } from '@/utils/fetch'
-import { enqueueSnackbar } from 'notistack'
+import { snackbar } from '@/utils/dom'
 import { useCallback, useEffect, useState } from 'react'
 import { Button } from '@/components/Button'
 import { useUser } from '@/states/useUser'
@@ -31,17 +31,13 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
 		setIsVoting(false)
 
 		if (!data.ok) {
-			enqueueSnackbar(data.message, {
-				variant: 'error'
-			})
+			snackbar({ message: data.message, variant: 'error' })
 			return
 		}
 
 		setAlreadyVoted(true)
     setIsThisCandidateVoted(true)
-		enqueueSnackbar(data.message, {
-			variant: 'success'
-		})
+		snackbar({ message: data.message, variant: 'success' })
 	}, [candidate, isVoting])
 
 	useEffect(() => {

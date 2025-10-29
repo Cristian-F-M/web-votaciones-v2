@@ -12,7 +12,7 @@ import type {
 } from '@/types/forms'
 import type { RegisterResponse, GetTypeDocumentsResponse } from '@/types/api'
 import { doFetch } from '@/utils/fetch'
-import { enqueueSnackbar } from 'notistack'
+import { snackbar } from '@/utils/dom'
 import {
 	getErrorEntries,
 	getProcessedErrors,
@@ -57,11 +57,7 @@ export default function Register() {
 			event.preventDefault()
 
 			if (isRegistering)
-				return enqueueSnackbar('Espera un momento', {
-					variant: 'warning',
-					preventDuplicate: true,
-					autoHideDuration: 3000
-				})
+				return snackbar({ message: 'Espera un momento', variant: 'warning' })
 
 			const target = event.target as HTMLFormElement
 
@@ -140,9 +136,7 @@ export default function Register() {
 
 		if (!ok) {
 			if (data.message)
-				enqueueSnackbar(data.message, {
-					variant: 'error'
-				})
+				snackbar({ message: data.message })
 
 			if ('errors' in data && data.errors) {
 				const errors = getProcessedErrors(data.errors)
@@ -151,9 +145,7 @@ export default function Register() {
 			return
 		}
 
-		enqueueSnackbar(data.message, {
-			variant: 'success'
-		})
+		snackbar({ message: data.message, variant: 'success' })
 
 		router.push('/login')
 	}, [router])
