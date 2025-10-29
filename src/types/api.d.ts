@@ -144,3 +144,10 @@ export type SendPasswordResetCodeResponse = {
   message: string
   timeNewCode?: string
 }
+
+export type VerifyPasswordResetCodeResponse = {
+  ok: true
+} | {
+  ok: false
+  message: string
+}

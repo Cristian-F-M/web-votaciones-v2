@@ -62,3 +62,11 @@ export interface FindUserErrors {
 	typeDocumentCode: string | null
 	document: string | null
 }
+
+export interface WriteCodeFormElements extends HTMLFormControlsCollection {
+  code: HTMLInputElement
+}
+
+export interface WriteCodeErrors {
+  code: string | null
+}
