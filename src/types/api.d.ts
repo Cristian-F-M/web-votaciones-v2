@@ -150,4 +150,5 @@ export type VerifyPasswordResetCodeResponse = {
 } | {
   ok: false
   message: string
+  errors?: ApiErrors
 }
