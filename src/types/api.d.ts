@@ -135,3 +135,12 @@ export type FindUserResponse = FetchError | {
   ok: false
   errors: ApiErrors
 }
+
+export type SendPasswordResetCodeResponse = {
+  ok: true
+  timeNewCode: string
+} | {
+  ok: false
+  message: string
+  timeNewCode?: string
+}
