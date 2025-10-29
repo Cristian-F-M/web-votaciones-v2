@@ -70,3 +70,13 @@ export interface WriteCodeFormElements extends HTMLFormControlsCollection {
 export interface WriteCodeErrors {
   code: string | null
 }
+
+export interface WritePasswordElements extends HTMLFormControlsCollection {
+  password: HTMLInputElement
+  passwordConfirmation: HTMLInputElement
+}
+
+export interface WritePasswordErrors {
+  password: string | null
+  passwordConfirmation: string | null
+}

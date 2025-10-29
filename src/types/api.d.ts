@@ -152,3 +152,13 @@ export type VerifyPasswordResetCodeResponse = {
   message: string
   errors?: ApiErrors
 }
+
+export type UpdatePasswordResponse = {
+  ok: true
+  message: string
+  urlReturn: string
+} | {
+  ok: false
+  message?: string
+  errors: ApiErrors
+}
