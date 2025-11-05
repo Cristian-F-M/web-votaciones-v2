@@ -10,6 +10,14 @@ html {
   --animate-loader: loader 0.8s linear infinite;
   --animate-fadeIn: fade-in 0.6s ease-out;
 
+  --color-page-dark-bg: var(--color-gray-950);
+  --color-page-light-bg: var(--color-white);
+  --color-page-light-bg-contrast: var(--color-gray-50);
+  --color-page-dark-bg-contrast: var(--color-gray-800);
+  --color-primary: var(--primary-color);
+  --color-dark-primary: var(--primary-color-dark);
+
+
   @keyframes loader {
     to {
       transform: rotate(360deg);
@@ -40,6 +48,14 @@ html {
 	.secondary-button {
 		@apply bg-transparent border border-gray-400 hover:bg-gray-200 dark:bg-gray-500/30 dark:border-gray-500/40 dark:hover:bg-gray-500/50 disabled:text-gray-700/90 dark:disabled:text-gray-400;
 	}
+
+  .bg-page {
+    @apply bg-(--color-page-light-bg) dark:bg-(--color-page-dark-bg);
+  }
+
+  .bg-page-contrast {
+    @apply bg-(--color-page-light-bg-contrast) dark:bg-(--color-page-dark-bg-contrast);
+  }
 }
 
 html, body, main {
