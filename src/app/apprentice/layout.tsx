@@ -28,7 +28,9 @@ export default function ApprenticeLayout({
 	return (
 		<div className="overflow-x-hidden">
 			<header className="px-2 py-2.5 flex flex-row items-center justify-between border-b border-gray-300/80 dark:border-gray-700/80">
-				<LogoSena className="text-(--color) size-14" />
+				<a href="/apprentice">
+					<LogoSena className="text-(--color) size-14" />
+				</a>
 				<div className="flex flex-row gap-2 items-center ">
 					<ToggleTheme />
 					<UserSettings />
