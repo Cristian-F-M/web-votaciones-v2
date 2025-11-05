@@ -42,7 +42,7 @@ html {
 	}
 }
 
-* {
+html, body, main {
   scrollbar-gutter: stable;
 }
 
