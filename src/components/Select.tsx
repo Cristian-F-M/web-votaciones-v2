@@ -72,14 +72,9 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 				>
 					<button className="relative" type="button" tabIndex={-1}>
 						<selectedcontent />
-						<span className={`picker-icon z-50 ${restPropsSelect.disabled ? 'opacity-0' : ''}`} />
-						<label
-							id={`${id}-label`}
-							htmlFor={id}
-							className={`text-label text-gray-800 dark:text-gray-300 z-10 block absolute size-full after:ml-0.5 after:text-red-500 ${required ? "after:content-['*']" : ''}`}
-						>
-							{label}
-						</label>
+						<span
+							className={`picker-icon z-50 ${restPropsSelect.disabled ? 'opacity-0' : ''}`}
+						/>
 					</button>
 					<option
 						value="default-value"
@@ -88,11 +83,9 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 						className={'text-label-fallback after:ml-0.5 after:text-red-500'}
 						selected={isDefaultValueSelected}
 					>
-						{!isChromium && (
-							<div>
-								<span>{label}</span>
-							</div>
-						)}
+						<div>
+							<span className={`text-label ${required && 'text-label--required'}`}>{label}</span>
+						</div>
 					</option>
 					{items.map((item, index) => (
 						<option
