@@ -24,6 +24,7 @@ import {
 import { scrollSmooth } from '@/utils/dom'
 import { useRouter } from 'next/navigation'
 import type { TypeDocument } from '@/types/models'
+import { Button } from '@/components/Button'
 
 export default function Register() {
 	const router = useRouter()
@@ -275,14 +276,9 @@ export default function Register() {
 							}}
 						/>
 						<div className="md:col-span-2">
-							<button
-								className="w-full h-10 px-4 py-2 rounded transition-all hover:brightness-95 active:brightness-95 
-            cursor-pointer text-gray-950 dark:text-white bg-[var(--color)]/90 active:scale-95"
-								type="submit"
-								disabled={isRegistering}
-							>
-								{isRegistering ? <Loader /> : 'Registrarse'}
-							</button>
+              <Button type="submit" showLoader={true} loading={isRegistering} disabled={isRegistering} >
+                Registrarse
+              </Button>
 							<div className="space-x-1 text-sm mt-3 w-fit mx-auto">
 								<span className="text-gray-500 dark:text-gray-300">
 									¿Ya tienes una cuenta?
