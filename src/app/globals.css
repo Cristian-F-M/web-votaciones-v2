@@ -15,7 +15,9 @@ html {
   --color-page-light-bg-contrast: var(--color-gray-50);
   --color-page-dark-bg-contrast: var(--color-gray-800);
   --color-primary: var(--primary-color);
-  --color-dark-primary: var(--primary-color-dark);
+  --color-primary-contrast: var(--primary-contrast-color);
+  --color-dark-primary: var(--dark-primary-color);
+  --color-dark-primary-contrast: var(--dark-primary-contrast-color);
 
 
   @keyframes loader {
