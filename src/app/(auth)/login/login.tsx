@@ -187,13 +187,9 @@ export default function Login() {
 										name="remember"
 									/>
 								</div>
-								<button
-									className="w-full h-10 px-4 py-2 rounded transition-all hover:brightness-95 active:brightness-95 cursor-pointer text-gray-950 dark:text-white bg-[var(--color)]/90 active:scale-95"
-									type="submit"
-									disabled={isLogginIn}
-								>
-									{isLogginIn ? <Loader /> : 'Iniciar sesión'}
-								</button>
+                <Button type="submit" showLoader={true} loading={isLogginIn} disabled={isLogginIn}>
+                  Iniciar sesión
+                </Button>
 								<div className="space-x-1 text-sm mt-3 w-fit mx-auto">
 									<span className="text-gray-500 dark:text-gray-300">
 										¿No tienes una cuenta?
