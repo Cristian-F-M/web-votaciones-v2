@@ -210,10 +210,10 @@ export default function Login() {
 						<div className="absolute inset-0 bg-primary-contrast dark:bg-dark-primary-contrast dark:text-dark-primary/60 z-10" />
 						<div className="size-full z-50 md:flex flex-col items-center justify-center ">
 							<LogoSena className="size-28 text-primary dark:text-dark-primary" />
-							<h2 className="text-2xl bold text-gray-900 text-center dark:text-gray-50">
+							<h2 className="text-2xl bold text-gray-900 text-center dark:text-gray-300">
 								Centro de Gestión Agroempresarial del Oriente
 							</h2>
-							<p className="text-center text-gray-700 text-sm mt-1 dark:text-gray-300">
+							<p className="text-center text-gray-700 text-sm mt-1 dark:text-gray-400">
 								Accede a nuestra plataforma para realizar la votación de el
 								candidato a representante de la jornada.
 							</p>
