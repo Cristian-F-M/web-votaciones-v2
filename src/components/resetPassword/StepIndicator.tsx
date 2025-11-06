@@ -35,7 +35,7 @@ export function StepIndicator({ currentStep, ...props }: StepIndicatorProps) {
 				{cantSteps > 1 && (
 					<div className="step--line w-11/12 h-1 rounded bg-gray-400/60 absolute left-1/2 top-2/4 -translate-1/2 -z-1 dark:bg-gray-300/60">
 						<div
-							className="h-full bg-(--color) transition-all duration-400 rounded"
+							className="h-full bg-primary dark:bg-dark-primary transition-all duration-400 rounded"
 							style={{ width: `${lineIndicatorWidth}%` }}
 						/>
 					</div>

@@ -73,7 +73,7 @@ export function ActivateNotificationsModal({
 				id="activate-notifications-modal"
 			>
 				<header className="flex flex-row gap-1 items-center ">
-					<Bell className="text-(--color) size-5" />
+					<Bell className="text-primary size-5" />
 					<h3 className="md:text-base text-sm font-semibold">
 						Activar notificaciones por email
 					</h3>
@@ -81,11 +81,11 @@ export function ActivateNotificationsModal({
 				<main className="mt-px">
 					<p className="text-gray-700 md:text-sm text-xs dark:text-gray-400">
 						Se enviará un correo electrónico a{' '}
-						<span className="text-(--color) font-semibold">{maskedEmail}</span>{' '}
+						<span className="text-primary dark:text-dark-primary font-semibold">{maskedEmail}</span>{' '}
 						cuando haya nuevas votaciones
 					</p>
 
-					<div className="bg-(--color)/20 px-3 py-2 rounded mt-3 border border-(--color)/30 text-xs">
+					<div className="bg-primary/20 px-3 py-2 rounded mt-3 border border-primary/30 text-xs">
 						<p>
 							📧 Recibiras una notificación inmediata cuando se abran nuevos
 							procesos de votacion.
@@ -101,7 +101,7 @@ export function ActivateNotificationsModal({
 							Cancelar
 						</button>
 						<button
-							className="bg-(--color) hover:bg-(--color)/80 dark:bg-(--color)/80 dark:hover:bg-(--color)/60 active:bg-(--color)/60 dark:active:bg-(--color)/60"
+							className="bg-primary hover:bg-primary/80 dark:bg-dark-primary/80 dark:hover:bg-dark-primary/60 active:bg-primary/60 dark:active:bg-dark-primary/60"
 							type="button"
 						>
 							Activar notificaciones

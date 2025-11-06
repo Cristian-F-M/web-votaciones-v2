@@ -13,6 +13,7 @@ import { snackbar } from '@/utils/dom'
 import { Loader } from '@/components/Loader'
 import { useRouter } from 'next/navigation'
 import type { TypeDocument } from '@/types/models'
+import { Button } from '@/components/Button'
 
 export default function Login() {
 	const year = new Date().getFullYear()
@@ -114,11 +115,11 @@ export default function Login() {
 	return (
 		<>
 			<link rel="stylesheet" href="/assets/css/form-ntw.css" />
-			<main className="flex items-center justify-center w-full h-screen">
+			<main className="flex items-center justify-center w-full h-screen bg-page-bg">
 				<div className="flex flex-row items-center rounded-sm max-h-10/12 md:h-full shadow shadow-gray-400 dark:shadow-gray-800 w-11/12 my-auto justify-center [&>div]:w-full [&>div]:p-4 [&>div]:md:min-w-[360px] max-w-[400px]  md:w-auto  md:max-w-[800px]">
-					<div className="login dark:bg-zinc-700 h-full overflow-y-auto">
+					<div className="login bg-page-contrast h-full overflow-y-auto">
 						<header className="w-full flex flex-col items-center justify-center">
-							<div className="mb-5 flex flex-row gap-2 items-center text-[var(--color)]">
+							<div className="mb-5 flex flex-row gap-2 items-center text-primary">
 								<LogoSena className="size-28 md:size-6" />
 								<span className="hidden md:block text-gray-800 dark:text-gray-200">
 									CGAO
@@ -195,7 +196,7 @@ export default function Login() {
 										¿No tienes una cuenta?
 									</span>
 									<a
-										className="underline md:no-underline md:hover:underline text-[var(--color)]"
+										className="underline md:no-underline md:hover:underline text-primary"
 										href="/register"
 									>
 										Registrate
@@ -206,9 +207,9 @@ export default function Login() {
 					</div>
 					<div className="information h-full hidden md:flex flex-col items-center justify-center relative">
 						<div className="hidden dark:block absolute inset-0 bg-gray-700 z-0" />
-						<div className="absolute inset-0 bg-[var(--color)]/60 z-10" />
+						<div className="absolute inset-0 bg-primary-contrast dark:bg-dark-primary-contrast dark:text-dark-primary/60 z-10" />
 						<div className="size-full z-50 md:flex flex-col items-center justify-center ">
-							<LogoSena className="size-28 text-[var(--color)]" />
+							<LogoSena className="size-28 text-primary dark:text-dark-primary" />
 							<h2 className="text-2xl bold text-gray-900 text-center dark:text-gray-50">
 								Centro de Gestión Agroempresarial del Oriente
 							</h2>

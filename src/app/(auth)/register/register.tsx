@@ -160,19 +160,19 @@ export default function Register() {
 			<link rel="stylesheet" href="/assets/css/form-ntw.css" />
 			<main className="flex items-center justify-center w-full py-10">
 				<div
-					className="dark:bg-zinc-700 overflow-y-auto px-4 py-8 md:px-7 flex flex-col items-center rounded-sm md:h-full shadow shadow-gray-400
+					className="bg-page-contrast overflow-y-auto px-4 py-8 md:px-7 flex flex-col items-center rounded-sm md:h-full shadow shadow-gray-400
        dark:shadow-gray-800 w-11/12 my-auto md:min-w-80 max-w-[700px]"
 				>
 					<header className="w-full flex flex-col md:flex-row items-center justify-between">
 						<div className="flex flex-col md:w-1/2 order-2 md:order-none">
-							<h1 className="text-2xl md:text-2xl font-bold text-(--color) text-center md:text-left">
+							<h1 className="text-2xl md:text-2xl font-bold text-primary text-center md:text-left">
 								Plataforma de Votaciones SENA
 							</h1>
 							<p className="text-gray-500 text-sm dark:text-gray-400 hidden md:block text-left">
 								Centro de Gestión Agroempresarial del Oriente Regional Santander
 							</p>
 						</div>
-						<div className="w-1/2 mb-5 flex-col gap-2 items-center text-[var(--color)] flex order-1 md:order-none">
+						<div className="w-1/2 mb-5 flex-col gap-2 items-center text-primary flex order-1 md:order-none">
 							<LogoSena className="size-28 md:size-24" />
 							<span className="hidden md:block text-gray-800 dark:text-gray-200">
 								CGAO
@@ -284,7 +284,7 @@ export default function Register() {
 									¿Ya tienes una cuenta?
 								</span>
 								<a
-									className="underline md:no-underline md:hover:underline text-[var(--color)]"
+									className="underline md:no-underline md:hover:underline text-primary"
 									href="/login"
 								>
 									Iniciar sesión

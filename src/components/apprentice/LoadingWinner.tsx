@@ -15,7 +15,7 @@ export function LoadingWinner() {
 					</div>
 				</div>
 
-				<div className="w-full p-4 border border-(--color)/40 rounded mt-5">
+				<div className="w-full p-4 border border-primary/40 rounded mt-5">
 					<header className="w-full flex flex-col items-center">
 						<h1 className="text-2xl font-semibold text-green-700 dark:text-green-500">
 							Votación Cerrada
@@ -31,7 +31,7 @@ export function LoadingWinner() {
 
 						<button
 							type="button"
-							className="flex items-center gap-1 mt-4 mx-auto bg-(--color) text-white px-4 py-1.5 rounded [&_svg]:size-5 cursor-pointer hover:bg-(--color)/80 dark:hover:bg-(--color)/60 active:bg-(--color)/60 dark:active:bg-(--color)/60"
+							className="flex items-center gap-1 mt-4 mx-auto bg-primary text-white px-4 py-1.5 rounded [&_svg]:size-5 cursor-pointer hover:bg-primary/80 dark:hover:bg-primary/60 active:bg-primary/60 dark:active:bg-primary/60 dark:bg-dark-primary"
 							ref={buttonTrigger}
 						>
 							<Bell />
@@ -39,7 +39,7 @@ export function LoadingWinner() {
 						</button>
 					</main>
 
-					<footer className="mt-4 text-sm text-center bg-blue-600/10 p-2 py-3 rounded border border-blue-300 dark:border-blue-700">
+					<footer className="mt-4 text-sm text-center bg-blue-600/10 p-2 py-3 rounded border border-blue-300 dark:border-blue-700 dark:bg-blue-700/10">
 						<h5 className="text-sm font-semibold text-blue-600 dark:text-blue-300">
 							📊 ¿Cuándo estarán los resultados?
 						</h5>

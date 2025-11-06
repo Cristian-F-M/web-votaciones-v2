@@ -44,7 +44,7 @@ html {
 	}
 
 	.primary-button {
-		@apply bg-(--color) hover:bg-(--color)/80 disabled:bg-(--color)/70;
+		@apply bg-primary hover:bg-primary/80 disabled:bg-primary/70 dark:bg-dark-primary dark:hover:bg-dark-primary/80 dark:disabled:bg-dark-primary/70;
 	}
 
 	.secondary-button {
@@ -78,10 +78,11 @@ html, body, main {
 }
 
 .input input:focus + label {
-  color: light-dark(
-    var(--color),
-    color-mix(in srgb, var(--color) 90%, transparent)
-  );
+  color: var(--color-primary);
+
+  html.dark & {
+    color: var(--color-dark-primary);
+  }
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -126,15 +127,15 @@ input[type="number"] {
   line-height: 18px;
 }
 .checkbox-wrapper .label:hover span:first-child {
-  border-color: var(--color);
+  border-color: var(--color-primary);
 }
 .checkbox-wrapper .inp-checkbox {
   position: absolute;
   visibility: hidden;
 }
 .checkbox-wrapper .inp-checkbox:checked + .label span:first-child {
-  background: var(--color);
-  border-color: var(--color);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
   animation: wave-4 0.4s ease;
 }
 .checkbox-wrapper .inp-checkbox:checked + .label span:first-child svg {

@@ -30,7 +30,7 @@ export function Input({
 					required={required}
 					placeholder=" "
 					className={twMerge([
-						'w-full text-gray-8 00 text-sm border-b border-gray-400 border-solid outline-none dark:text-gray-200 focus:border-(--color)',
+						'w-full text-gray-8 00 text-sm border-b border-gray-400 border-solid outline-none dark:text-gray-200 focus:border-primary',
 						className
 					])}
 				/>

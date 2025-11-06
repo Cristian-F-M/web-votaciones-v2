@@ -15,7 +15,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 	const isChromium = userAgent.toLowerCase().includes('chrome')
 
 	const selectClassName =
-		'custom-select w-full text-gray-800 text-sm border-b border-gray-400 border-solid outline-none dark:text-gray-300 [&>option]:dark:text-gray-800 focus:border-(--color)'
+		'custom-select w-full text-gray-800 text-sm border-b border-gray-400 border-solid outline-none dark:text-gray-300 [&>option]:dark:text-gray-800 focus:border-primary dark:focus:border-dark-primary'
 
 	const optionStyle = (index: number) =>
 		({ '--delay': `${index * 0.02}s` }) as React.CSSProperties & {

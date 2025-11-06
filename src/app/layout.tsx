@@ -13,19 +13,25 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode
 }>) {
-	const color = '#ff8617'
+  const primaryColor = '#ff8617'
+  const darkPrimaryColor = '#ba6213'
+	const primaryColorContrast = '#f7b272'
+  const darkPrimaryColorContrast = '#47280c'
 
 	return (
-		<html lang="es" suppressHydrationWarning>
+		<html lang="es" suppressHydrationWarning className="scheme-light-dark">
 			<head>
 				<link rel="icon" type="image/svg+xml" href="./logo-sena.svg" />
 				<style>{`
-          body {
-            --color: ${color};
+          :root {
+            --primary-color: ${primaryColor};
+            --primary-contrast-color: ${primaryColorContrast};
+            --dark-primary-color: ${darkPrimaryColor};
+            --dark-primary-contrast-color: ${darkPrimaryColorContrast};
           }
         `}</style>
 			</head>
-			<body className="dark:bg-gray-950">
+			<body className="bg-page">
 				<ClientLayout />
 				{children}
 			</body>

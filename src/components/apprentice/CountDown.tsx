@@ -8,9 +8,9 @@ export function CountDown({ targetDate }: { targetDate: Date | string | null }) 
 	return (
 		<div className="remaining-time w-10/12 mx-auto mt-7">
 			<h3 className="flex flex-row gap-1 items-center w-fit mx-auto md:text-xl text-sm">
-				<Clock className="text-(--color) size-6" /> Tiempo restante para votar
+				<Clock className="text-primary dark:text-dark-primary size-6" /> Tiempo restante para votar
 			</h3>
-			<div className="mx-auto w-fit mt-2 flex flex-row gap-1 items-center justify-center border dark:border-(--color)/50 border-(--color) md:px-14 px-5 py-4 rounded">
+			<div className="mx-auto w-fit mt-2 flex flex-row gap-1 items-center justify-center border dark:border-primary/50 border-primary md:px-14 px-5 py-4 rounded">
 				<SingleTimeCard label="días" value={remainingTime.days} />
 				<span className="time-separator">:</span>
 				<SingleTimeCard label="horas" value={remainingTime.hours} />

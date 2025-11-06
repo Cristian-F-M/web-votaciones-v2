@@ -68,7 +68,7 @@ export function UserSettings() {
 						<span className="text-xs text-gray-500 dark:text-gray-400">
 							{user?.email}
 						</span>
-						<span className="text-xs text-(--color)">
+						<span className="text-xs text-primary dark:text-dark-primary">
 							{user?.roleUser.name}
 						</span>
 					</div>

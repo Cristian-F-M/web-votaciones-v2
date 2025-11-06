@@ -2,6 +2,7 @@
   .custom-select {
     transition: all 0.2s ease;
     appearance: base-select;
+    --hover-select-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
 
     button {
       display: flex;
@@ -11,8 +12,12 @@
     }
   }
 
+  html.dark .custom-select {
+    --hover-select-color: color-mix(in srgb, var(--color-dark-primary) 50%, transparent);
+  }
+
   .custom-select:focus {
-    outline-color: color-mix(in srgb, var(--color) 60%, transparent);
+    outline-color: light-dark(var(--color-primary), var(--color-dark-primary));
     outline-offset: 5px;
   }
 
@@ -47,18 +52,15 @@
   }
 
   .custom-select option:focus {
-    outline-color: color-mix(in srgb, var(--color) 60%, transparent);
+    outline-color: light-dark(var(--hover-select-color), var(--hover-select-color));
   }
 
   .custom-select option:is(:checked) {
-    background-color: light-dark(
-      color-mix(in srgb, var(--color) 70%, transparent),
-      color-mix(in srgb, var(--color) 60%, transparent)
-    );
+    background-color: var(--hover-select-color);
   }
 
   .custom-select option:hover {
-    background-color: color-mix(in srgb, var(--color) 30%, transparent);
+    background-color: var(--hover-select-color);
     transition: background-color 0.3s ease;
   }
 
@@ -122,14 +124,14 @@
     transition: color 0.2s;
   }
 
-  .custom-select:open {
-    border-color: color-mix(in srgb, var(--color) 90%, transparent);
+  .custom-select:open, .custom-select:focus-visible {
+    border-color: light-dark(var(--color-primary), var(--color-dark-primary));
   }
   
   .custom-select:focus .picker-icon,
   .custom-select:open .picker-icon {
-    --light-color: color-mix(in srgb, var(--color) 80%, transparent);
-    --dark-color: color-mix(in srgb, var(--color) 80%, transparent);
+    --light-color: color-mix(in srgb, var(--color-primary) 80%, transparent);
+    --dark-color: color-mix(in srgb, var(--color-dark-primary) 80%, transparent);
 
     background-color: light-dark(var(--light-color), var(--dark-color));
   }

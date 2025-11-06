@@ -16,7 +16,7 @@ interface CheckboxBaseProps {
 type CheckboxProps =
 	| (CheckboxControlledProps & CheckboxBaseProps)
 	| (CheckboxBaseProps & { checked?: never; onChange?: never })
-
+// TODO: Show outline only with focus-visible
 export function Checkbox({
 	label,
 	id,

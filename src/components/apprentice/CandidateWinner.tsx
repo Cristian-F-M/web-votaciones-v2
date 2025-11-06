@@ -33,7 +33,7 @@ function CandidateSingleCard({
 			<div className="text-sm flex items-center justify-between [&_p]:text-xs [&_p]:text-gray-600 dark:[&_p]:text-gray-400">
 				<h4 className="font-semibold">
 					{isWinner && (
-						<span className="text-xs bg-(--color) px-2 py-0.5 rounded text-white font-semibold mr-2 dark:bg-(--color)/90 dark:text-gray-200">
+						<span className="text-xs bg-primary px-2 py-0.5 rounded text-white font-semibold mr-2 dark:bg-dark-primary/90 dark:text-gray-200">
 							Ganador
 						</span>
 					)}
@@ -49,7 +49,7 @@ function CandidateSingleCard({
 					aria-valuemin={0}
 					aria-valuemax={100}
 					tabIndex={0}
-					className={`h-full rounded ${isWinner ? 'bg-(--color)' : 'bg-gray-600'}`}
+					className={`h-full rounded ${isWinner ? 'bg-primary dark:bg-dark-primary' : 'bg-gray-600'}`}
 				/>
 			</div>
 			<p className="text-xs text-gray-600 dark:text-gray-400">
@@ -185,7 +185,7 @@ export function CandidateWinner() {
 									aria-valuemin={0}
 									aria-valuemax={100}
 									tabIndex={0}
-									className="h-full rounded bg-(--color)"
+									className="h-full rounded bg-primary dark:bg-dark-primary"
 								/>
 							</div>
 							<div className="text-gray-500 flex flex-col items-center leading-4.5 dark:text-gray-400 text-sm md:text-base">
@@ -222,7 +222,7 @@ export function CandidateWinner() {
 					</main>
 				</div>
 				<div className="col-span-5 row-span-1 col-start-1 row-start-8 flex items-center gap-2 card-stat order-4">
-					<div className="text-(--color)">
+					<div className="text-primary dark:text-dark-primary">
 						<Calendar />
 					</div>
 					<div>

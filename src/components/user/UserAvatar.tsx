@@ -8,7 +8,7 @@ interface UserAvatarProps {
 }
 
 const commonClasses =
-	'size-8 aspect-square rounded-full bg-(--color)/80 border border-gray-300/40 flex flex-row items-center justify-center font-sans'
+	'size-8 aspect-square rounded-full bg-primary/80 dark:bg-dark-primary/80 border border-gray-300/40 dark:border-gray-700/40 flex flex-row items-center justify-center font-sans'
 
 export function UserAvatarFallback() {
 	return (

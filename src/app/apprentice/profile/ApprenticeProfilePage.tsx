@@ -144,7 +144,7 @@ export default function ApprenticeProfilePage() {
 									</div>
 								)}
 								<img
-									className="size-full object-cover rounded border-2 border-(--color)/70 mx-auto"
+									className="size-full object-cover rounded border-2 border-primary/70 dark:border-dark-primary mx-auto"
 									src={profileImageUrl || apprenticeImageUrl}
 									alt={`Foto de el usuario ${user?.name}`}
 								/>

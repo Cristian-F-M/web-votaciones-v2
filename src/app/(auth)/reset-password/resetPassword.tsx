@@ -57,7 +57,7 @@ export function ResetPasswordPage() {
 						<ArrowLeft />
 						Volver al login
 					</a>
-					<header className="flex flex-col items-center justify-center [&_svg]:size-30 [&_svg]:text-(--color) mt-4">
+					<header className="flex flex-col items-center justify-center [&_svg]:size-30 [&_svg]:text-primary mt-4">
 						<LogoSena />
 						<h1 className="text-2xl font-semibold mt-2">
 							Restablecer contraseña
