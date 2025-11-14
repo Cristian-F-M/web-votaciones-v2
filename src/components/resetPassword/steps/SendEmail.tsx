@@ -67,6 +67,11 @@ export function SendEmail({ onComplete, onCancel, user }: StepSendEmailProps) {
 		return () => clearInterval(interval)
 	}, [dateNewCode, seconds])
 
+	useEffect(() => {
+		if (!user) return
+		setDateNewCode(new Date(user.timeNewCode))
+	}, [user])
+
 	return (
 		<div>
 			<div className="border border-blue-300 bg-blue-100 p-2 rounded dark:bg-blue-400/40 dark:border-blue-500/40">
