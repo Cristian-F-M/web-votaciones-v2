@@ -44,6 +44,7 @@ export interface UpdateProfileFormElements extends HTMLFormControlsCollection {
 	lastname: HTMLInputElement
 	phone: HTMLInputElement
 	email: HTMLInputElement
+  image: HTMLInputElement
 }
 
 export interface UpdateProfileErrors {
