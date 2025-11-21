@@ -16,7 +16,7 @@ import { snackbar } from '@/utils/dom'
 import { useCallback, useState, Activity } from 'react'
 
 export default function ApprenticeProfilePage() {
-	const { user, getUser } = useUser((state) => state)
+	const { user, getUser, setUser } = useUser((state) => state)
 	const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null)
 	const [confirmedImage, setConfirmedImage] = useState(false)
 	const [updatingProfile, setUpdatingProfile] = useState(false)
@@ -62,7 +62,7 @@ export default function ApprenticeProfilePage() {
 
 			const target = event.currentTarget as HTMLFormElement
 
-			const { name, lastname, phone, email } =
+			const { name, lastname, phone, email, image } =
 				target.elements as UpdateProfileFormElements
 
 			const locallyErrors: Partial<UpdateProfileErrors> = {}
@@ -107,11 +107,13 @@ export default function ApprenticeProfilePage() {
 				return
 			}
 
-			await getUser()
+			const user = await getUser()
+      setUser(user)
 			setProfileImageUrl(null)
 			snackbar({ message: data.message, variant: 'success' })
+      image.value = ''
 		},
-		[updatingProfile, errors, profileImageUrl, confirmedImage, getUser]
+		[updatingProfile, errors, profileImageUrl, confirmedImage, getUser, setUser]
 	)
 
 	const apprenticeImageUrl = user?.imageUrl
