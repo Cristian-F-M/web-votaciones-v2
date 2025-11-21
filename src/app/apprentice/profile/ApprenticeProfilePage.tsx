@@ -13,16 +13,16 @@ import type {
 import { doFetch } from '@/utils/fetch'
 import { getErrorEntries, getProcessedErrors } from '@/utils/form'
 import { snackbar } from '@/utils/dom'
-import { useCallback, useState, Activity, useRef, useEffect } from 'react'
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+import { useCallback, useState, Activity } from 'react'
 
 export default function ApprenticeProfilePage() {
-	const { user } = useUser((state) => state)
+	const { user, getUser } = useUser((state) => state)
 	const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null)
 	const [confirmedImage, setConfirmedImage] = useState(false)
 	const [updatingProfile, setUpdatingProfile] = useState(false)
 	const [errors, setErrors] = useState<Partial<UpdateProfileErrors>>({})
+	const imageUrlFallback =
+		'https://res.cloudinary.com/dp6ucd28f/image/upload/v1763591326/votaciones-v2/users/base_user.webp'
 
 	const handleChangeProfileImage = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,12 +107,14 @@ export default function ApprenticeProfilePage() {
 				return
 			}
 
+			await getUser()
+			setProfileImageUrl(null)
 			snackbar({ message: data.message, variant: 'success' })
 		},
-		[updatingProfile, errors, profileImageUrl, confirmedImage]
+		[updatingProfile, errors, profileImageUrl, confirmedImage, getUser]
 	)
 
-	const apprenticeImageUrl = `${API_URL}/user/image/${user?.id}`
+	const apprenticeImageUrl = user?.imageUrl
 	const showUploadFile = !profileImageUrl || (profileImageUrl && confirmedImage)
 
 	return (
@@ -127,7 +129,7 @@ export default function ApprenticeProfilePage() {
 						<div className="aspect-square w-11/12 h-auto mx-auto lg:w-full rounded">
 							<a
 								className="relative"
-								href={profileImageUrl || apprenticeImageUrl}
+								href={profileImageUrl || apprenticeImageUrl || imageUrlFallback}
 								target="_blank"
 								rel="noopener noreferrer"
 							>
@@ -145,7 +147,7 @@ export default function ApprenticeProfilePage() {
 								)}
 								<img
 									className="size-full object-cover rounded border-2 border-primary/70 dark:border-dark-primary mx-auto"
-									src={profileImageUrl || apprenticeImageUrl}
+									src={profileImageUrl || apprenticeImageUrl || imageUrlFallback}
 									alt={`Foto de el usuario ${user?.name}`}
 								/>
 							</a>
