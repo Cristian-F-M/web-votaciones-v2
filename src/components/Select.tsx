@@ -1,6 +1,7 @@
 import type { SelectProps } from '@/types/input'
 import { twMerge } from 'tailwind-merge'
 import { InputError } from './InputError'
+import { SELECT_DEFAULT_VALUE } from '@/constants/form'
 
 function SelectWrapper({ children }: { children: React.ReactNode }) {
 	return (
@@ -56,7 +57,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 	const { id, name, required, selectedItem, label, ...restPropsSelect } =
 		restProps
 
-	const isDefaultValueSelected = ['', undefined, 'default-value'].includes(
+	const isDefaultValueSelected = ['', undefined, SELECT_DEFAULT_VALUE].includes(
 		selectedItem
 	)
 
@@ -77,7 +78,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 						/>
 					</button>
 					<option
-						value="default-value"
+						value={SELECT_DEFAULT_VALUE}
 						disabled
 						hidden
 						className={'text-label-fallback after:ml-0.5 after:text-red-500'}
