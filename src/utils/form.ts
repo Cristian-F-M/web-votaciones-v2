@@ -1,3 +1,4 @@
+import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/form'
 import type { ApiErrors, GetProcessedErrorsReturnType } from '@/types/api'
 import type {
 	ValidateFieldsProps,
@@ -5,9 +6,6 @@ import type {
 } from '@/types/forms'
 import type { ZodErrors } from '@/types/zod'
 
-export const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-export const PASSWORD_REGEX =
-	/^(?=(.*[A-Z]))(?=(.*[a-z]))(?=(.*\d))(?=(.*[\W_]))[A-Za-z\d\W_]{8,20}$/
 
 export const isEmailValid = (email: string) => EMAIL_REGEX.test(email)
 export const isPasswordValid = (text: string) => PASSWORD_REGEX.test(text)
