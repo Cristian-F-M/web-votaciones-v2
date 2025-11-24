@@ -52,3 +52,23 @@ export function validateFieldsNotEmpty(
 
 	return errors
 }
+
+export function serializeForm<T extends HTMLFormControlsCollection>(
+	form: HTMLFormElement | T
+) {
+	if (form instanceof HTMLFormElement) {
+		const formData = new FormData(form)
+		const formEntries = formData.entries()
+		return Object.fromEntries(formEntries) as T | Record<string, any>
+	}
+
+
+  if (form instanceof HTMLFormControlsCollection) {
+    const entries = Array.from(form).map((e) => {
+      if (e instanceof HTMLInputElement || e instanceof HTMLSelectElement) {
+        return [e.name, e.value]
+      }
+    }).filter(c => !!c)
+    return Object.fromEntries(entries)
+  }
+}
