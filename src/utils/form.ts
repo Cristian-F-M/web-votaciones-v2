@@ -3,6 +3,7 @@ import type {
 	ValidateFieldsProps,
 	ValidateFieldsReturnType
 } from '@/types/forms'
+import type { ZodErrors } from '@/types/zod'
 
 export const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 export const PASSWORD_REGEX =
@@ -62,13 +63,26 @@ export function serializeForm<T extends HTMLFormControlsCollection>(
 		return Object.fromEntries(formEntries) as T | Record<string, any>
 	}
 
+	if (form instanceof HTMLFormControlsCollection) {
+		const entries = Array.from(form)
+			.map((e) => {
+				if (e instanceof HTMLInputElement || e instanceof HTMLSelectElement) {
+					return [e.name, e.value]
+				}
+			})
+			.filter((c) => !!c)
+		return Object.fromEntries(entries)
+	}
+}
 
-  if (form instanceof HTMLFormControlsCollection) {
-    const entries = Array.from(form).map((e) => {
-      if (e instanceof HTMLInputElement || e instanceof HTMLSelectElement) {
-        return [e.name, e.value]
-      }
-    }).filter(c => !!c)
-    return Object.fromEntries(entries)
-  }
+export function getValidationResult(errors: ZodErrors) {
+	const result: GetProcessedErrorsReturnType = {}
+
+	for (const i of errors) {
+		const path = i.path[0]
+		if (Object.hasOwn(result, path)) continue
+		result[path] = i.message
+	}
+
+	return result
 }
