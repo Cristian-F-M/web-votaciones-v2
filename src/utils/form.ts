@@ -52,13 +52,13 @@ export function validateFieldsNotEmpty(
 	return errors
 }
 
-export function serializeForm<T extends HTMLFormControlsCollection>(
+export function serializeForm<T extends HTMLFormControlsCollection, R>(
 	form: HTMLFormElement | T
 ) {
 	if (form instanceof HTMLFormElement) {
 		const formData = new FormData(form)
 		const formEntries = formData.entries()
-		return Object.fromEntries(formEntries) as T | Record<string, any>
+		return Object.fromEntries(formEntries) as R
 	}
 
 	if (form instanceof HTMLFormControlsCollection) {
@@ -69,8 +69,10 @@ export function serializeForm<T extends HTMLFormControlsCollection>(
 				}
 			})
 			.filter((c) => !!c)
-		return Object.fromEntries(entries)
+		return Object.fromEntries(entries) as R
 	}
+
+	return {}
 }
 
 export function getValidationResult(errors: ZodErrors) {
