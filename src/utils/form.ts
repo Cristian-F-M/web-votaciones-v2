@@ -5,7 +5,7 @@ import type {
 	ValidateFieldsReturnType
 } from '@/types/forms'
 import type { ZodErrors } from '@/types/zod'
-
+import type { ZodSafeParseResult } from 'zod'
 
 export const isEmailValid = (email: string) => EMAIL_REGEX.test(email)
 export const isPasswordValid = (text: string) => PASSWORD_REGEX.test(text)
@@ -85,4 +85,13 @@ export function getValidationResult(errors: ZodErrors) {
 	}
 
 	return result
+}
+
+export function parseZodMessages(result: ZodSafeParseResult<any>) {
+	if (result.success) return {}
+
+	const zodErrors = result.error
+	const messages = JSON.parse(zodErrors.message) as ZodErrors
+
+	return getValidationResult(messages)
 }
