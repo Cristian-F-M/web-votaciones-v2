@@ -18,13 +18,13 @@ import {
 	getProcessedErrors,
 	isEmailValid,
 	isPasswordValid,
-	PASSWORD_REGEX,
 	validateFieldsNotEmpty
 } from '@/utils/form'
 import { scrollSmooth } from '@/utils/dom'
 import { useRouter } from 'next/navigation'
 import type { TypeDocument } from '@/types/models'
 import { Button } from '@/components/Button'
+import { PASSWORD_REGEX } from '@/constants/form'
 
 export default function Register() {
 	const router = useRouter()
