@@ -2,18 +2,24 @@
 import { Input } from '@/components/Input'
 import LogoSena from '@/icons/LogoSena'
 import { ToggleTheme } from '@/components/ToggleTheme'
-import type { GetTypeDocumentsResponse, LoginResponse } from '@/types/api'
+import type { GetProcessedErrorsReturnType, GetTypeDocumentsResponse, LoginResponse } from '@/types/api'
 import { useCallback, useEffect, useState } from 'react'
 import { Select } from '@/components/Select'
 import { doFetch } from '@/utils/fetch'
 import { Checkbox } from '@/components/Checkbox'
 import type { LoginErrors, LoginFormElements } from '@/types/forms'
-import { getErrorEntries, getProcessedErrors } from '@/utils/form'
+import {
+	getProcessedErrors,
+	parseZodMessages,
+	serializeForm
+} from '@/utils/form'
 import { snackbar } from '@/utils/dom'
 import { Loader } from '@/components/Loader'
 import { useRouter } from 'next/navigation'
 import type { TypeDocument } from '@/types/models'
 import { Button } from '@/components/Button'
+import * as z from 'zod'
+import { LOGIN_SCHEME } from '@/zod-validations'
 
 export default function Login() {
 	const year = new Date().getFullYear()
@@ -46,23 +52,14 @@ export default function Login() {
 				return snackbar({ message: 'Espera un momento', variant: 'warning' })
 			const target = event.target as HTMLFormElement
 
-			const { typeDocument, document, password, remember } =
-				target.elements as LoginFormElements
+			const serializedForm = serializeForm<LoginFormElements, GetProcessedErrorsReturnType>(target.elements as LoginFormElements)
+			const result = z.safeParse(LOGIN_SCHEME, serializedForm)
 
-			const locallyErrors: typeof errors = {}
-
-			if (typeDocument.value === 'default-value')
-				locallyErrors.typeDocument = 'Selecciona una opción de la lista'
-
-			if (document.value.trim() === '')
-				locallyErrors.document = 'Este campo es requrido'
-			if (password.value.trim() === '')
-				locallyErrors.password = 'Este campo es requrido'
-
-			const locallyErrorsEntries = getErrorEntries(locallyErrors)
-
-			if (locallyErrorsEntries.length > 0)
-				return setErrors((prev) => ({ ...prev, ...locallyErrors }))
+			if (!result.success) {
+        const errors = parseZodMessages(result)
+				setErrors(errors)
+				return
+			}
 
 			await login(target.elements as LoginFormElements)
 		},
