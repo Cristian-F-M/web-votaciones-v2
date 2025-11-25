@@ -132,13 +132,13 @@ export default function Login() {
 						>
 							<Select
 								label="Tipo de documento"
-								id="typeDocument"
-								name="typeDocument"
+								id="typeDocumentCode"
+								name="typeDocumentCode"
 								required
-								error={errors.typeDocument}
+								error={errors.typeDocumentCode}
 								items={typesDocuments}
 								onChange={() => {
-									clearError('typeDocument')
+									clearError('typeDocumentCode')
 								}}
 							/>
 

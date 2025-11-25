@@ -4,14 +4,14 @@ export type ValidateFieldsProps = HTMLFormControlsCollection & {
 export type ValidateFieldsReturnType = Record<string, string>
 
 export interface LoginFormElements extends HTMLFormControlsCollection {
-	typeDocument: HTMLInputElement
+	typeDocumentCode: HTMLSelectElement
 	document: HTMLInputElement
 	password: HTMLInputElement
 	remember: HTMLInputElement
 }
 
 export interface LoginErrors {
-	typeDocument?: string | null
+	typeDocumentCode?: string | null
 	document?: string | null
 	password?: string | null
 	remember?: string | null

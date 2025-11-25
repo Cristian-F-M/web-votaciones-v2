@@ -24,7 +24,7 @@ export const SCHEMES = {
 }
 
 export const LOGIN_SCHEME = z.object({
-	typeDocument: SCHEMES.typeDocument,
+	typeDocumentCode: SCHEMES.typeDocument,
 	document: SCHEMES.document,
 	password: SCHEMES.password
 })
