@@ -69,17 +69,13 @@ export default function Login() {
 	const login = useCallback(
 		async (elements: LoginFormElements) => {
 			setIsLogginIn(true)
-			const { typeDocument, document, password, remember } = elements
+			const { password } = elements
+			const serializedForm = serializeForm<LoginFormElements, Record<string, unknown>>(elements)
 
 			const { ok, ...data } = await doFetch<LoginResponse>({
 				url: '/login',
 				method: 'POST',
-				body: {
-					typeDocumentCode: typeDocument.value,
-					document: document.value,
-					password: password.value,
-					remember: remember.value
-				}
+				body: serializedForm
 			})
 
 			setIsLogginIn(false)
