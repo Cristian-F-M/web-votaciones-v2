@@ -20,5 +20,5 @@
 }
 
 .grid-stats div header {
-  @apply mb-2 font-semibold text-lg;
+	@apply mb-2 font-semibold text-lg;
 }

@@ -13,10 +13,10 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode
 }>) {
-  const primaryColor = '#ff8617'
-  const darkPrimaryColor = '#ba6213'
+	const primaryColor = '#ff8617'
+	const darkPrimaryColor = '#ba6213'
 	const primaryColorContrast = '#f7b272'
-  const darkPrimaryColorContrast = '#47280c'
+	const darkPrimaryColorContrast = '#47280c'
 
 	return (
 		<html lang="es" suppressHydrationWarning className="scheme-light-dark">

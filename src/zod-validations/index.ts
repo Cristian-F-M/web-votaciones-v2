@@ -58,9 +58,9 @@ export const REGISTER_SCHEME = z
 		path: ['confirmPassword']
 	})
 
-  export const UPDATE_PROFILE_SCHEME = z.object({
-    name: SCHEMES.name,
-    lastname: SCHEMES.lastname,
-    phone: SCHEMES.phone,
-    email: SCHEMES.email,
-  })
+export const UPDATE_PROFILE_SCHEME = z.object({
+	name: SCHEMES.name,
+	lastname: SCHEMES.lastname,
+	phone: SCHEMES.phone,
+	email: SCHEMES.email
+})

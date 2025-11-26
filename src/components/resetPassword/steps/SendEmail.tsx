@@ -26,7 +26,7 @@ export function SendEmail({ onComplete, onCancel, user }: StepSendEmailProps) {
 		}
 
 		if (sendingEmail || !user)
-			return snackbar({ message: 'Enviando correo', variant: 'warning', })
+			return snackbar({ message: 'Enviando correo', variant: 'warning' })
 
 		setSendingEmail(true)
 		const data = await doFetch<SendPasswordResetCodeResponse>({

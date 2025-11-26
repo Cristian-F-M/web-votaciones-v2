@@ -44,7 +44,7 @@ export interface UpdateProfileFormElements extends HTMLFormControlsCollection {
 	lastname: HTMLInputElement
 	phone: HTMLInputElement
 	email: HTMLInputElement
-  image: HTMLInputElement
+	image: HTMLInputElement
 }
 
 export interface UpdateProfileErrors {
@@ -65,19 +65,19 @@ export interface FindUserErrors {
 }
 
 export interface WriteCodeFormElements extends HTMLFormControlsCollection {
-  code: HTMLInputElement
+	code: HTMLInputElement
 }
 
 export interface WriteCodeErrors {
-  code: string | null
+	code: string | null
 }
 
 export interface WritePasswordElements extends HTMLFormControlsCollection {
-  password: HTMLInputElement
-  passwordConfirmation: HTMLInputElement
+	password: HTMLInputElement
+	passwordConfirmation: HTMLInputElement
 }
 
 export interface WritePasswordErrors {
-  password: string | null
-  passwordConfirmation: string | null
+	password: string | null
+	passwordConfirmation: string | null
 }

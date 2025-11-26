@@ -36,16 +36,16 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
 		}
 
 		setAlreadyVoted(true)
-    setIsThisCandidateVoted(true)
+		setIsThisCandidateVoted(true)
 		snackbar({ message: data.message, variant: 'success' })
 	}, [candidate, isVoting])
 
 	useEffect(() => {
 		if (!user) return
 		setAlreadyVoted(user.voted)
-    setIsThisCandidateVoted(user.votedCandidateId === candidate.id)
+		setIsThisCandidateVoted(user.votedCandidateId === candidate.id)
 
-    console.log(user.votedCandidateId, candidate.id)
+		console.log(user.votedCandidateId, candidate.id)
 	}, [user, candidate])
 
 	const buttonText = alreadyVoted ? 'Ya votaste' : 'Votar'
@@ -55,12 +55,12 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
 
 	return (
 		<div className="md:w-[260px] w-[220px] max-h-[380px] border border-gray-400/60 rounded shadow relative">
-      {isThisCandidateVoted && (
-        <div className="absolute -top-1 -left-4 px-1.5 py-0.5 -rotate-25 bg-green-600 rounded text-sm flex items-center gap-1 [&_svg]:size-5">
-          <Sparkles />
-          Tu voto
-          </div>
-      )}
+			{isThisCandidateVoted && (
+				<div className="absolute -top-1 -left-4 px-1.5 py-0.5 -rotate-25 bg-green-600 rounded text-sm flex items-center gap-1 [&_svg]:size-5">
+					<Sparkles />
+					Tu voto
+				</div>
+			)}
 			<div className="md:w-11/12 w-full h-auto mx-auto border-b border-gray-300">
 				<img alt={`Foto del candidate ${candidate.user.name}`} src={imageUrl} />
 			</div>
@@ -68,7 +68,9 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
 			<div className="py-2 px-4">
 				<div className="md:w-fit w-full mx-auto flex flex-col items-center mb-4">
 					<h4 className="md:text-2xl text-xl">{candidate.user.name}</h4>
-					<p className="text-xs text-gray-700 dark:text-gray-400 text-center line-clamp-2">{candidate.description}</p>
+					<p className="text-xs text-gray-700 dark:text-gray-400 text-center line-clamp-2">
+						{candidate.description}
+					</p>
 				</div>
 
 				<Button

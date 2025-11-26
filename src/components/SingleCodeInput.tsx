@@ -1,4 +1,4 @@
-import { useCallback } from "react"
+import { useCallback } from 'react'
 
 type SingleCodeInputProps = {
 	onChange: (newChar: string, index?: number) => void

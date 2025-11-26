@@ -85,7 +85,11 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 						selected={isDefaultValueSelected}
 					>
 						<div>
-							<span className={`text-label ${required && 'text-label--required'}`}>{label}</span>
+							<span
+								className={`text-label ${required && 'text-label--required'}`}
+							>
+								{label}
+							</span>
 						</div>
 					</option>
 					{items.map((item, index) => (

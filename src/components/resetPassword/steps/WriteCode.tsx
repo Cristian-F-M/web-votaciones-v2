@@ -150,7 +150,7 @@ export function WriteCode({
 				</p>
 			</div>
 			<form className="space-y-8 mt-8" onSubmit={handleSendCode}>
-        <CodeInput className="mx-auto" size={6} id="code" name="code" />
+				<CodeInput className="mx-auto" size={6} id="code" name="code" />
 				<div className="flex items-center gap-3">
 					<Button
 						type="button"

@@ -83,7 +83,8 @@ export function FindUser({ onComplete }: StepFindUserProps) {
 			setFindingUser(false)
 
 			if (!data.ok) {
-				if ('message' in data) snackbar({ message: data.message, variant: 'error', })
+				if ('message' in data)
+					snackbar({ message: data.message, variant: 'error' })
 
 				if ('errors' in data) {
 					const errors = getProcessedErrors(data.errors)

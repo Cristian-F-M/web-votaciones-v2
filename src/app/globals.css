@@ -2,40 +2,39 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 html {
-  scroll-behavior: smooth;
-  scroll-margin-block: 50px;
+	scroll-behavior: smooth;
+	scroll-margin-block: 50px;
 }
 
 @theme {
-  --animate-loader: loader 0.8s linear infinite;
-  --animate-fadeIn: fade-in 0.6s ease-out;
+	--animate-loader: loader 0.8s linear infinite;
+	--animate-fadeIn: fade-in 0.6s ease-out;
 
-  --color-page-dark-bg: var(--color-gray-950);
-  --color-page-light-bg: var(--color-white);
-  --color-page-light-bg-contrast: var(--color-gray-50);
-  --color-page-dark-bg-contrast: var(--color-gray-800);
-  --color-primary: var(--primary-color);
-  --color-primary-contrast: var(--primary-contrast-color);
-  --color-dark-primary: var(--dark-primary-color);
-  --color-dark-primary-contrast: var(--dark-primary-contrast-color);
+	--color-page-dark-bg: var(--color-gray-950);
+	--color-page-light-bg: var(--color-white);
+	--color-page-light-bg-contrast: var(--color-gray-50);
+	--color-page-dark-bg-contrast: var(--color-gray-800);
+	--color-primary: var(--primary-color);
+	--color-primary-contrast: var(--primary-contrast-color);
+	--color-dark-primary: var(--dark-primary-color);
+	--color-dark-primary-contrast: var(--dark-primary-contrast-color);
 
+	@keyframes loader {
+		to {
+			transform: rotate(360deg);
+		}
+	}
 
-  @keyframes loader {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes fade-in {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+	@keyframes fade-in {
+		0% {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		100% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
 }
 
 @layer components {
@@ -51,109 +50,111 @@ html {
 		@apply bg-transparent border border-gray-400 hover:bg-gray-200 dark:bg-gray-500/30 dark:border-gray-500/40 dark:hover:bg-gray-500/50 disabled:text-gray-700/90 dark:disabled:text-gray-400;
 	}
 
-  .bg-page {
-    @apply bg-(--color-page-light-bg) dark:bg-(--color-page-dark-bg);
-  }
+	.bg-page {
+		@apply bg-(--color-page-light-bg) dark:bg-(--color-page-dark-bg);
+	}
 
-  .bg-page-contrast {
-    @apply bg-(--color-page-light-bg-contrast) dark:bg-(--color-page-dark-bg-contrast);
-  }
+	.bg-page-contrast {
+		@apply bg-(--color-page-light-bg-contrast) dark:bg-(--color-page-dark-bg-contrast);
+	}
 }
 
-html, body, main {
-  scrollbar-gutter: stable;
+html,
+body,
+main {
+	scrollbar-gutter: stable;
 }
 
 .input label {
-  transition-duration: 0.3s;
-  transition-property: transform, translate, font-size, color;
-  transition-timing-function: ease;
+	transition-duration: 0.3s;
+	transition-property: transform, translate, font-size, color;
+	transition-timing-function: ease;
 }
 
 .input input:focus + label,
 .input input:not(:placeholder-shown) + label {
-  translate: 0 -110%;
-  color: light-dark(#6a7282, #9ca3af);
-  font-size: 13px;
+	translate: 0 -110%;
+	color: light-dark(#6a7282, #9ca3af);
+	font-size: 13px;
 }
 
 .input input:focus + label {
-  color: var(--color-primary);
+	color: var(--color-primary);
 
-  html.dark & {
-    color: var(--color-dark-primary);
-  }
+	html.dark & {
+		color: var(--color-dark-primary);
+	}
 }
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+	-webkit-appearance: none;
+	margin: 0;
 }
 
 input[type="number"] {
-  -moz-appearance: textfield;
-  appearance: textfield;
+	-moz-appearance: textfield;
+	appearance: textfield;
 }
 
 .checkbox-wrapper .label span {
-  float: left;
+	float: left;
 }
 .checkbox-wrapper .label span:first-child {
-  position: relative;
-  border-radius: 4px;
-  transform: scale(1);
-  border: 1px solid #cccfdb;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 1px rgba(0, 16, 75, 0.05);
+	position: relative;
+	border-radius: 4px;
+	transform: scale(1);
+	border: 1px solid #cccfdb;
+	transition: all 0.2s ease;
+	box-shadow: 0 1px 1px rgba(0, 16, 75, 0.05);
 }
 .checkbox-wrapper .label span:first-child svg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  fill: none;
-  stroke: #fff;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 16px;
-  stroke-dashoffset: 16px;
-  transition: all 0.3s ease;
-  transition-delay: 0.1s;
-  transform: translate3d(-50%, -50%, 0);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	fill: none;
+	stroke: #fff;
+	stroke-width: 1.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-dasharray: 16px;
+	stroke-dashoffset: 16px;
+	transition: all 0.3s ease;
+	transition-delay: 0.1s;
+	transform: translate3d(-50%, -50%, 0);
 }
 .checkbox-wrapper .label span:last-child {
-  padding-left: 8px;
-  line-height: 18px;
+	padding-left: 8px;
+	line-height: 18px;
 }
 .checkbox-wrapper .label:hover span:first-child {
-  border-color: var(--color-primary);
+	border-color: var(--color-primary);
 }
 .checkbox-wrapper .inp-checkbox {
-  position: absolute;
-  visibility: hidden;
+	position: absolute;
+	visibility: hidden;
 }
 .checkbox-wrapper .inp-checkbox:checked + .label span:first-child {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  animation: wave-4 0.4s ease;
+	background: var(--color-primary);
+	border-color: var(--color-primary);
+	animation: wave-4 0.4s ease;
 }
 .checkbox-wrapper .inp-checkbox:checked + .label span:first-child svg {
-  stroke-dashoffset: 0;
+	stroke-dashoffset: 0;
 }
 
 @keyframes wave-4 {
-  50% {
-    transform: scale(0.9);
-  }
+	50% {
+		transform: scale(0.9);
+	}
 }
 
 .eye-line {
-  stroke-dasharray: 30;
-  stroke-dashoffset: 30;
-  transition: stroke-dashoffset 0.3s ease;
+	stroke-dasharray: 30;
+	stroke-dashoffset: 30;
+	transition: stroke-dashoffset 0.3s ease;
 }
 
 .eye-off .eye-line {
-  stroke-dashoffset: 0;
+	stroke-dashoffset: 0;
 }

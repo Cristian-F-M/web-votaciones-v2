@@ -10,7 +10,11 @@ import type {
 	RegisterFormElements,
 	ValidateFieldsProps
 } from '@/types/forms'
-import type { RegisterResponse, GetTypeDocumentsResponse, GetProcessedErrorsReturnType } from '@/types/api'
+import type {
+	RegisterResponse,
+	GetTypeDocumentsResponse,
+	GetProcessedErrorsReturnType
+} from '@/types/api'
 import { doFetch } from '@/utils/fetch'
 import { snackbar } from '@/utils/dom'
 import {
@@ -77,11 +81,14 @@ export default function Register() {
 				confirmPassword
 			} = target.elements as RegisterFormElements
 
-      const serializedForm = serializeForm<RegisterFormElements, GetProcessedErrorsReturnType>(target.elements as RegisterFormElements)
+			const serializedForm = serializeForm<
+				RegisterFormElements,
+				GetProcessedErrorsReturnType
+			>(target.elements as RegisterFormElements)
 			const result = z.safeParse(REGISTER_SCHEME, serializedForm)
 
 			if (!result.success) {
-        const errors = parseZodMessages(result)
+				const errors = parseZodMessages(result)
 				setErrors(errors)
 				return
 			}
@@ -114,37 +121,42 @@ export default function Register() {
 				setErrors(fullErrors)
 				return
 			}
-      
-      register(target.elements as RegisterFormElements)
+
+			register(target.elements as RegisterFormElements)
 		},
 		[isRegistering, errors]
 	)
 
-	const register = useCallback(async (elements: RegisterFormElements) => {
-		setIsRegistering(true)
-    const serializedForm = serializeForm<RegisterFormElements, GetProcessedErrorsReturnType>(elements)
-		const { ok, ...data } = await doFetch<RegisterResponse>({
-			url: '/register',
-			method: 'POST',
-			body: serializedForm
-		})
-		setIsRegistering(false)
+	const register = useCallback(
+		async (elements: RegisterFormElements) => {
+			setIsRegistering(true)
+			const serializedForm = serializeForm<
+				RegisterFormElements,
+				GetProcessedErrorsReturnType
+			>(elements)
+			const { ok, ...data } = await doFetch<RegisterResponse>({
+				url: '/register',
+				method: 'POST',
+				body: serializedForm
+			})
+			setIsRegistering(false)
 
-		if (!ok) {
-			if (data.message)
-				snackbar({ message: data.message })
+			if (!ok) {
+				if (data.message) snackbar({ message: data.message })
 
-			if ('errors' in data && data.errors) {
-				const errors = getProcessedErrors(data.errors)
-				setErrors(errors)
+				if ('errors' in data && data.errors) {
+					const errors = getProcessedErrors(data.errors)
+					setErrors(errors)
+				}
+				return
 			}
-			return
-		}
 
-		snackbar({ message: data.message, variant: 'success' })
+			snackbar({ message: data.message, variant: 'success' })
 
-		router.push('/login')
-	}, [router])
+			router.push('/login')
+		},
+		[router]
+	)
 
 	const clearError = useCallback((key: keyof RegisterFormElements) => {
 		setErrors((prev) => ({ ...prev, [key]: null }))
@@ -177,7 +189,7 @@ export default function Register() {
 					<form
 						onSubmit={handleSubmit}
 						className="w-full mt-10 md:mt-6 grid gap-6 grid-cols-1 sm:grid-cols-2 space-y-4"
-            method="POST"
+						method="POST"
 					>
 						<Input
 							label="Nombre"
@@ -272,9 +284,14 @@ export default function Register() {
 							}}
 						/>
 						<div className="md:col-span-2">
-              <Button type="submit" showLoader={true} loading={isRegistering} disabled={isRegistering} >
-                Registrarse
-              </Button>
+							<Button
+								type="submit"
+								showLoader={true}
+								loading={isRegistering}
+								disabled={isRegistering}
+							>
+								Registrarse
+							</Button>
 							<div className="space-x-1 text-sm mt-3 w-fit mx-auto">
 								<span className="text-gray-500 dark:text-gray-300">
 									¿Ya tienes una cuenta?

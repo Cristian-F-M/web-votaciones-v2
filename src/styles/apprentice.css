@@ -1,5 +1,5 @@
 @reference '../app/globals.css';
 
 .time-separator {
-  @apply md:text-2xl text-2xl mx-1.5 self-start;
+	@apply md:text-2xl text-2xl mx-1.5 self-start;
 }

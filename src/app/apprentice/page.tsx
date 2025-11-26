@@ -68,13 +68,16 @@ export default function IndexPage() {
 	useEffect(() => {
 		const currentYear = new Date().getFullYear()
 
-		let newTitle = 'Votaciones - Vota en línea por tu candidato preferido en CGAO'
-    
-		if (loadingVote) newTitle = `Votaciones - Cargando votaciones para el año ${currentYear}`
+		let newTitle =
+			'Votaciones - Vota en línea por tu candidato preferido en CGAO'
+
+		if (loadingVote)
+			newTitle = `Votaciones - Cargando votaciones para el año ${currentYear}`
 		if (loadingWinner)
 			newTitle = `Votaciones - Cargando resultados para conocer el ganador del año ${currentYear}`
 		if (voteNotStarted)
-			newTitle = 'Votaciones - Las votaciones aún no han iniciado, por favor vuelva pronto'
+			newTitle =
+				'Votaciones - Las votaciones aún no han iniciado, por favor vuelva pronto'
 		if (voteFinished)
 			newTitle = `Votaciones - Mira los resultados de la votación del año ${currentYear}`
 

@@ -5,4 +5,3 @@ export const snackbarOptions: OptionsObject = {
 	autoHideDuration: 2000,
 	preventDuplicate: true
 }
-

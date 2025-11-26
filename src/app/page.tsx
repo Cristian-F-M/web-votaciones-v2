@@ -16,10 +16,10 @@ export default function Home() {
 		await new Promise((resolve) => setTimeout(resolve, 1000))
 
 		if (!data.ok) {
-      snackbar({
-        message: data.message,
-        variant: 'info'
-      })
+			snackbar({
+				message: data.message,
+				variant: 'info'
+			})
 			if ('urlRedirect' in data) return router.replace(data.urlRedirect)
 			router.replace('login')
 		}

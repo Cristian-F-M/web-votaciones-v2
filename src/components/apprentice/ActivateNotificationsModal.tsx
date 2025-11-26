@@ -81,7 +81,9 @@ export function ActivateNotificationsModal({
 				<main className="mt-px">
 					<p className="text-gray-700 md:text-sm text-xs dark:text-gray-400">
 						Se enviará un correo electrónico a{' '}
-						<span className="text-primary dark:text-dark-primary font-semibold">{maskedEmail}</span>{' '}
+						<span className="text-primary dark:text-dark-primary font-semibold">
+							{maskedEmail}
+						</span>{' '}
 						cuando haya nuevas votaciones
 					</p>
 

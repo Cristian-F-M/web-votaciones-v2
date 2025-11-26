@@ -4,7 +4,10 @@ import type { TypeDocument, Role } from './models'
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
 
-export type GetProcessedErrorsReturnType = Record<string, string | null | undefined>
+export type GetProcessedErrorsReturnType = Record<
+	string,
+	string | null | undefined
+>
 
 export interface FetchProps {
 	url: `/${string}`
@@ -80,85 +83,107 @@ export interface ResponseFailedResponse {
 
 export type RegisterResponse = ResponseSuccesResponse | ResponseFailedResponse
 
+export type UserHomeResponse =
+	| VerifySessionResponse
+	| {
+			ok: true
+			user: UserHome
+	  }
 
-export type UserHomeResponse = (VerifySessionResponse) | {
-	ok: true
-	user: UserHome
-}
+export type LogoutResponse =
+	| FetchError
+	| {
+			ok: true
+			message: string
+			urlRedirect: string
+	  }
 
-export type LogoutResponse = FetchError | {
-	ok: true
-	message: string
-	urlRedirect: string
-}
+export type GetCandidatesResponse =
+	| FetchError
+	| {
+			ok: true
+			candidates: Candidate[]
+	  }
 
-export type GetCandidatesResponse = FetchError | {
-	ok: true
-	candidates: Candidate[]
-}
+export type ValidatePermissionsResponse =
+	| FetchError
+	| VerifySessionResponse
+	| {
+			ok: boolean
+			message: string
+	  }
 
-export type ValidatePermissionsResponse = FetchError | VerifySessionResponse | {
-	ok: boolean
-	message: string
-}
+export type GetVoteResponse =
+	| FetchError
+	| {
+			ok: true
+			lastVote: Vote
+	  }
 
-export type GetVoteResponse = FetchError | {
-	ok: true
-	lastVote: Vote
-}
+export type VoteResponse =
+	| FetchError
+	| {
+			ok: true
+			message: string
+	  }
 
-export type VoteResponse = FetchError | {
-	ok: true,
-  message: string
-} 
-
-export type UpdateProfileResponse = FetchError | {
-  ok: true
-  message: string
-} | 
-{ 
-  ok: false 
-  errors: ApiErrors
-}
+export type UpdateProfileResponse =
+	| FetchError
+	| {
+			ok: true
+			message: string
+	  }
+	| {
+			ok: false
+			errors: ApiErrors
+	  }
 
 export interface FindUserUser {
-  email: string
-  id: string
-  timeNewCode: string
+	email: string
+	id: string
+	timeNewCode: string
 }
 
+export type FindUserResponse =
+	| FetchError
+	| {
+			ok: true
+			user: FindUserUser
+	  }
+	| {
+			ok: false
+			errors: ApiErrors
+	  }
 
-export type FindUserResponse = FetchError | {
-  ok: true
-  user: FindUserUser
-} | {
-  ok: false
-  errors: ApiErrors
-}
+export type SendPasswordResetCodeResponse =
+	| {
+			ok: true
+			timeNewCode: string
+	  }
+	| {
+			ok: false
+			message: string
+			timeNewCode?: string
+	  }
 
-export type SendPasswordResetCodeResponse = {
-  ok: true
-  timeNewCode: string
-} | {
-  ok: false
-  message: string
-  timeNewCode?: string
-}
+export type VerifyPasswordResetCodeResponse =
+	| {
+			ok: true
+	  }
+	| {
+			ok: false
+			message: string
+			errors?: ApiErrors
+	  }
 
-export type VerifyPasswordResetCodeResponse = {
-  ok: true
-} | {
-  ok: false
-  message: string
-  errors?: ApiErrors
-}
-
-export type UpdatePasswordResponse = {
-  ok: true
-  message: string
-  urlReturn: string
-} | {
-  ok: false
-  message?: string
-  errors: ApiErrors
-}
+export type UpdatePasswordResponse =
+	| {
+			ok: true
+			message: string
+			urlReturn: string
+	  }
+	| {
+			ok: false
+			message?: string
+			errors: ApiErrors
+	  }

@@ -33,7 +33,7 @@ export const INPUTS_VALIDATIONS = {
 		size: 10,
 		sizeMessage: 'El telefono debe tener 10 caracteres'
 	},
-  email: {
-    validMessage: 'Ingresa un correo electronico válido',
-  }
+	email: {
+		validMessage: 'Ingresa un correo electronico válido'
+	}
 }

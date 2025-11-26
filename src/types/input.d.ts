@@ -28,7 +28,6 @@ export interface InputSelectWrapperProps {
 	onErrorChange?: (error: string | null) => void
 }
 
-
 export interface SelectFullPropsProps extends InputBaseProps {
 	selectedItem?: 'default-value' | (string & {})
 	items: SelectItem[] | null

@@ -119,10 +119,10 @@ export default function ApprenticeProfilePage() {
 			}
 
 			const user = await getUser()
-      setUser(user)
+			setUser(user)
 			setProfileImageUrl(null)
 			snackbar({ message: data.message, variant: 'success' })
-      image.value = ''
+			image.value = ''
 		},
 		[updatingProfile, errors, profileImageUrl, confirmedImage, getUser, setUser]
 	)
@@ -160,7 +160,9 @@ export default function ApprenticeProfilePage() {
 								)}
 								<img
 									className="size-full object-cover rounded border-2 border-primary/70 dark:border-dark-primary mx-auto"
-									src={profileImageUrl || apprenticeImageUrl || imageUrlFallback}
+									src={
+										profileImageUrl || apprenticeImageUrl || imageUrlFallback
+									}
 									alt={`Foto de el usuario ${user?.name}`}
 								/>
 							</a>

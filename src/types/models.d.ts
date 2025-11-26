@@ -62,7 +62,7 @@ export interface Vote {
 	startDate: string
 	endDate: string
 	finishVoteInfo: {
-		cantApprentices: number,
+		cantApprentices: number
 		totalVotes: number
 		cantVotesWinner: number
 		candidates: Candidate[]

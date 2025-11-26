@@ -2,7 +2,11 @@
 import { Input } from '@/components/Input'
 import LogoSena from '@/icons/LogoSena'
 import { ToggleTheme } from '@/components/ToggleTheme'
-import type { GetProcessedErrorsReturnType, GetTypeDocumentsResponse, LoginResponse } from '@/types/api'
+import type {
+	GetProcessedErrorsReturnType,
+	GetTypeDocumentsResponse,
+	LoginResponse
+} from '@/types/api'
 import { useCallback, useEffect, useState } from 'react'
 import { Select } from '@/components/Select'
 import { doFetch } from '@/utils/fetch'
@@ -52,11 +56,14 @@ export default function Login() {
 				return snackbar({ message: 'Espera un momento', variant: 'warning' })
 			const target = event.target as HTMLFormElement
 
-			const serializedForm = serializeForm<LoginFormElements, GetProcessedErrorsReturnType>(target.elements as LoginFormElements)
+			const serializedForm = serializeForm<
+				LoginFormElements,
+				GetProcessedErrorsReturnType
+			>(target.elements as LoginFormElements)
 			const result = z.safeParse(LOGIN_SCHEME, serializedForm)
 
 			if (!result.success) {
-        const errors = parseZodMessages(result)
+				const errors = parseZodMessages(result)
 				setErrors(errors)
 				return
 			}
@@ -70,7 +77,10 @@ export default function Login() {
 		async (elements: LoginFormElements) => {
 			setIsLogginIn(true)
 			const { password } = elements
-			const serializedForm = serializeForm<LoginFormElements, Record<string, unknown>>(elements)
+			const serializedForm = serializeForm<
+				LoginFormElements,
+				Record<string, unknown>
+			>(elements)
 
 			const { ok, ...data } = await doFetch<LoginResponse>({
 				url: '/login',
@@ -181,9 +191,14 @@ export default function Login() {
 										name="remember"
 									/>
 								</div>
-                <Button type="submit" showLoader={true} loading={isLogginIn} disabled={isLogginIn}>
-                  Iniciar sesión
-                </Button>
+								<Button
+									type="submit"
+									showLoader={true}
+									loading={isLogginIn}
+									disabled={isLogginIn}
+								>
+									Iniciar sesión
+								</Button>
 								<div className="space-x-1 text-sm mt-3 w-fit mx-auto">
 									<span className="text-gray-500 dark:text-gray-300">
 										¿No tienes una cuenta?
