@@ -57,3 +57,10 @@ export const REGISTER_SCHEME = z
 		error: IV.password.confirmMessage,
 		path: ['confirmPassword']
 	})
+
+  export const UPDATE_PROFILE_SCHEME = z.object({
+    name: SCHEMES.name,
+    lastname: SCHEMES.lastname,
+    phone: SCHEMES.phone,
+    email: SCHEMES.email,
+  })
