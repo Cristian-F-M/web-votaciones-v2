@@ -177,6 +177,7 @@ export default function Register() {
 					<form
 						onSubmit={handleSubmit}
 						className="w-full mt-10 md:mt-6 grid gap-6 grid-cols-1 sm:grid-cols-2 space-y-4"
+            method="POST"
 					>
 						<Input
 							label="Nombre"
