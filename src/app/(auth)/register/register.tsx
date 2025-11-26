@@ -122,29 +122,11 @@ export default function Register() {
 
 	const register = useCallback(async (elements: RegisterFormElements) => {
 		setIsRegistering(true)
-		const {
-			name,
-			lastname,
-			typeDocumentCode,
-			document,
-			email,
-			phone,
-			password,
-			confirmPassword
-		} = elements
+    const serializedForm = serializeForm<RegisterFormElements, GetProcessedErrorsReturnType>(elements)
 		const { ok, ...data } = await doFetch<RegisterResponse>({
 			url: '/register',
 			method: 'POST',
-			body: {
-				name: name.value,
-				lastname: lastname.value,
-				typeDocumentCode: typeDocumentCode.value,
-				document: document.value,
-				email: email.value,
-				phone: phone.value,
-				password: password.value,
-				confirmPassword: confirmPassword.value
-			}
+			body: serializedForm
 		})
 		setIsRegistering(false)
 
