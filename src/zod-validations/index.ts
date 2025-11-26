@@ -20,7 +20,20 @@ export const SCHEMES = {
 		.string()
 		.nonempty(IV.requiredMessage)
 		.min(PASSWORD_MIN_MAX_LENGHT[0], IV.password.sizeMessage)
-		.max(PASSWORD_MIN_MAX_LENGHT[1], IV.password.sizeMessage)
+		.max(PASSWORD_MIN_MAX_LENGHT[1], IV.password.sizeMessage),
+	name: z
+		.string()
+		.nonempty(IV.requiredMessage)
+		.min(IV.name.min, IV.name.sizeMessage),
+	lastname: z
+		.string()
+		.nonempty(IV.requiredMessage)
+		.min(IV.lastname.min, IV.lastname.sizeMessage),
+	phone: z
+		.string()
+		.nonempty(IV.requiredMessage)
+		.length(IV.phone.size, IV.phone.sizeMessage),
+	email: z.email(IV.email.validMessage)
 }
 
 export const LOGIN_SCHEME = z.object({
@@ -29,3 +42,18 @@ export const LOGIN_SCHEME = z.object({
 	password: SCHEMES.password
 })
 
+export const REGISTER_SCHEME = z
+	.object({
+		typeDocumentCode: SCHEMES.typeDocument,
+		document: SCHEMES.document,
+		name: SCHEMES.name,
+		lastname: SCHEMES.lastname,
+		phone: SCHEMES.phone,
+		email: SCHEMES.email,
+		password: SCHEMES.password.regex(PASSWORD_REGEX, IV.password.strongMessage),
+		confirmPassword: SCHEMES.password
+	})
+	.refine((d) => d.password === d.confirmPassword, {
+		error: IV.password.confirmMessage,
+		path: ['confirmPassword']
+	})
