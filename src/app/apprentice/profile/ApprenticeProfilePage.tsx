@@ -5,15 +5,25 @@ import { Select } from '@/components/Select'
 import { UploadFile } from '@/components/UploadFile'
 import X from '@/icons/X'
 import { useUser } from '@/states/useUser'
-import type { UpdateProfileResponse } from '@/types/api'
+import type {
+	GetProcessedErrorsReturnType,
+	UpdateProfileResponse
+} from '@/types/api'
 import type {
 	UpdateProfileErrors,
 	UpdateProfileFormElements
 } from '@/types/forms'
 import { doFetch } from '@/utils/fetch'
-import { getErrorEntries, getProcessedErrors } from '@/utils/form'
+import {
+	getErrorEntries,
+	getProcessedErrors,
+	parseZodMessages,
+	serializeForm
+} from '@/utils/form'
 import { snackbar } from '@/utils/dom'
 import { useCallback, useState, Activity } from 'react'
+import * as z from 'zod'
+import { UPDATE_PROFILE_SCHEME } from '@/zod-validations'
 
 export default function ApprenticeProfilePage() {
 	const { user, getUser, setUser } = useUser((state) => state)
@@ -62,22 +72,23 @@ export default function ApprenticeProfilePage() {
 
 			const target = event.currentTarget as HTMLFormElement
 
-			const { name, lastname, phone, email, image } =
-				target.elements as UpdateProfileFormElements
+			const serializedFrom = serializeForm<
+				UpdateProfileFormElements,
+				GetProcessedErrorsReturnType
+			>(target.elements as UpdateProfileFormElements)
 
-			const locallyErrors: Partial<UpdateProfileErrors> = {}
+			const result = z.safeParse(UPDATE_PROFILE_SCHEME, serializedFrom)
 
-			for (const i of [name, lastname, phone, email]) {
-				const key = i.name as keyof UpdateProfileErrors
-				if (i.value.trim() === '') locallyErrors[key] = 'Campo requerido'
+			if (!result.success) {
+				const errors = parseZodMessages(result)
+				setErrors(errors)
+				return
 			}
 
-			setErrors((prev) => ({ ...prev, ...locallyErrors }))
+			const { image } = target.elements as UpdateProfileFormElements
 
-			const locallyErrorsEntries = getErrorEntries(locallyErrors)
 			const errorsEntries = getErrorEntries(errors)
-
-			if (locallyErrorsEntries.length > 0 || errorsEntries.length > 0) return
+			if (errorsEntries.length > 0) return
 
 			setUpdatingProfile(true)
 
