@@ -10,7 +10,7 @@ import type {
 	RegisterFormElements,
 	ValidateFieldsProps
 } from '@/types/forms'
-import type { RegisterResponse, GetTypeDocumentsResponse } from '@/types/api'
+import type { RegisterResponse, GetTypeDocumentsResponse, GetProcessedErrorsReturnType } from '@/types/api'
 import { doFetch } from '@/utils/fetch'
 import { snackbar } from '@/utils/dom'
 import {
@@ -18,6 +18,8 @@ import {
 	getProcessedErrors,
 	isEmailValid,
 	isPasswordValid,
+	parseZodMessages,
+	serializeForm,
 	validateFieldsNotEmpty
 } from '@/utils/form'
 import { scrollSmooth } from '@/utils/dom'
@@ -25,6 +27,8 @@ import { useRouter } from 'next/navigation'
 import type { TypeDocument } from '@/types/models'
 import { Button } from '@/components/Button'
 import { PASSWORD_REGEX } from '@/constants/form'
+import { REGISTER_SCHEME } from '@/zod-validations'
+import * as z from 'zod'
 
 export default function Register() {
 	const router = useRouter()
@@ -72,6 +76,15 @@ export default function Register() {
 				password,
 				confirmPassword
 			} = target.elements as RegisterFormElements
+
+      const serializedForm = serializeForm<RegisterFormElements, GetProcessedErrorsReturnType>(target.elements as RegisterFormElements)
+			const result = z.safeParse(REGISTER_SCHEME, serializedForm)
+
+			if (!result.success) {
+        const errors = parseZodMessages(result)
+				setErrors(errors)
+				return
+			}
 
 			let locallyErrors: typeof errors = {}
 
