@@ -15,9 +15,25 @@ export const INPUTS_VALIDATIONS = {
 	password: {
 		sizeMessage: 'La contraseña debe tener entre 8 y 20 caracteres',
 		strongMessage:
-			'La contraseña debe tener al menos 1 mayúscula, 1 minúscula, 1 número y 1 símbolo especial'
+			'La contraseña debe tener al menos 1 mayúscula, 1 minúscula, 1 número y 1 símbolo especial',
+		confirmMessage: 'Las contraseñas no coinciden'
 	},
 	select: {
 		requiredMessage: 'Selecciona una opción de la lista'
-	}
+	},
+	name: {
+		min: 2,
+		sizeMessage: 'El nombre debe tener al menos 2 caracteres'
+	},
+	lastname: {
+		min: 2,
+		sizeMessage: 'El apellido debe tener al menos 2 caracteres'
+	},
+	phone: {
+		size: 10,
+		sizeMessage: 'El telefono debe tener 10 caracteres'
+	},
+  email: {
+    validMessage: 'Ingresa un correo electronico válido',
+  }
 }
