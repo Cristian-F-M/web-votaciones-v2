@@ -17,7 +17,7 @@ export function Input({
 	const [showPassword, setShowPassword] = useState(false)
 
 	return (
-		<div>
+		<div className="w-full">
 			<div
 				className="input w-full relative flex flex-col justify-center"
 				aria-labelledby={`${id}-label`}
