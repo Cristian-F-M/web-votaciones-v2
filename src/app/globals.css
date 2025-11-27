@@ -39,7 +39,7 @@ html {
 
 @layer components {
 	.button {
-		@apply w-full px-3 md:py-1.5 py-1 rounded cursor-pointer disabled:text-white/90 flex flex-row gap-2 items-center justify-center not-disabled:active:scale-95 transition-all mb-3 disabled:cursor-not-allowed text-sm md:text-base h-9;
+		@apply w-full px-3 md:py-1.5 py-1 rounded cursor-pointer disabled:text-white/90 flex flex-row gap-2 items-center justify-center not-disabled:active:scale-95 transition-all disabled:cursor-not-allowed text-sm md:text-base h-9;
 	}
 
 	.primary-button {
