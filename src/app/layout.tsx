@@ -21,7 +21,7 @@ export default function RootLayout({
 	return (
 		<html lang="es" suppressHydrationWarning className="scheme-light-dark">
 			<head>
-				<link rel="icon" type="image/svg+xml" href="./logo-sena.svg" />
+				<link rel="icon" type="image/svg+xml" href="/logo-sena.svg" />
 				<style>{`
           :root {
             --primary-color: ${primaryColor};
