@@ -23,7 +23,7 @@ interface BaseProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	label: string
 	itemInputProps?: React.InputHTMLAttributes<HTMLInputElement>
 	removeItemProps?: React.ButtonHTMLAttributes<HTMLButtonElement>
-  error?: string | null | undefined
+	error?: string | null | undefined
 }
 
 type ItemsListProps =
@@ -34,8 +34,8 @@ export function ItemsList({
 	label,
 	className,
 	itemInputProps,
-  error,
-  onChange,
+	error,
+	onChange,
 	...props
 }: ItemsListProps) {
 	const [currentText, setCurrentText] = useState('')
@@ -64,9 +64,12 @@ export function ItemsList({
 		setCurrentText('')
 	}, [setItemsState, currentText, scheme])
 
-	const handleRemoveItem = useCallback((id: string) => {
-		setItemsState((prev) => prev.filter((item) => item.id !== id))
-	}, [setItemsState])
+	const handleRemoveItem = useCallback(
+		(id: string) => {
+			setItemsState((prev) => prev.filter((item) => item.id !== id))
+		},
+		[setItemsState]
+	)
 
 	const handleKeyPress = useCallback(
 		(event: React.KeyboardEvent<HTMLInputElement>) => {
