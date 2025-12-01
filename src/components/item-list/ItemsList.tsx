@@ -24,6 +24,7 @@ interface BaseProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	itemInputProps?: React.InputHTMLAttributes<HTMLInputElement>
 	removeItemProps?: React.ButtonHTMLAttributes<HTMLButtonElement>
 	error?: string | null | undefined
+  defaultItems?: Item[]
 }
 
 type ItemsListProps =
@@ -36,11 +37,12 @@ export function ItemsList({
 	itemInputProps,
 	error,
 	onChange,
+  defaultItems = [],
 	...props
 }: ItemsListProps) {
 	const [currentText, setCurrentText] = useState('')
 	const [errors, setErrors] = useState<Partial<{ item: string }>>({})
-	const [items, setItems] = useState<Item[]>([])
+	const [items, setItems] = useState<Item[]>(defaultItems)
 	const isState = props.use === 'state'
 	const setItemsState = isState ? props.setItems : setItems
 
