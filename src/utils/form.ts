@@ -52,27 +52,40 @@ export function validateFieldsNotEmpty(
 	return errors
 }
 
-export function serializeForm<T extends HTMLFormControlsCollection, R>(
-	form: HTMLFormElement | T
-) {
+export function serializeForm<R = Record<string, unknown>>(
+	form: HTMLFormElement | HTMLFormControlsCollection
+): R {
+	let entries: [string, FormDataEntryValue][] = []
+
 	if (form instanceof HTMLFormElement) {
-		const formData = new FormData(form)
-		const formEntries = formData.entries()
-		return Object.fromEntries(formEntries) as R
+		entries.push(...Array.from(new FormData(form).entries()))
+
+		entries = Array.from(new FormData(form).entries())
 	}
 
 	if (form instanceof HTMLFormControlsCollection) {
-		const entries = Array.from(form)
-			.map((e) => {
-				if (e instanceof HTMLInputElement || e instanceof HTMLSelectElement) {
-					return [e.name, e.value]
-				}
-			})
-			.filter((c) => !!c)
-		return Object.fromEntries(entries) as R
+		entries = (
+			Array.from(form) as (HTMLElement & { name: string; value: string })[]
+		).map((el) => [el.name, el.value] as [string, FormDataEntryValue])
 	}
 
-	return {}
+	const result: Record<string, any> = {}
+
+	for (const [rawKey, value] of entries) {
+		const isArray = rawKey.endsWith('[]')
+		const key = isArray ? rawKey.replace('[]', '') : rawKey
+
+		if (isArray) {
+			const arr = result[key] || []
+			arr.push(value)
+			result[key] = arr
+			continue
+		}
+
+		result[key] = value
+	}
+
+	return result as R
 }
 
 export function getValidationResult(errors: ZodErrors) {
