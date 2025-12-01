@@ -71,6 +71,8 @@ export function ItemsList({
 		setItems((prev) => prev.filter((item) => item.id !== id))
 	}
 
+	const itemsName = props.use === 'form' ? props.itemsName : 'items[]'
+
 	return (
 		<div>
 			<div className="flex items-center gap-6 h-fit">
@@ -106,6 +108,7 @@ export function ItemsList({
 							{...itemInputProps}
 							item={item}
 							handleRemoveItem={handleRemoveItem}
+							name={itemsName}
 						/>
 					</li>
 				))}
