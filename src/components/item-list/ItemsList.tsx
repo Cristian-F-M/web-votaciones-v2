@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
 import { SingleItemList } from '@/components/item-list/SingleItemList'
@@ -42,12 +42,13 @@ export function ItemsList({
 	const [errors, setErrors] = useState<Partial<{ item: string }>>({})
 	const [items, setItems] = useState<Item[]>([])
 	const isState = props.use === 'state'
+	const setItemsState = isState ? props.setItems : setItems
 
 	const scheme = z.object({
 		item: z.string().nonempty(IV.requiredMessage)
 	})
 
-	const handleAddItem = () => {
+	const handleAddItem = useCallback(() => {
 		const result = z.safeParse(scheme, { item: currentText })
 
 		if (!result.success) {
@@ -56,23 +57,27 @@ export function ItemsList({
 			return
 		}
 
-		if (isState) {
-			props.setItems((prev) => [
-				...prev,
-				{ id: Date.now().toString(), text: currentText }
-			])
-		}
-
-		setItems((prev) => [
+		setItemsState((prev) => [
 			...prev,
 			{ id: Date.now().toString(), text: currentText }
 		])
 		setCurrentText('')
-	}
+	}, [setItemsState, currentText, scheme])
 
-	const handleRemoveItem = (id: string) => {
-		setItems((prev) => prev.filter((item) => item.id !== id))
-	}
+	const handleRemoveItem = useCallback((id: string) => {
+		setItemsState((prev) => prev.filter((item) => item.id !== id))
+	}, [setItemsState])
+
+	const handleKeyPress = useCallback(
+		(event: React.KeyboardEvent<HTMLInputElement>) => {
+			if (event.key === 'Enter') {
+				event.preventDefault()
+				event.stopPropagation()
+				handleAddItem()
+			}
+		},
+		[handleAddItem]
+	)
 
 	const itemsName = props.use === 'form' ? props.itemsName : 'items[]'
 
@@ -87,11 +92,12 @@ export function ItemsList({
 					error={error ?? errors.item}
 					label={label}
 					onChange={(event) => {
-            if (onChange) onChange(event)
+						if (onChange) onChange(event)
 						setCurrentText(event.target.value)
 						setErrors({ item: undefined })
 					}}
 					value={currentText}
+					onKeyDown={handleKeyPress}
 					{...props}
 				/>
 				<Button
