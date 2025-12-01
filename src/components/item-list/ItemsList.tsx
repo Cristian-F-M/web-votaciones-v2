@@ -23,6 +23,7 @@ interface BaseProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	label: string
 	itemInputProps?: React.InputHTMLAttributes<HTMLInputElement>
 	removeItemProps?: React.ButtonHTMLAttributes<HTMLButtonElement>
+  error?: string | null | undefined
 }
 
 type ItemsListProps =
@@ -33,6 +34,8 @@ export function ItemsList({
 	label,
 	className,
 	itemInputProps,
+  error,
+  onChange,
 	...props
 }: ItemsListProps) {
 	const [currentText, setCurrentText] = useState('')
@@ -81,9 +84,10 @@ export function ItemsList({
 					className={twMerge('w-full h-[webkit-fill-available]', className)}
 					name="item"
 					id="item"
-					error={errors.item}
+					error={error ?? errors.item}
 					label={label}
 					onChange={(event) => {
+            if (onChange) onChange(event)
 						setCurrentText(event.target.value)
 						setErrors({ item: undefined })
 					}}
