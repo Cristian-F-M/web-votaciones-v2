@@ -81,10 +81,7 @@ export default function Register() {
 				confirmPassword
 			} = target.elements as RegisterFormElements
 
-			const serializedForm = serializeForm<
-				RegisterFormElements,
-				GetProcessedErrorsReturnType
-			>(target.elements as RegisterFormElements)
+			const serializedForm = serializeForm<GetProcessedErrorsReturnType>(target.elements as RegisterFormElements)
 			const result = z.safeParse(REGISTER_SCHEME, serializedForm)
 
 			if (!result.success) {
@@ -130,10 +127,7 @@ export default function Register() {
 	const register = useCallback(
 		async (elements: RegisterFormElements) => {
 			setIsRegistering(true)
-			const serializedForm = serializeForm<
-				RegisterFormElements,
-				GetProcessedErrorsReturnType
-			>(elements)
+			const serializedForm = serializeForm<GetProcessedErrorsReturnType>(elements)
 			const { ok, ...data } = await doFetch<RegisterResponse>({
 				url: '/register',
 				method: 'POST',

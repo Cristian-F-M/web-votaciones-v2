@@ -56,10 +56,7 @@ export default function Login() {
 				return snackbar({ message: 'Espera un momento', variant: 'warning' })
 			const target = event.target as HTMLFormElement
 
-			const serializedForm = serializeForm<
-				LoginFormElements,
-				GetProcessedErrorsReturnType
-			>(target.elements as LoginFormElements)
+			const serializedForm = serializeForm<GetProcessedErrorsReturnType>(target.elements as LoginFormElements)
 			const result = z.safeParse(LOGIN_SCHEME, serializedForm)
 
 			if (!result.success) {
@@ -77,10 +74,7 @@ export default function Login() {
 		async (elements: LoginFormElements) => {
 			setIsLogginIn(true)
 			const { password } = elements
-			const serializedForm = serializeForm<
-				LoginFormElements,
-				Record<string, unknown>
-			>(elements)
+			const serializedForm = serializeForm<Record<string, unknown>>(elements)
 
 			const { ok, ...data } = await doFetch<LoginResponse>({
 				url: '/login',

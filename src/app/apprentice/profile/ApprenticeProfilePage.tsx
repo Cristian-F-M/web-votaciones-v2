@@ -72,10 +72,9 @@ export default function ApprenticeProfilePage() {
 
 			const target = event.currentTarget as HTMLFormElement
 
-			const serializedFrom = serializeForm<
-				UpdateProfileFormElements,
-				GetProcessedErrorsReturnType
-			>(target.elements as UpdateProfileFormElements)
+			const serializedFrom = serializeForm<GetProcessedErrorsReturnType>(
+				target.elements as UpdateProfileFormElements
+			)
 
 			const result = z.safeParse(UPDATE_PROFILE_SCHEME, serializedFrom)
 
