@@ -64,3 +64,9 @@ export const UPDATE_PROFILE_SCHEME = z.object({
 	phone: SCHEMES.phone,
 	email: SCHEMES.email
 })
+
+
+export const UPDATE_CANDIDATE_PROFILE_SCHEME = z.object({
+  description: z.string().nonempty(IV.requiredMessage).min(IV.description.min, IV.description.sizeMessage).max(IV.description.max, IV.description.sizeMessage),
+  objectives: z.array(z.string().nonempty(IV.requiredMessage), IV.objectives.sizeMessage).min(IV.objectives.min, IV.objectives.sizeMessage).max(IV.objectives.max, IV.objectives.sizeMessage)
+})
