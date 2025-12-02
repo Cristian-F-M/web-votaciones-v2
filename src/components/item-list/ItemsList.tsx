@@ -16,7 +16,7 @@ interface ItemsListStateProps {
 
 interface ItemsListFormProps {
 	use: 'form'
-	itemsName: string
+	textKey: string
 }
 
 interface BaseProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -37,7 +37,8 @@ export function ItemsList({
 	itemInputProps,
 	error,
 	onChange,
-  defaultItems = [],
+	defaultItems = [],
+  name,
 	...props
 }: ItemsListProps) {
 	const [currentText, setCurrentText] = useState('')
@@ -61,7 +62,7 @@ export function ItemsList({
 
 		setItemsState((prev) => [
 			...prev,
-			{ id: Date.now().toString(), text: currentText }
+			{ id: Date.now().toString(), [itemsTextKey]: currentText }
 		])
 		setCurrentText('')
 	}, [setItemsState, currentText, scheme])
@@ -84,7 +85,10 @@ export function ItemsList({
 		[handleAddItem]
 	)
 
-	const itemsName = props.use === 'form' ? props.itemsName : 'items[]'
+	const itemsTextKey = props.use === 'form' ? props.textKey : 'text'
+	const itemsIdKey = 'id'
+
+	// TODO: Add paste event and handle it
 
 	return (
 		<div>
@@ -116,14 +120,17 @@ export function ItemsList({
 			</div>
 
 			<ul className="my-6 space-y-2">
-				{items.toReversed().map((item) => (
+				{items.toReversed().map((item, index) => (
 					<li key={item.id}>
 						<SingleItemList
+							index={index}
 							removeItemProps={props.removeItemProps}
 							{...itemInputProps}
 							item={item}
 							handleRemoveItem={handleRemoveItem}
-							name={itemsName}
+							textKey={itemsTextKey}
+							idKey={itemsIdKey}
+              fieldName={name}
 						/>
 					</li>
 				))}
