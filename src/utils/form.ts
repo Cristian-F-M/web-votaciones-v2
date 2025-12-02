@@ -58,8 +58,6 @@ export function serializeForm<R = Record<string, unknown>>(
 	let entries: [string, FormDataEntryValue][] = []
 
 	if (form instanceof HTMLFormElement) {
-		entries.push(...Array.from(new FormData(form).entries()))
-
 		entries = Array.from(new FormData(form).entries())
 	}
 
