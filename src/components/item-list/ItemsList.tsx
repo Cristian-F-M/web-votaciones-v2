@@ -60,9 +60,11 @@ export function ItemsList({
 			return
 		}
 
+    const id = crypto.randomUUID()
+
 		setItemsState((prev) => [
 			...prev,
-			{ id: Date.now().toString(), [itemsTextKey]: currentText }
+			{ id, [itemsTextKey]: currentText }
 		])
 		setCurrentText('')
 	}, [setItemsState, currentText, scheme])
