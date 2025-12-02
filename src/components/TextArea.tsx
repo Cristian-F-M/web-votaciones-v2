@@ -1,5 +1,6 @@
 import { twMerge } from 'tailwind-merge'
 import { InputError } from './InputError'
+import { useState } from 'react'
 
 interface TextAreaStateProps {
 	use: 'state'
@@ -17,6 +18,7 @@ type TextAreaProps = (TextAreaStateProps | TextAreaFormProps) &
 		id: string
 		error: string | null | undefined
 		use: 'state' | 'form'
+		limit?: number
 	}
 
 export function TextArea({
@@ -26,8 +28,12 @@ export function TextArea({
 	id,
 	error,
 	use,
+	limit,
+	onChange,
 	...props
 }: TextAreaProps) {
+	const [text, setText] = useState('')
+
 	return (
 		<div className="w-full relative flex flex-col justify-center">
 			<textarea
@@ -38,9 +44,24 @@ export function TextArea({
 				name={name}
 				id={id}
 				placeholder={placeholder}
+				onChange={(event) => {
+					if (onChange) onChange(event)
+					setText(event.target.value)
+				}}
+				onKeyDown={(event) => {
+					if (event.key !== 'Backspace' && !!limit && text.length >= limit)
+						return event.preventDefault()
+				}}
 				{...props}
 			/>
-			<InputError id={id} error={error} />
+			<div className="flex justify-between items-center mt-px">
+				<InputError id={id} error={error} />
+				{!!limit && (
+					<div className="w-fit ml-auto -bottom-1 right-0 text-xs text-gray-500 dark:text-gray-400">
+						{text.length} / {limit}
+					</div>
+				)}
+			</div>
 		</div>
 	)
 }
