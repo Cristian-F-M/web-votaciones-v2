@@ -1,6 +1,6 @@
 import { twMerge } from 'tailwind-merge'
 import { InputError } from './InputError'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 interface TextAreaStateProps {
 	use: 'state'
@@ -34,6 +34,16 @@ export function TextArea({
 }: TextAreaProps) {
 	const [text, setText] = useState('')
 
+  const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key !== 'Backspace' && !!limit && text.length >= limit)
+				return event.preventDefault()
+  }, [limit, text])
+
+  const handleChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (onChange) onChange(event)
+    setText(event.target.value)
+  }, [onChange])
+
 	return (
 		<div className="w-full relative flex flex-col justify-center">
 			<textarea
@@ -44,14 +54,8 @@ export function TextArea({
 				name={name}
 				id={id}
 				placeholder={placeholder}
-				onChange={(event) => {
-					if (onChange) onChange(event)
-					setText(event.target.value)
-				}}
-				onKeyDown={(event) => {
-					if (event.key !== 'Backspace' && !!limit && text.length >= limit)
-						return event.preventDefault()
-				}}
+				onChange={handleChange}
+				onKeyDown={handleKeyDown}
 				{...props}
 			/>
 			<div className="flex justify-between items-center mt-px">
