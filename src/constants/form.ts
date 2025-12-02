@@ -35,5 +35,15 @@ export const INPUTS_VALIDATIONS = {
 	},
 	email: {
 		validMessage: 'Ingresa un correo electronico válido'
-	}
+	},
+	description: {
+		min: 10,
+		max: 255,
+		sizeMessage: 'La descripción debe tener entre 10 y 255 caracteres'
+	},
+  objectives: {
+    min: 5,
+    max: 30,
+    sizeMessage: 'Debes agregar al menos 5 objetivos'
+  }
 }
