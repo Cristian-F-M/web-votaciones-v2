@@ -1,4 +1,4 @@
 export interface Item {
   id: string
-  text: string
+  [key: string]: string
 }
