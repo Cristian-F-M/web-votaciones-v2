@@ -90,6 +90,12 @@ export function ItemsList({
 	const itemsTextKey = props.use === 'form' ? props.textKey : 'text'
 	const itemsIdKey = 'id'
 
+  // This is a dirty hack to remove the textKey prop from the props object
+  let rest: Omit<typeof props, 'textKey'> = props
+  let textKey: string | undefined = undefined
+
+  if (props.use === 'form') ({ textKey, ...rest } = props)
+
 	// TODO: Add paste event and handle it
 
 	return (
@@ -109,7 +115,7 @@ export function ItemsList({
 					}}
 					value={currentText}
 					onKeyDown={handleKeyPress}
-					{...props}
+					{...rest}
 				/>
 				<Button
 					className="w-fit"
