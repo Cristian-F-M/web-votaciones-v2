@@ -19,6 +19,7 @@ type TextAreaProps = (TextAreaStateProps | TextAreaFormProps) &
 		error: string | null | undefined
 		use: 'state' | 'form'
 		limit?: number
+    defaultValue?: string
 	}
 
 export function TextArea({
@@ -30,9 +31,10 @@ export function TextArea({
 	use,
 	limit,
 	onChange,
+  defaultValue,
 	...props
 }: TextAreaProps) {
-	const [text, setText] = useState('')
+	const [text, setText] = useState(defaultValue || '') 
 
   const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key !== 'Backspace' && !!limit && text.length >= limit)
@@ -56,6 +58,7 @@ export function TextArea({
 				placeholder={placeholder}
 				onChange={handleChange}
 				onKeyDown={handleKeyDown}
+				value={text}
 				{...props}
 			/>
 			<div className="flex justify-between items-center mt-px">
