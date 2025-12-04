@@ -1,4 +1,4 @@
-import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/form'
+import { EMAIL_REGEX, PASSWORD_REGEX, INDEX_REGEX } from '@/constants/form'
 import type { ApiErrors, GetProcessedErrorsReturnType } from '@/types/api'
 import type {
 	ValidateFieldsProps,
@@ -53,37 +53,59 @@ export function validateFieldsNotEmpty(
 }
 
 export function serializeForm<R = Record<string, unknown>>(
-	form: HTMLFormElement | HTMLFormControlsCollection
-): R {
-	let entries: [string, FormDataEntryValue][] = []
+  form: HTMLFormElement | HTMLFormControlsCollection
+) {
+  let entries: [string, FormDataEntryValue][] = []
 
-	if (form instanceof HTMLFormElement) {
-		entries = Array.from(new FormData(form).entries())
-	}
+  if (form instanceof HTMLFormElement) {
+    entries = Array.from(new FormData(form).entries())
+  }
 
-	if (form instanceof HTMLFormControlsCollection) {
-		entries = (
-			Array.from(form) as (HTMLElement & { name: string; value: string })[]
-		).map((el) => [el.name, el.value] as [string, FormDataEntryValue])
-	}
+  if (form instanceof HTMLFormControlsCollection) {
+    entries = (
+      Array.from(form) as (HTMLElement & { name: string; value: string })[]
+    ).map(el => [el.name, el.value] as [string, FormDataEntryValue])
+  }
 
-	const result: Record<string, any> = {}
+  const result: Record<string, any> = {}
 
-	for (const [rawKey, value] of entries) {
-		const isArray = rawKey.endsWith('[]')
-		const key = isArray ? rawKey.replace('[]', '') : rawKey
+  for (const [rawKey, value] of entries) {
+    const isArray = /\[\]/g.test(rawKey)
+    const paths = rawKey
+      .replace(/\]/g, '')
+      .split('[')
+      .slice(0, isArray ? 1 : undefined)
+    const isObject = /\[.+\]/g.test(rawKey)
 
-		if (isArray) {
-			const arr = result[key] || []
-			arr.push(value)
-			result[key] = arr
-			continue
-		}
+    set(result, paths, value, isArray)
+  }
 
-		result[key] = value
-	}
+  return result as R
+}
 
-	return result as R
+export function set(obj: Record<string, any>, paths: string[], value: unknown, isArray = false) {
+  let currentObj = obj
+
+  for (const [index, key] of Array.from(paths.entries())) {
+    const isLast = index === paths.length - 1
+    const isIndex = INDEX_REGEX.test(key)
+    const nextKey = paths[index + 1]
+    const nextKeyIsIndex = INDEX_REGEX.test(nextKey)
+
+    if (isArray) {
+      // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+      ;(currentObj[key] ??= []).push(value)
+      continue
+    }
+
+    if (isLast) {
+      currentObj[key] = value
+      continue
+    }
+
+    if (!currentObj[key]) currentObj[key] = nextKeyIsIndex ? [] : {}
+    currentObj = currentObj[key]
+  }
 }
 
 export function getValidationResult(errors: ZodErrors) {
