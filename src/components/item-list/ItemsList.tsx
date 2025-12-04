@@ -7,6 +7,7 @@ import { INPUTS_VALIDATIONS as IV } from '@/constants/form'
 import { parseZodMessages } from '@/utils/form'
 import type { Item } from '@/types/ItemList'
 import { twMerge } from 'tailwind-merge'
+import { OBJECTIVE_SCHEME } from '@/zod-validations'
 
 interface ItemsListStateProps {
 	use: 'state'
@@ -47,12 +48,10 @@ export function ItemsList({
 	const isState = props.use === 'state'
 	const setItemsState = isState ? props.setItems : setItems
 
-	const scheme = z.object({
-		item: z.string().nonempty(IV.requiredMessage)
-	})
-
 	const handleAddItem = useCallback(() => {
-		const result = z.safeParse(scheme, { item: currentText })
+    const id = crypto.randomUUID()
+    const item = { id, text: currentText }
+		const result = z.safeParse(OBJECTIVE_SCHEME, item)
 
 		if (!result.success) {
 			const errors = parseZodMessages(result)
@@ -60,14 +59,13 @@ export function ItemsList({
 			return
 		}
 
-    const id = crypto.randomUUID()
 
 		setItemsState((prev) => [
 			...prev,
 			{ id, [itemsTextKey]: currentText }
 		])
 		setCurrentText('')
-	}, [setItemsState, currentText, scheme])
+	}, [setItemsState, currentText])
 
 	const handleRemoveItem = useCallback(
 		(id: string) => {
