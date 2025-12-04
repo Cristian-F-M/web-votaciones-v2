@@ -187,3 +187,18 @@ export type UpdatePasswordResponse =
 			message?: string
 			errors: ApiErrors
 	  }
+
+export type GetCandidateResponse = {
+	ok: true
+	candidate: Candidate
+}
+
+export type UpdateCandidateProfileResponse =
+	| {
+			ok: true
+			message: string
+	  }
+	| {
+			ok: false
+			errors: ApiErrors
+	  }
