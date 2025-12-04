@@ -65,8 +65,19 @@ export const UPDATE_PROFILE_SCHEME = z.object({
 	email: SCHEMES.email
 })
 
+export const OBJECTIVE_SCHEME = z.object({
+	id: z.string().nonempty(IV.requiredMessage),
+	text: z.string().nonempty(IV.requiredMessage).min(IV.objectives.text.min, IV.objectives.text.sizeMessage)
+})
 
 export const UPDATE_CANDIDATE_PROFILE_SCHEME = z.object({
-  description: z.string().nonempty(IV.requiredMessage).min(IV.description.min, IV.description.sizeMessage).max(IV.description.max, IV.description.sizeMessage),
-  objectives: z.array(z.string().nonempty(IV.requiredMessage), IV.objectives.sizeMessage).min(IV.objectives.min, IV.objectives.sizeMessage).max(IV.objectives.max, IV.objectives.sizeMessage)
+	description: z
+		.string()
+		.nonempty(IV.requiredMessage)
+		.min(IV.description.min, IV.description.sizeMessage)
+		.max(IV.description.max, IV.description.sizeMessage),
+	objectives: z
+		.array(OBJECTIVE_SCHEME, IV.objectives.sizeMessage)
+		.min(IV.objectives.min, IV.objectives.sizeMessage)
+		.max(IV.objectives.max, IV.objectives.sizeMessage)
 })
