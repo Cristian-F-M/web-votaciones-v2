@@ -4,6 +4,7 @@ import { doFetch } from '@/utils/fetch'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect } from 'react'
 import { useUser } from '@/states/useUser'
+import { useCandidate } from '@/states/useCandidate'
 import { ValidatePermission } from '@/utils/ValidatePermission'
 import { ToggleTheme } from '@/components/ToggleTheme'
 import { UserSettings } from '@/components/user/menu'
@@ -13,7 +14,8 @@ export default function ApprenticeLayout({
 	children
 }: { children: React.ReactNode }) {
 	const router = useRouter()
-	const setUser = useUser((state) => state.setUser)
+	const { user, setUser} = useUser()
+	const { getCandidate: getCandidateState, setCandidate } = useCandidate()
 
 	const getUser = useCallback(async () => {
 		const { ok, ...data } = await doFetch<UserHomeResponse>({ url: '/user' })
@@ -21,9 +23,18 @@ export default function ApprenticeLayout({
 		if ('user' in data) setUser(data.user)
 	}, [setUser])
 
+  const getCandidate = useCallback(async () => {
+    const candidate = await getCandidateState(user?.id)
+    setCandidate(candidate)
+  }, [getCandidateState, setCandidate, user])
+
 	useEffect(() => {
 		getUser()
 	}, [getUser])
+
+	useEffect(() => {
+		getCandidate()
+	}, [getCandidate])
 
 	return (
 		<div className="overflow-x-hidden">
