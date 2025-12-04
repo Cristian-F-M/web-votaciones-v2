@@ -51,6 +51,7 @@ export interface Candidate {
 	imageUrl: string
 	description: string
 	votes: number
+  objectives: Objective[]
 	user: Pick<User, 'id' | 'name' | 'lastname' | 'document' | 'email'>
 }
 
@@ -68,4 +69,9 @@ export interface Vote {
 		candidates: Candidate[]
 	}
 	isFinished: boolean
+}
+
+export interface Objective {
+  id: string
+  text: string
 }
