@@ -4,6 +4,7 @@ export const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 export const PASSWORD_REGEX = new RegExp(
 	`^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{${PASSWORD_MIN_MAX_LENGHT[0]},${PASSWORD_MIN_MAX_LENGHT[1]}}$`
 )
+export const INDEX_REGEX = /^\d+$/
 
 export const INPUTS_VALIDATIONS = {
 	requiredMessage: 'Este campo es obligatorio',
@@ -44,6 +45,10 @@ export const INPUTS_VALIDATIONS = {
   objectives: {
     min: 5,
     max: 30,
-    sizeMessage: 'Debes agregar al menos 5 objetivos'
+    sizeMessage: 'Debes agregar al menos 5 objetivos',
+    text: {
+      min: 5, 
+      sizeMessage: 'El objetivo debe tener al menos 5 caracteres'
+    }
   }
 }
