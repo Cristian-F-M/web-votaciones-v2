@@ -1,12 +1,12 @@
-import type { UserHomeResponse } from '@/types/api'
-import type { UserHome } from '@/types/models'
+import type { UserGetProfileResponse } from '@/types/api'
+import type { StateUser } from '@/types/models'
 import { doFetch } from '@/utils/fetch'
 import { create } from 'zustand'
 
 interface UserState {
-	user: UserHome | null
+	user: StateUser | null
 	setUser: (user: UserState['user']) => void
-	getUser: () => Promise<UserHome | null>
+	getUser: () => Promise<StateUser | null>
 }
 
 export const useUser = create<UserState>()((set) => ({
@@ -16,7 +16,7 @@ export const useUser = create<UserState>()((set) => ({
 }))
 
 async function getUser() {
-	const { ok, ...data } = await doFetch<UserHomeResponse>({ url: '/user' })
-	if (!ok) return null
-	if ('user' in data) return data.user
+	const response = await doFetch<UserGetProfileResponse>({ url: '/user' })
+	if (!response.ok) return null
+	return response.data
 }

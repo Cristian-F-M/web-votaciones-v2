@@ -1,23 +1,21 @@
-import type { GetCandidateResponse } from '@/types/api'
-import type { Candidate, UserHome } from '@/types/models'
+import type { CandidateGetOneResponse } from '@/types/api'
+import type { Candidate, User } from '@/types/models'
 import { doFetch } from '@/utils/fetch'
 import { create } from 'zustand'
 
 interface CandidateState {
 	candidate: Candidate | null
 	setCandidate: (candidate: CandidateState['candidate']) => void
-	getCandidate: (
-		userId: UserHome['id'] | undefined
-	) => Promise<Candidate | null>
+	getCandidate: (userId: User['id'] | undefined) => Promise<Candidate | null>
 }
 
 const getCandidate: CandidateState['getCandidate'] = async (userId) => {
 	if (!userId) return null
-	const { ok, ...data } = await doFetch<GetCandidateResponse>({
+	const response = await doFetch<CandidateGetOneResponse>({
 		url: `/candidate?userId=${userId}`
 	})
-	if (!ok) return null
-	if ('candidate' in data) return data.candidate
+	if (!response.ok) return null
+	return response.data
 }
 
 export const useCandidate = create<CandidateState>()((set) => ({
