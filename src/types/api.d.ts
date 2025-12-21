@@ -296,6 +296,6 @@ export type PasswordResetVerifyCodeResponse =
  * Response for the endpoint `/reset-password/update-password`
  */
 export type PasswordResetUpdateResponse =
-	| { ok: true; message: string; urlReturn: string }
+	| { ok: true; message: string; urlRedirect: string }
 	| { ok: false; message: string }
 	| ValidationErrorResponse
