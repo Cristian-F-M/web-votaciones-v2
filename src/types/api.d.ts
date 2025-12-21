@@ -50,6 +50,7 @@ export interface SuccessResponse<T = undefined> {
 export interface ErrorResponse {
 	ok: false
 	message: string
+  errors?: FormErrors
 }
 
 export interface ValidationErrorResponse {
