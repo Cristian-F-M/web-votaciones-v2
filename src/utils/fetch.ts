@@ -1,4 +1,5 @@
 import type { ErrorResponse, FetchProps } from '@/types/api'
+import { snackbar } from './dom'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -36,18 +37,28 @@ export async function doFetch<T>({
 
 		const responseData = isJson ? await response.json() : {}
 
-		if (!response.ok)
+		if (!response.ok) {
+			const message =
+				responseData?.message ?? 'Ocurrio un error procesando la solicitud :c'
+			snackbar({ message, variant: 'error' })
+
 			return {
 				ok: false,
-				message: responseData?.message || 'Error desconocido',
+				message,
 				...responseData
 			}
+		}
 
 		return responseData
 	} catch (error: any) {
+		const message = error?.message
+			? error?.message
+			: 'Ocurrio un error procesando la solicitud :c'
+		snackbar({ message, variant: 'error' })
+
 		return {
 			ok: false,
-			message: error?.message || 'Error de red'
+			message
 		}
 	}
 }
