@@ -14,17 +14,11 @@ export function getErrorEntries(errors: Record<string, any>) {
 	return Object.entries(errors).filter(([_, value]) => value)
 }
 
-export function getProcessedErrors(
-	errors: ApiErrors
-): GetProcessedErrorsReturnType {
-	const errorsEntries = Object.entries(errors)
-	const locallyErrors: GetProcessedErrorsReturnType = {}
-
-	for (const [_, error] of errorsEntries) {
-		const { path, msg, message } = error[0]
-		locallyErrors[path] = msg || message
-	}
-	return locallyErrors
+export function getProcessedErrors(errors: FormErrors): ProcessedErrors {
+	const locallyErrors = Object.entries(errors).map(
+		([_, [{ path, message }]]) => [path, message]
+	)
+	return Object.fromEntries(locallyErrors)
 }
 
 export function validateFieldsNotEmpty(
