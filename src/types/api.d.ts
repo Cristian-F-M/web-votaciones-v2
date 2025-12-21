@@ -1,6 +1,6 @@
 import type { LoginErrors, RegisterErrors } from './forms'
 import type { SelectItem } from './input'
-import type { TypeDocument, Role, Config, Profile } from './models'
+import type { TypeDocument, Role, Config, Profile, ResetPasswordFindUser } from './models'
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
 
@@ -264,7 +264,7 @@ export type RoleDeleteResponse =
 export type PasswordResetFindUserResponse =
 	| {
 			ok: true
-			user: { id: string; email: string }
+			user: ResetPasswordFindUser
 			nextSendAt: Date | false
 	  }
 	| ValidationErrorResponse

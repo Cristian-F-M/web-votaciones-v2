@@ -179,3 +179,8 @@ export interface StateUser {
 	role: Pick<Role, 'id' | 'name'>
 	profile: Pick<Profile, 'name' | 'lastname' | 'phone' | 'imageUrl'>
 }
+
+export interface ResetPasswordFindUser {
+	id: string
+	email: string
+}
