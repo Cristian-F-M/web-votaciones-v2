@@ -1,6 +1,6 @@
 import type * as Models from './models'
 
-export interface UserProfile {
+export interface User {
 	id: Models.User['id']
 	email: Models.User['email']
 	document: Models.User['document']
@@ -30,21 +30,35 @@ export interface TypeDocument {
 }
 
 export interface ShiftType {
-  id: Models.ShiftType['id']
-  name: Models.ShiftType['name']
-  code: Models.ShiftType['code']
+	id: Models.ShiftType['id']
+	name: Models.ShiftType['name']
+	code: Models.ShiftType['code']
 }
 
 export interface Election {
-  id: Models.Election['id']
-  startDate: Models.Election['startDate']
-  endDate: Models.Election['endDate']
-  status: Models.Election['status']
-  shiftType: ShiftType
+	id: Models.Election['id']
+	totalVotes: Models.Election['totalVotes']
+	apprenticeCount: Models.Election['apprenticeCount']
+	winnerVoteCount: Models.Election['winnerVoteCount']
+	winner: Models.Election['winner']
+	startDate: Models.Election['startDate']
+	endDate: Models.Election['endDate']
+	status: Models.Election['status']
+	shiftType: ShiftType
 }
 
 export interface Role {
-  id: Models.Role['id']
-  name: Models.Role['name']
-  code: Models.Role['code']
+	id: Models.Role['id']
+	name: Models.Role['name']
+	code: Models.Role['code']
+}
+
+export interface Candidate {
+	id: Models.Candidate['id']
+	userId: Models.Candidate['userId']
+	description: Models.Candidate['description']
+	isActive: Models.Candidate['isActive']
+	objectives: Models.Candidate['objectives']
+
+	user: User
 }

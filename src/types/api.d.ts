@@ -1,12 +1,12 @@
 import type { LoginErrors, RegisterErrors } from './forms'
 import type { SelectItem } from './input'
 import type {
-	UserProfile,
 	ResetPasswordFindUser,
 	TypeDocument,
 	Role,
 	Config,
-	Profile
+	Profile,
+	User
 } from './responseModels'
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
@@ -50,7 +50,7 @@ export interface SuccessResponse<T = undefined> {
 export interface ErrorResponse {
 	ok: false
 	message: string
-  errors?: FormErrors
+	errors?: FormErrors
 }
 
 export interface ValidationErrorResponse {
@@ -156,7 +156,7 @@ export type TypeDocumentDeleteResponse = {
  */
 export type UserGetProfileResponse = {
 	ok: true
-	data: UserProfile
+	data: User
 }
 
 /**
