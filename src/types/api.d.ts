@@ -4,10 +4,9 @@ import type { TypeDocument, Role, Config, Profile } from './models'
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
 
-export type GetProcessedErrorsReturnType = Record<
-	string,
-	string | null | undefined
->
+export interface ProcessedErrors {
+	[key: string]: string | undefined | null
+}
 
 export interface FetchProps {
 	url: `/${string}`
@@ -17,10 +16,6 @@ export interface FetchProps {
 	cache?: RequestInit['cache']
 }
 
-export interface FormError {
-	[key: string]: { path: string; msg: string }[]
-}
-
 export interface DatabaseError {
 	message: string
 	path: string
@@ -28,7 +23,7 @@ export interface DatabaseError {
 }
 
 export interface FormErrors {
-	[key: string]: FormError[]
+	[key: string]: FormError[] | DatabaseError[]
 }
 
 export interface FormError {
