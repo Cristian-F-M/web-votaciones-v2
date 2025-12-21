@@ -5,7 +5,8 @@ import type {
 	ValidateFieldsReturnType
 } from '@/types/forms'
 import type { ZodErrors } from '@/types/zod'
-import type { ZodSafeParseResult } from 'zod'
+import { z } from 'zod'
+import type { ZodSafeParseResult, ZodType } from 'zod'
 
 export const isEmailValid = (email: string) => EMAIL_REGEX.test(email)
 export const isPasswordValid = (text: string) => PASSWORD_REGEX.test(text)
@@ -47,59 +48,64 @@ export function validateFieldsNotEmpty(
 }
 
 export function serializeForm<R = Record<string, unknown>>(
-  form: HTMLFormElement | HTMLFormControlsCollection
+	form: HTMLFormElement | HTMLFormControlsCollection
 ) {
-  let entries: [string, FormDataEntryValue][] = []
+	let entries: [string, FormDataEntryValue][] = []
 
-  if (form instanceof HTMLFormElement) {
-    entries = Array.from(new FormData(form).entries())
-  }
+	if (form instanceof HTMLFormElement) {
+		entries = Array.from(new FormData(form).entries())
+	}
 
-  if (form instanceof HTMLFormControlsCollection) {
-    entries = (
-      Array.from(form) as (HTMLElement & { name: string; value: string })[]
-    ).map(el => [el.name, el.value] as [string, FormDataEntryValue])
-  }
+	if (form instanceof HTMLFormControlsCollection) {
+		entries = (
+			Array.from(form) as (HTMLElement & { name: string; value: string })[]
+		).map((el) => [el.name, el.value] as [string, FormDataEntryValue])
+	}
 
-  const result: Record<string, any> = {}
+	const result: Record<string, any> = {}
 
-  for (const [rawKey, value] of entries) {
-    const isArray = /\[\]/g.test(rawKey)
-    const paths = rawKey
-      .replace(/\]/g, '')
-      .split('[')
-      .slice(0, isArray ? 1 : undefined)
-    const isObject = /\[.+\]/g.test(rawKey)
+	for (const [rawKey, value] of entries) {
+		const isArray = /\[\]/g.test(rawKey)
+		const paths = rawKey
+			.replace(/\]/g, '')
+			.split('[')
+			.slice(0, isArray ? 1 : undefined)
+		const isObject = /\[.+\]/g.test(rawKey)
 
-    set(result, paths, value, isArray)
-  }
+		set(result, paths, value, isArray)
+	}
 
-  return result as R
+	return result as R
 }
 
-export function set(obj: Record<string, any>, paths: string[], value: unknown, isArray = false) {
-  let currentObj = obj
+export function set(
+	obj: Record<string, any>,
+	paths: string[],
+	value: unknown,
+	isArray = false
+) {
+	let currentObj = obj
 
-  for (const [index, key] of Array.from(paths.entries())) {
-    const isLast = index === paths.length - 1
-    const isIndex = INDEX_REGEX.test(key)
-    const nextKey = paths[index + 1]
-    const nextKeyIsIndex = INDEX_REGEX.test(nextKey)
+	for (const [index, key] of Array.from(paths.entries())) {
+		const isLast = index === paths.length - 1
+		const isIndex = INDEX_REGEX.test(key)
+		const nextKey = paths[index + 1]
+		const nextKeyIsIndex = INDEX_REGEX.test(nextKey)
 
-    if (isArray) {
-      // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-      ;(currentObj[key] ??= []).push(value)
-      continue
-    }
+		if (isArray) {
+			// biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+			;(currentObj[key] ??= []).push(value)
+			continue
+		}
 
-    if (isLast) {
-      currentObj[key] = value
-      continue
-    }
+		if (isLast) {
+			currentObj[key] = value
+			continue
+		}
 
-    if (!currentObj[key]) currentObj[key] = nextKeyIsIndex ? [] : {}
-    currentObj = currentObj[key]
-  }
+		if (!currentObj[key]) currentObj[key] = nextKeyIsIndex ? [] : {}
+		currentObj = currentObj[key]
+	}
 }
 
 export function getValidationResult(errors: ZodErrors) {
@@ -121,4 +127,23 @@ export function parseZodMessages(result: ZodSafeParseResult<any>) {
 	const messages = JSON.parse(zodErrors.message) as ZodErrors
 
 	return getValidationResult(messages)
+}
+
+export function validateForm(
+	form: HTMLFormElement | HTMLFormControlsCollection | ProcessedErrors,
+	schema: ZodType
+) {
+	let serializedForm: ProcessedErrors = {}
+
+	const isForm = form instanceof HTMLFormElement
+	const areFormElementos = form instanceof HTMLFormControlsCollection
+
+	if (isForm) serializedForm = serializeForm(form.elements)
+	if (areFormElementos) serializedForm = serializeForm(form)
+	if (!areFormElementos && !isForm) serializedForm = form
+
+	const result = z.safeParse(schema, serializedForm)
+	const errors = result.success ? undefined : parseZodMessages(result)
+
+	return { success: result.success, errors }
 }
