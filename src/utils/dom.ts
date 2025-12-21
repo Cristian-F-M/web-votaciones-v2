@@ -19,7 +19,7 @@ export function getStringTime(seconds: number) {
 }
 
 interface SnackbarProps {
-	message: string
+	message: string | undefined
 	variant?: OptionsObject['variant']
 	options?: OptionsObject
 }
@@ -29,5 +29,6 @@ export function snackbar({
 	variant = 'info',
 	options = snackbarOptions
 }: SnackbarProps) {
+	if (!message) return null
 	return enqueueSnackbar(message, { variant, ...options })
 }
