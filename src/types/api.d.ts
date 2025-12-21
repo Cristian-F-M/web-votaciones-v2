@@ -148,16 +148,7 @@ export type TypeDocumentDeleteResponse = {
  */
 export type UserGetProfileResponse = {
 	ok: true
-	data: {
-		id: string
-		email: string
-		document: string
-		typeDocumentId: string
-		typeDocument: Pick<TypeDocument, 'id' | 'name'>
-		roleId: string
-		role: Pick<Role, 'id' | 'name'>
-		profile: Pick<Profile, 'name' | 'lastname' | 'phone' | 'imageUrl'>
-	}
+	data: StateUser
 }
 
 /**
