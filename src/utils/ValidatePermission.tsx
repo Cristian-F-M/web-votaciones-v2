@@ -1,7 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import { doFetch } from './fetch'
-import type { ValidatePermissionsResponse } from '@/types/api'
+import type { AuthValidatePermissionsResponse } from '@/types/api'
 import { useEffect, useState } from 'react'
 import { Loader } from '@/components/Loader'
 import { snackbar } from '@/utils/dom'
@@ -21,11 +21,10 @@ export function ValidatePermission({
 	const router = useRouter()
 	const [isAllowed, setIsAllowed] = useState(false)
 	const [isLoading, setIsLoading] = useState(true)
-	const [needLogin, setNeedLogin] = useState(false)
 
 	useEffect(() => {
 		async function validatePermissions() {
-			const res = await doFetch<ValidatePermissionsResponse>({
+			const res = await doFetch<AuthValidatePermissionsResponse>({
 				url: '/validate-permissions',
 				method: 'POST',
 				body: { roles }
@@ -35,20 +34,14 @@ export function ValidatePermission({
 
 			if (!res.ok) {
 				snackbar({ message: res.message, variant: 'error' })
-				if ('urlRedirect' in res) {
-					router.replace(res.urlRedirect)
-					return setNeedLogin(true)
-				}
-
 				return setIsAllowed(false)
 			}
 
 			setIsAllowed(true)
-			setNeedLogin(false)
 		}
 
 		validatePermissions()
-	}, [roles, router])
+	}, [roles])
 
 	if (isLoading) {
 		return (
@@ -58,6 +51,6 @@ export function ValidatePermission({
 		)
 	}
 
-	if (!needLogin && isAllowed) return children
+	if (isAllowed) return children
 	return <Forbidden />
 }
