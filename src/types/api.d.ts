@@ -1,6 +1,13 @@
 import type { LoginErrors, RegisterErrors } from './forms'
 import type { SelectItem } from './input'
-import type { TypeDocument, Role, Config, Profile, ResetPasswordFindUser } from './models'
+import type {
+	UserProfile,
+	ResetPasswordFindUser,
+	TypeDocument,
+	Role,
+	Config,
+	Profile
+} from './responseModels'
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
 
@@ -148,7 +155,7 @@ export type TypeDocumentDeleteResponse = {
  */
 export type UserGetProfileResponse = {
 	ok: true
-	data: StateUser
+	data: UserProfile
 }
 
 /**
