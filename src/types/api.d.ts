@@ -131,7 +131,7 @@ export type TypeDocumentGetOneResponse = { ok: true; data: TypeDocument }
 export type TypeDocumentUpdateResponse = {
 	ok: true
 	message: string
-	typeDocument: TypeDocument
+	data: TypeDocument
 }
 
 /**
