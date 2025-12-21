@@ -42,14 +42,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 					</select>
 					<div className="absolute w-9/12 h-3 bg-gray-300 dark:bg-gray-500 animate-pulse z-50 rounded" />
 				</SelectWrapper>
-				<p
-					id="document-error"
-					role="alert"
-					aria-live="assertive"
-					className={`error-message text-xs text-red-600 mt-px ${error ? 'opacity-100' : 'opacity-0'}`}
-				>
-					{error}
-				</p>
+				<InputError id="document-error" error={error} />
 			</div>
 		)
 	}
