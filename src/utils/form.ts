@@ -1,5 +1,5 @@
 import { EMAIL_REGEX, PASSWORD_REGEX, INDEX_REGEX } from '@/constants/form'
-import type { ApiErrors, GetProcessedErrorsReturnType } from '@/types/api'
+import type { FormErrors, ProcessedErrors } from '@/types/api'
 import type {
 	ValidateFieldsProps,
 	ValidateFieldsReturnType
@@ -103,7 +103,7 @@ export function set(obj: Record<string, any>, paths: string[], value: unknown, i
 }
 
 export function getValidationResult(errors: ZodErrors) {
-	const result: GetProcessedErrorsReturnType = {}
+	const result: ProcessedErrors = {}
 
 	for (const i of errors) {
 		const path = i.path[0]
