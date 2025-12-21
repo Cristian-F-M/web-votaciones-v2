@@ -89,7 +89,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 						<option
 							className="text-black dark:text-gray-300"
 							key={item.id}
-							value={item.value || item.code}
+							value={item.value}
 							style={optionStyle(index)}
 							selected={[item.name, item.code].includes(selectedItem)}
 						>
