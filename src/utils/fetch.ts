@@ -1,4 +1,4 @@
-import type { FetchError, FetchProps } from '@/types/api'
+import type { ErrorResponse, FetchProps } from '@/types/api'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -8,7 +8,7 @@ export async function doFetch<T>({
 	body = null,
 	headers = {},
 	cache = 'default'
-}: FetchProps): Promise<T | FetchError> {
+}: FetchProps): Promise<T | ErrorResponse> {
 	try {
 		let defaultBody: typeof body = null
 
