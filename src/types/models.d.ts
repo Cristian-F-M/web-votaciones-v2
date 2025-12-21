@@ -168,19 +168,3 @@ export interface Profile {
 
 	user: User
 }
-
-export interface StateUser {
-	id: string
-	email: string
-	document: string
-	typeDocumentId: string
-	typeDocument: Pick<TypeDocument, 'id' | 'name'>
-	roleId: string
-	role: Pick<Role, 'id' | 'name'>
-	profile: Pick<Profile, 'name' | 'lastname' | 'phone' | 'imageUrl'>
-}
-
-export interface ResetPasswordFindUser {
-	id: string
-	email: string
-}
