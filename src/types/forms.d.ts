@@ -42,7 +42,7 @@ export interface RegisterFormValues {
 	phone: string
 	email: string
 	password: string
-	confirmPassword: string
+	passwordConfirmation: string
 }
 
 export interface RegisterFormElements extends HTMLFormControlsCollection {
@@ -53,7 +53,7 @@ export interface RegisterFormElements extends HTMLFormControlsCollection {
 	phone: HTMLInputElement
 	email: HTMLInputElement
 	password: HTMLInputElement
-	confirmPassword: HTMLInputElement
+	passwordConfirmation: HTMLInputElement
 }
 
 export interface RegisterForm extends Form<RegisterFormElements> {}
