@@ -108,16 +108,15 @@ export function set(
 	}
 }
 
-export function getValidationResult(errors: ZodErrors) {
-	const result: ProcessedErrors = {}
+export function getValidationResult(errors: ZodErrors): ProcessedErrors {
+	const map = new Map<string, string>()
 
-	for (const i of errors) {
-		const path = i.path[0]
-		if (Object.hasOwn(result, path)) continue
-		result[path] = i.message
+	for (const err of errors) {
+		const path = err.path.at(-1) ?? 'unknown'
+		if (!map.has(path)) map.set(path, err.message)
 	}
 
-	return result
+	return Object.fromEntries(map)
 }
 
 export function parseZodMessages(result: ZodSafeParseResult<any>) {
