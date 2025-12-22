@@ -58,14 +58,15 @@ export default function Login() {
 				return
 			}
 
-			await login(form.elements)
+			await login(form)
 		},
 		[isLogginIn]
 	)
 
 	const login = useCallback(
-		async (elements: LoginForm['elements']) => {
+		async (form: LoginForm) => {
 			setIsLogginIn(true)
+			const elements = form
 			const { password } = elements
 			const serializedForm = serializeForm<LoginFormValues>(elements)
 
