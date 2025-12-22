@@ -9,25 +9,24 @@ import { snackbar } from '@/utils/dom'
 
 export default function Home() {
 	const verifySession = useCallback(async () => {
-		const data = await doFetch<AuthCheckSessionResponse>({
+		const response = await doFetch<AuthCheckSessionResponse>({
 			url: '/'
 		})
 
 		await new Promise((resolve) => setTimeout(resolve, 1000))
 
-		if (!data.ok) {
-			if ('message' in data)
-				snackbar({
-					message: data.message,
-					variant: 'info'
-				})
-			if ('urlRedirect' in data) return router.replace(data.urlRedirect)
+		if (!response.ok) {
+			snackbar({
+				message: response.message,
+				variant: 'info'
+			})
+			if ('urlRedirect' in response) return router.replace(response.urlRedirect)
 			router.replace('login')
 
 			return
 		}
 
-		return router.replace(data.urlRedirect)
+		return router.replace(response.urlRedirect)
 	}, [])
 
 	const router = useRouter()
