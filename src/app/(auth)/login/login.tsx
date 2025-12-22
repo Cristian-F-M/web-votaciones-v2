@@ -35,8 +35,7 @@ export default function Login() {
 
 	const getTypeDocuments = useCallback(async () => {
 		const res = await doFetch<TypeDocumentGetAllResponse>({
-			url: '/typeDocument',
-			cache: 'force-cache'
+			url: '/typeDocument/all'
 		})
 
 		if (!res.ok)
@@ -45,7 +44,13 @@ export default function Login() {
 				typeDocumentCode: 'Ocurrio un error al cargar los tipos de documento'
 			}))
 
-		setTypesDocuments(res.data)
+		const typeDocumentItems = res.data.map(({ id, code, name }) => ({
+			id,
+			value: code,
+			name
+		}))
+
+		setTypesDocuments(typeDocumentItems)
 	}, [])
 
 	const handleSubmit = useCallback(
