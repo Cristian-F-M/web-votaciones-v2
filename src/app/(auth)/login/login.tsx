@@ -2,25 +2,16 @@
 import { Input } from '@/components/Input'
 import LogoSena from '@/icons/LogoSena'
 import { ToggleTheme } from '@/components/ToggleTheme'
-import type {
-	ProcessedErrors,
-	TypeDocumentGetAllResponse,
-	AuthLoginResponse
-} from '@/types/api'
+import type { TypeDocumentGetAllResponse, AuthLoginResponse } from '@/types/api'
 import { useCallback, useEffect, useState } from 'react'
 import { Select } from '@/components/Select'
 import { doFetch } from '@/utils/fetch'
 import { Checkbox } from '@/components/Checkbox'
-import type { LoginErrors, LoginFormElements } from '@/types/forms'
-import {
-	getProcessedErrors,
-	parseZodMessages,
-	serializeForm
-} from '@/utils/form'
+import type { LoginErrors, LoginForm, LoginFormValues } from '@/types/forms'
+import { getProcessedErrors, serializeForm, validateForm } from '@/utils/form'
 import { snackbar } from '@/utils/dom'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/Button'
-import * as z from 'zod'
 import { LOGIN_SCHEME } from '@/zod-validations'
 import type { SelectItem } from '@/types/input'
 
@@ -58,29 +49,25 @@ export default function Login() {
 			event.preventDefault()
 			if (isLogginIn)
 				return snackbar({ message: 'Espera un momento', variant: 'warning' })
-			const target = event.target as HTMLFormElement
+			const form = event.target as LoginForm
 
-			const serializedForm = serializeForm<ProcessedErrors>(
-				target.elements as LoginFormElements
-			)
-			const result = z.safeParse(LOGIN_SCHEME, serializedForm)
+			const { success, errors } = validateForm(form, LOGIN_SCHEME)
 
-			if (!result.success) {
-				const errors = parseZodMessages(result)
+			if (!success && errors) {
 				setErrors(errors)
 				return
 			}
 
-			await login(target.elements as LoginFormElements)
+			await login(form.elements)
 		},
 		[isLogginIn]
 	)
 
 	const login = useCallback(
-		async (elements: LoginFormElements) => {
+		async (elements: LoginForm['elements']) => {
 			setIsLogginIn(true)
 			const { password } = elements
-			const serializedForm = serializeForm<Record<string, unknown>>(elements)
+			const serializedForm = serializeForm<LoginFormValues>(elements)
 
 			const { ok, ...data } = await doFetch<AuthLoginResponse>({
 				url: '/login',
@@ -111,7 +98,7 @@ export default function Login() {
 		getTypeDocuments()
 	}, [getTypeDocuments])
 
-	const clearError = useCallback((key: keyof LoginFormElements) => {
+	const clearError = useCallback((key: keyof LoginErrors) => {
 		setErrors((prev) => ({ ...prev, [key]: null }))
 	}, [])
 
