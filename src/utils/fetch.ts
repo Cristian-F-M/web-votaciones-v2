@@ -51,9 +51,7 @@ export async function doFetch<T>({
 
 		return responseData
 	} catch (error: any) {
-		const message = error?.message
-			? error?.message
-			: 'Ocurrio un error procesando la solicitud :c'
+		const message = 'Ocurrio un error procesando la solicitud :c'
 		snackbar({ message, variant: 'error' })
 
 		return {
