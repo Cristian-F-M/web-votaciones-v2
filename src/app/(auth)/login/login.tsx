@@ -70,7 +70,7 @@ export default function Login() {
 			const { password } = elements
 			const serializedForm = serializeForm<LoginFormValues>(elements)
 
-			const { ok, ...data } = await doFetch<AuthLoginResponse>({
+			const response = await doFetch<AuthLoginResponse>({
 				url: '/login',
 				method: 'POST',
 				body: serializedForm
@@ -78,19 +78,18 @@ export default function Login() {
 
 			setIsLogginIn(false)
 
-			if (!ok) {
-				if ('message' in data)
-					snackbar({ message: data.message, variant: 'error' })
-				if ('errors' in data && data.errors) {
-					const errors = getProcessedErrors(data.errors)
+			if (!response.ok) {
+				snackbar({ message: response.message, variant: 'error' })
+
+				if (response.errors) {
+					const errors = getProcessedErrors(response.errors)
 					setErrors(errors)
 				}
 				password.value = ''
 				return
 			}
 
-			if ('urlRedirect' in data) return router.replace(data.urlRedirect)
-			router.replace('/')
+			return router.replace(response.urlRedirect)
 		},
 		[router]
 	)
