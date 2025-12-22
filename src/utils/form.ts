@@ -129,10 +129,14 @@ export function parseZodMessages(result: ZodSafeParseResult<any>) {
 	return getValidationResult(messages)
 }
 
+type ValidateFormReturnType =
+	| { success: true; errors: undefined }
+	| { success: false; errors: ProcessedErrors }
+
 export function validateForm(
 	form: HTMLFormElement | HTMLFormControlsCollection | ProcessedErrors,
 	schema: ZodType
-) {
+): ValidateFormReturnType {
 	let serializedForm: ProcessedErrors = {}
 
 	const isForm = form instanceof HTMLFormElement
@@ -143,7 +147,9 @@ export function validateForm(
 	if (!areFormElementos && !isForm) serializedForm = form
 
 	const result = z.safeParse(schema, serializedForm)
-	const errors = result.success ? undefined : parseZodMessages(result)
+	const errors = parseZodMessages(result)
 
-	return { success: result.success, errors }
+	if (result.success) return { success: true, errors: undefined }
+
+	return { success: false, errors }
 }
