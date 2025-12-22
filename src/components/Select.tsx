@@ -47,7 +47,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 		)
 	}
 
-	const { id, name, required, selectedItem, label, ...restPropsSelect } =
+	const { id, name, required, selectedItem = SELECT_DEFAULT_VALUE, label, ...restPropsSelect } =
 		restProps
 
 	const isDefaultValueSelected = ['', undefined, SELECT_DEFAULT_VALUE].includes(
@@ -63,6 +63,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 					name={name}
 					required={required}
 					className={twMerge([selectClassName, className])}
+					defaultValue={SELECT_DEFAULT_VALUE}
 				>
 					<button className="relative" type="button" tabIndex={-1}>
 						<selectedcontent />
@@ -91,7 +92,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 							key={item.id}
 							value={item.value}
 							style={optionStyle(index)}
-							selected={[item.name, item.code].includes(selectedItem)}
+							selected={[item.name, item.value].includes(selectedItem)}
 						>
 							<div>{item.name}</div>
 						</option>
