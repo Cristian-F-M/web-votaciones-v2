@@ -1,17 +1,19 @@
 import { Button } from '@/components/Button'
 import type { StepProps } from './FindUser'
 import Alert from '@/icons/Alert'
-import type { FindUserUser, SendPasswordResetCodeResponse } from '@/types/api'
+import type { PasswordResetSendCodeResponse } from '@/types/api'
+import type { ResetPasswordFindUser } from '@/types/responseModels'
 import { useCallback, useEffect, useState } from 'react'
 import { snackbar } from '@/utils/dom'
 import { doFetch } from '@/utils/fetch'
 import { getStringTime } from '@/utils/dom'
 
 interface StepSendEmailProps extends Omit<StepProps, 'onComplete'> {
-	user: FindUserUser | null
+	user: ResetPasswordFindUser | null
 	onComplete: (dateNewCode: Date) => void
 }
 
+// TODO: Update reset password process to use query params instead of state
 export function SendEmail({ onComplete, onCancel, user }: StepSendEmailProps) {
 	const [sendingEmail, setSendingEmail] = useState(false)
 	const [dateNewCode, setDateNewCode] = useState<Date | null>(null)
@@ -29,8 +31,8 @@ export function SendEmail({ onComplete, onCancel, user }: StepSendEmailProps) {
 			return snackbar({ message: 'Enviando correo', variant: 'warning' })
 
 		setSendingEmail(true)
-		const data = await doFetch<SendPasswordResetCodeResponse>({
-			url: '/user/send-password-reset-code',
+		const data = await doFetch<PasswordResetSendCodeResponse>({
+			url: '/reset-password/send-code',
 			method: 'POST',
 			body: { userId: user.id }
 		})
@@ -39,15 +41,24 @@ export function SendEmail({ onComplete, onCancel, user }: StepSendEmailProps) {
 			snackbar({ message: data.message, variant: 'error' })
 
 			// mostrar el tiempo restante
-			if ('timeNewCode' in data && data.timeNewCode) {
-				setDateNewCode(new Date(data.timeNewCode))
+			if ('nextSendAt' in data && data.nextSendAt) {
+				setDateNewCode(new Date(data.nextSendAt))
 			}
+
+			if ('errors' in data && data.errors) {
+				snackbar({
+					message: 'Asegurate de estar siguiendo los pasos del proceso',
+					variant: 'error'
+				})
+			}
+			setSendingEmail(false)
 
 			return
 		}
 
+		snackbar({ message: data.message, variant: 'success' })
 		setSendingEmail(false)
-		onComplete(new Date(data.timeNewCode))
+		onComplete(new Date(data.nextSendAt))
 	}, [onComplete, sendingEmail, user, seconds])
 
 	useEffect(() => {
@@ -69,7 +80,7 @@ export function SendEmail({ onComplete, onCancel, user }: StepSendEmailProps) {
 
 	useEffect(() => {
 		if (!user) return
-		setDateNewCode(new Date(user.timeNewCode))
+		// setDateNewCode(new Date(nextSendAt))
 	}, [user])
 
 	return (
@@ -90,7 +101,8 @@ export function SendEmail({ onComplete, onCancel, user }: StepSendEmailProps) {
 					type="button"
 					showLoader
 					onClick={handleSendEmail}
-					disabled={seconds > 0}
+					disabled={seconds > 0 || sendingEmail}
+					loading={sendingEmail}
 				>
 					{seconds > 0 ? getStringTime(seconds) : 'Enviar correo'}
 				</Button>

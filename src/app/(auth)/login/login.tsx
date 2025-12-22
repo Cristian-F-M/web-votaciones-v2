@@ -3,9 +3,9 @@ import { Input } from '@/components/Input'
 import LogoSena from '@/icons/LogoSena'
 import { ToggleTheme } from '@/components/ToggleTheme'
 import type {
-	GetProcessedErrorsReturnType,
-	GetTypeDocumentsResponse,
-	LoginResponse
+	ProcessedErrors,
+	TypeDocumentGetAllResponse,
+	AuthLoginResponse
 } from '@/types/api'
 import { useCallback, useEffect, useState } from 'react'
 import { Select } from '@/components/Select'
@@ -18,24 +18,23 @@ import {
 	serializeForm
 } from '@/utils/form'
 import { snackbar } from '@/utils/dom'
-import { Loader } from '@/components/Loader'
 import { useRouter } from 'next/navigation'
-import type { TypeDocument } from '@/types/models'
 import { Button } from '@/components/Button'
 import * as z from 'zod'
 import { LOGIN_SCHEME } from '@/zod-validations'
+import type { SelectItem } from '@/types/input'
 
 export default function Login() {
 	const year = new Date().getFullYear()
 	const [errors, setErrors] = useState<LoginErrors>({})
-	const [typesDocuments, setTypesDocuments] = useState<TypeDocument[] | null>(
+	const [typesDocuments, setTypesDocuments] = useState<SelectItem[] | null>(
 		null
 	)
 	const [isLogginIn, setIsLogginIn] = useState(false)
 	const router = useRouter()
 
 	const getTypeDocuments = useCallback(async () => {
-		const res = await doFetch<GetTypeDocumentsResponse>({
+		const res = await doFetch<TypeDocumentGetAllResponse>({
 			url: '/typeDocument',
 			cache: 'force-cache'
 		})
@@ -43,10 +42,10 @@ export default function Login() {
 		if (!res.ok)
 			return setErrors((prev) => ({
 				...prev,
-				typeDocument: 'Ocurrio un error al cargar los tipos de documento'
+				typeDocumentCode: 'Ocurrio un error al cargar los tipos de documento'
 			}))
 
-		setTypesDocuments(res.typesDocuments)
+		setTypesDocuments(res.data)
 	}, [])
 
 	const handleSubmit = useCallback(
@@ -56,7 +55,9 @@ export default function Login() {
 				return snackbar({ message: 'Espera un momento', variant: 'warning' })
 			const target = event.target as HTMLFormElement
 
-			const serializedForm = serializeForm<GetProcessedErrorsReturnType>(target.elements as LoginFormElements)
+			const serializedForm = serializeForm<ProcessedErrors>(
+				target.elements as LoginFormElements
+			)
 			const result = z.safeParse(LOGIN_SCHEME, serializedForm)
 
 			if (!result.success) {
@@ -76,7 +77,7 @@ export default function Login() {
 			const { password } = elements
 			const serializedForm = serializeForm<Record<string, unknown>>(elements)
 
-			const { ok, ...data } = await doFetch<LoginResponse>({
+			const { ok, ...data } = await doFetch<AuthLoginResponse>({
 				url: '/login',
 				method: 'POST',
 				body: serializedForm
@@ -87,7 +88,7 @@ export default function Login() {
 			if (!ok) {
 				if ('message' in data)
 					snackbar({ message: data.message, variant: 'error' })
-				if ('errors' in data) {
+				if ('errors' in data && data.errors) {
 					const errors = getProcessedErrors(data.errors)
 					setErrors(errors)
 				}

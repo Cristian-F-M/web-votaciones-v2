@@ -3,10 +3,10 @@ import type { StepProps } from './FindUser'
 import { Input } from '@/components/Input'
 import { Button } from '@/components/Button'
 import type {
-	FindUserUser,
-	SendPasswordResetCodeResponse,
-	VerifyPasswordResetCodeResponse
+	PasswordResetSendCodeResponse,
+	PasswordResetVerifyCodeResponse
 } from '@/types/api'
+import type { ResetPasswordFindUser } from '@/types/responseModels'
 import { useCallback, useEffect, useState } from 'react'
 import { doFetch } from '@/utils/fetch'
 import { getStringTime } from '@/utils/dom'
@@ -16,7 +16,7 @@ import { getErrorEntries, getProcessedErrors } from '@/utils/form'
 import { CodeInput } from '@/components/CodeInput'
 
 interface WriteCodeProps extends Omit<StepProps, 'onComplete'> {
-	user: FindUserUser | null
+	user: ResetPasswordFindUser | null
 	onComplete: (code: string) => void
 	dateNewCode: Date | null
 }
@@ -33,8 +33,8 @@ export function WriteCode({
 	const [loading, setLoading] = useState(false)
 
 	const sendPasswordResetCode = useCallback(async () => {
-		const data = await doFetch<SendPasswordResetCodeResponse>({
-			url: '/user/send-password-reset-code',
+		const data = await doFetch<PasswordResetSendCodeResponse>({
+			url: '/reset-password/send-code',
 			method: 'POST',
 			body: { userId: user?.id }
 		})
@@ -61,8 +61,8 @@ export function WriteCode({
 			snackbar({ message: data.message, variant: 'error' })
 
 			// mostrar el tiempo restante
-			if ('timeNewCode' in data && data.timeNewCode) {
-				setDateNewCode(new Date(data.timeNewCode))
+			if ('nextSendAt' in data && data.nextSendAt) {
+				setDateNewCode(new Date(data.nextSendAt))
 			}
 
 			return
@@ -114,8 +114,8 @@ export function WriteCode({
 			if (locallyErrorsEntries.length > 0 || errorsEntries.length > 0) return
 
 			setLoading(true)
-			const data = await doFetch<VerifyPasswordResetCodeResponse>({
-				url: '/user/verify-password-reset-code',
+			const data = await doFetch<PasswordResetVerifyCodeResponse>({
+				url: '/reset-password/verify-code',
 				method: 'POST',
 				body: { code: code.value, userId: user?.id }
 			})

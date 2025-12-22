@@ -106,8 +106,8 @@ export function Forbidden() {
 							<strong>URL solicitada:</strong> {pathname}
 						</span>
 						<span>
-							<strong>Usuario:</strong> {user?.name ?? '~'} {user?.lastname} (
-							{user?.roleUser.name ?? '~'})
+							<strong>Usuario:</strong> {user?.profile.name ?? '~'} {user?.profile.lastname} (
+							{user?.role.name ?? '~'})
 						</span>
 						<span>
 							<strong>Timestamp:</strong>

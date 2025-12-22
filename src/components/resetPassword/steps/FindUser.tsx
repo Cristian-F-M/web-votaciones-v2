@@ -4,14 +4,14 @@ import { Button } from '@/components/Button'
 import { useCallback, useEffect, useState } from 'react'
 import { doFetch } from '@/utils/fetch'
 import type {
-	FindUserResponse,
-	FindUserUser,
-	GetTypeDocumentsResponse
+	PasswordResetFindUserResponse,
+	TypeDocumentGetAllResponse
 } from '@/types/api'
-import type { TypeDocument } from '@/types/models'
+import type { ResetPasswordFindUser } from '@/types/responseModels'
 import { snackbar } from '@/utils/dom'
 import type { FindUserErrors, FindUserFormElements } from '@/types/forms'
 import { getErrorEntries, getProcessedErrors } from '@/utils/form'
+import type { SelectItem } from '@/types/input'
 
 export type OnComplete = () => void
 export type OnCancel = () => void
@@ -22,24 +22,28 @@ export interface StepProps {
 }
 
 export interface StepFindUserProps {
-	onComplete: (user: FindUserUser) => void
+	onComplete: (user: ResetPasswordFindUser) => void
 	onCancel?: OnCancel
 }
 
 export function FindUser({ onComplete }: StepFindUserProps) {
-	const [typesDocuments, setTypesDocuments] = useState<TypeDocument[]>([])
+	const [typesDocuments, setTypesDocuments] = useState<SelectItem[]>([])
 	const [findingUser, setFindingUser] = useState(false)
 	const [errors, setErrors] = useState<Partial<FindUserErrors>>({})
 
 	useEffect(() => {
 		const fetchTypesDocuments = async () => {
-			const data = await doFetch<GetTypeDocumentsResponse>({
-				url: '/typeDocument'
+			const data = await doFetch<TypeDocumentGetAllResponse>({
+				url: '/typeDocument/all'
 			})
 
 			if (!data.ok) return snackbar({ message: data.message, variant: 'error' })
 
-			setTypesDocuments(data.typesDocuments)
+			const typesDocumentsItems: SelectItem[] = data.data.map(
+				({ id, name, code }) => ({ id, name, value: code })
+			)
+
+			setTypesDocuments(typesDocumentsItems)
 		}
 		fetchTypesDocuments()
 	}, [])
@@ -71,8 +75,8 @@ export function FindUser({ onComplete }: StepFindUserProps) {
 
 			setFindingUser(true)
 
-			const data = await doFetch<FindUserResponse>({
-				url: '/user/find-user',
+			const data = await doFetch<PasswordResetFindUserResponse>({
+				url: '/reset-password/find-user',
 				method: 'POST',
 				body: {
 					typeDocumentCode: typeDocumentCode.value,
@@ -83,10 +87,9 @@ export function FindUser({ onComplete }: StepFindUserProps) {
 			setFindingUser(false)
 
 			if (!data.ok) {
-				if ('message' in data)
-					snackbar({ message: data.message, variant: 'error' })
+				snackbar({ message: data.message, variant: 'error' })
 
-				if ('errors' in data) {
+				if (data.errors) {
 					const errors = getProcessedErrors(data.errors)
 					setErrors(errors)
 				}

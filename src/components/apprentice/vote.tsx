@@ -3,26 +3,26 @@ import { CandidateCard } from '@/components/candidate/CandidateCard'
 import { CandidateCardFallback } from '@/components/candidate/CandidateCardFallback'
 import { useEffect, useState } from 'react'
 import type { Candidate } from '@/types/models'
-import type { GetCandidatesResponse } from '@/types/api'
+import type { CandidateGetAllResponse } from '@/types/api'
 import { doFetch } from '@/utils/fetch'
 import { snackbar } from '@/utils/dom'
 import { CountDown } from '@/components/apprentice/CountDown'
-import { useVote } from '@/states/useVote'
+import { useElection } from '@/states/useElection'
 
 export function Vote() {
 	const [targetDate, setTargetDate] = useState<Date | null>(null)
 	const [candidates, setCandidates] = useState<Candidate[] | null>(null)
-	const { vote } = useVote()
+	const { election } = useElection()
 
 	useEffect(() => {
-		if (!vote) return
-		const endDate = new Date(vote.endDate)
+		if (!election) return
+		const endDate = new Date(election.endDate)
 		setTargetDate(endDate)
-	}, [vote])
+	}, [election])
 
 	useEffect(() => {
 		async function getCandidates() {
-			const res = await doFetch<GetCandidatesResponse>({
+			const res = await doFetch<CandidateGetAllResponse>({
 				url: '/candidate/all'
 			})
 
@@ -31,7 +31,7 @@ export function Vote() {
 				return
 			}
 
-			setCandidates(res.candidates)
+			setCandidates(res.data)
 		}
 
 		getCandidates()

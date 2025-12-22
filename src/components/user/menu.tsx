@@ -5,7 +5,7 @@ import SettingsIcon from '@/icons/Settings'
 import SquareArrowRightIcon from '@/icons/SquareArrowRight'
 import { useCallback, useEffect } from 'react'
 import { doFetch } from '@/utils/fetch'
-import type { LogoutResponse } from '@/types/api'
+import type { AuthLogoutResponse } from '@/types/api'
 import type { BaseVariant } from 'notistack'
 import { snackbar } from '@/utils/dom'
 import { useRouter } from 'next/navigation'
@@ -16,7 +16,7 @@ export function UserSettings() {
 	const router = useRouter()
 
 	const handleLogout = useCallback(async () => {
-		const data = await doFetch<LogoutResponse>({
+		const data = await doFetch<AuthLogoutResponse>({
 			url: '/logout',
 			method: 'POST',
 			body: {}
@@ -27,7 +27,7 @@ export function UserSettings() {
 		snackbar({ message: data.message, variant: variant })
 
 		if (!data.ok) return
-		if ('urlRedirect' in data) return router.replace(data.urlRedirect)
+		if (data.urlRedirect) return router.replace(data.urlRedirect)
 
 		router.replace('/')
 	}, [router])
@@ -63,13 +63,13 @@ export function UserSettings() {
 					<UserAvatar className="cursor-default" />
 					<div className="flex flex-col">
 						<span className="text-sm">
-							{user?.name} {user?.lastname}
+							{user?.profile.name} {user?.profile.lastname}
 						</span>
 						<span className="text-xs text-gray-500 dark:text-gray-400">
 							{user?.email}
 						</span>
 						<span className="text-xs text-primary dark:text-dark-primary">
-							{user?.roleUser.name}
+							{user?.role.name}
 						</span>
 					</div>
 				</header>

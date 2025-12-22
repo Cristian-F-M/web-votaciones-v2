@@ -5,7 +5,7 @@ import { useRef } from 'react'
 import { useUser } from '@/states/useUser'
 import { ActivateNotificationsModal } from './ActivateNotificationsModal'
 
-export function NoVote() {
+export function NoElection() {
 	const user = useUser((state) => state.user)
 	const buttonTriggerRef = useRef<HTMLButtonElement>(null)
 

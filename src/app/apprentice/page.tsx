@@ -5,10 +5,10 @@ import { Vote } from '@/components/apprentice/vote'
 import { useCallback, useEffect, useState } from 'react'
 import { doFetch } from '@/utils/fetch'
 import { snackbar } from '@/utils/dom'
-import type { GetVoteResponse } from '@/types/api'
-import { useVote } from '@/states/useVote'
+import type { ElectionGetCurrentResponse } from '@/types/api'
+import { useElection } from '@/states/useElection'
 import { LoaderVote } from '@/components/apprentice/LoaderVote'
-import { NoVote } from '@/components/apprentice/NoVote'
+import { NoElection } from '@/components/apprentice/NoElection'
 import { LoadingWinner } from '@/components/apprentice/LoadingWinner'
 import { CandidateWinner } from '@/components/apprentice/CandidateWinner'
 
@@ -17,12 +17,12 @@ export default function IndexPage() {
 	const [isFinished, setIsFinished] = useState(false)
 	const [timeIsUp, setTimeIsUp] = useState(false)
 	const user = useUser((state) => state.user)
-	const setVote = useVote((state) => state.setVote)
-	const vote = useVote((state) => state.vote)
+	const setElection = useElection((state) => state.setElection)
+	const election = useElection((state) => state.election)
 
 	const getVote = useCallback(async () => {
-		const res = await doFetch<GetVoteResponse>({
-			url: '/vote'
+		const res = await doFetch<ElectionGetCurrentResponse>({
+			url: '/election'
 		})
 
 		setLoading(false)
@@ -32,23 +32,21 @@ export default function IndexPage() {
 			return
 		}
 
-		const finishVoteInfo = JSON.parse(res.lastVote.finishVoteInfo)
-
-		setVote({ ...res.lastVote, finishVoteInfo })
-	}, [setVote])
+		setElection(res.data)
+	}, [setElection])
 
 	useEffect(() => {
 		getVote()
 	}, [getVote])
 
 	useEffect(() => {
-		if (!vote) return
-		const startDate = new Date(vote.startDate)
-		const endDate = new Date(vote.endDate)
+		if (!election) return
+		const startDate = new Date(election.startDate)
+		const endDate = new Date(election.endDate)
 
 		const now = new Date()
 
-		setIsFinished(vote.isFinished)
+		setIsFinished(election.status === 'finished')
 
 		if (now < startDate) {
 			return
@@ -58,12 +56,12 @@ export default function IndexPage() {
 			setTimeIsUp(true)
 			return
 		}
-	}, [vote])
+	}, [election])
 
-	const loadingVote = !vote && loading
-	const loadingWinner = vote && timeIsUp && !isFinished
-	const voteNotStarted = vote && !timeIsUp
-	const voteFinished = vote && timeIsUp && isFinished
+	const loadingVote = !election && loading
+	const loadingWinner = election && timeIsUp && !isFinished
+	const voteNotStarted = election && !timeIsUp
+	const voteFinished = election && timeIsUp && isFinished
 
 	useEffect(() => {
 		const currentYear = new Date().getFullYear()
@@ -95,7 +93,7 @@ export default function IndexPage() {
 				</span>
 
 				{loadingVote && <LoaderVote />}
-				{!loadingVote && !vote && <NoVote />}
+				{!loadingVote && !election && <NoElection />}
 				{voteNotStarted && <Vote />}
 				{loadingWinner && <LoadingWinner />}
 				{voteFinished && <CandidateWinner />}

@@ -3,30 +3,35 @@ import Icon from '@/icons/Alert'
 import Users from '@/icons/Users'
 import ChartLine from '@/icons/ChartLine'
 import MilitaryAward from '@/icons/MilitaryAward'
-import { useVote } from '@/states/useVote'
+import { useElection } from '@/states/useElection'
 import Calendar from '@/icons/Calendar'
-import type { GetCandidatesResponse } from '@/types/api'
+import type { CandidateGetAllResponse } from '@/types/api'
 import { doFetch } from '@/utils/fetch'
 import { snackbar } from '@/utils/dom'
 import { useCallback, useEffect, useState } from 'react'
-import type { Candidate } from '@/types/models'
+import type { Candidate, User } from '@/types/responseModels'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
+
+type LocalCandidate = Omit<Candidate, 'user'> & {
+	user: Pick<User, 'id' | 'document' | 'email' | 'profile'>
+}
 
 function CandidateSingleCard({
 	candidate,
 	isWinner = false
 }: {
-	candidate: Candidate | undefined
+	candidate: LocalCandidate | undefined
 	isWinner?: boolean
 }) {
-	const { vote } = useVote()
+	const { election } = useElection()
 
 	if (candidate) console.log(Object.keys(candidate))
 
 	if (!candidate || Object.keys(candidate).length === 0) return null
 
-	const votesPercent = (candidate.votes / (vote?.totalVotes ?? 0)) * 100
+	const votesPercent =
+		(election?.winnerVoteCount ?? 1 / (election?.totalVotes ?? 1)) * 100
 
 	return (
 		<div className="border border-gray-200/70 px-4 py-3 rounded flex flex-col gap-1 dark:border-gray-700/80">
@@ -37,7 +42,7 @@ function CandidateSingleCard({
 							Ganador
 						</span>
 					)}
-					{candidate.user.name}
+					{candidate.user.profile.name}
 				</h4>
 				<p>{votesPercent}%</p>
 			</div>
@@ -53,37 +58,40 @@ function CandidateSingleCard({
 				/>
 			</div>
 			<p className="text-xs text-gray-600 dark:text-gray-400">
-				{candidate.votes} {candidate.votes === 1 ? 'voto' : 'votos'}
+				{election?.winnerVoteCount}{' '}
+				{election?.winnerVoteCount === 1 ? 'voto' : 'votos'}
 			</p>
 		</div>
 	)
 }
 
 export function CandidateWinner() {
-	const { vote } = useVote()
+	const { election } = useElection()
 	const [candidates, setCandidates] = useState<Candidate[]>([])
-	const candidateFallback: Candidate = {
+	const candidateFallback: LocalCandidate = {
 		id: 'CandidateFallback',
 		user: {
 			id: 'UserFallback',
-			name: 'Candidato',
-			lastname: 'Candidato',
 			document: 'Candidato',
-			email: 'Candidato'
+			email: 'Candidato',
+			profile: {
+				name: 'Candidato',
+				lastname: 'Candidato',
+				phone: '0',
+				imageUrl: null
+			}
 		},
-		imageUrl: 'https://via.placeholder.com/150',
 		description: 'Candidato',
-		votes: 0,
-		userId: { id: 'UserFallback' }
+		userId: 'UserFallback',
+		isActive: false,
+		objectives: []
 	}
-	const candidateWinner =
-		vote?.finishVoteInfo.candidates[0] ?? candidateFallback
+	const candidateWinner = election?.winner ?? candidateFallback
 
 	const participationPercent =
-		((vote?.totalVotes ?? 0) / (vote?.finishVoteInfo?.cantApprentices ?? 0)) *
-		100
+		((election?.winnerVoteCount ?? 0) / (election?.totalVotes ?? 0)) * 100
 
-	const endDate = new Date(vote?.endDate ?? '')
+	const endDate = new Date(election?.endDate ?? '')
 	const endWinnerDate = new Date(endDate.setFullYear(endDate.getFullYear() + 1))
 	const endWinnerDateString = endWinnerDate.toLocaleDateString('es-CO', {
 		day: 'numeric',
@@ -93,7 +101,7 @@ export function CandidateWinner() {
 
 	const getCandidates = useCallback(() => {
 		async function getCandidates() {
-			const res = await doFetch<GetCandidatesResponse>({
+			const res = await doFetch<CandidateGetAllResponse>({
 				url: '/candidate/all'
 			})
 
@@ -102,7 +110,7 @@ export function CandidateWinner() {
 				return
 			}
 
-			setCandidates(res.candidates)
+			setCandidates(res.data)
 		}
 
 		getCandidates()
@@ -124,7 +132,7 @@ export function CandidateWinner() {
 	})
 
 	const votesPercent =
-		((candidateWinner.votes ?? 0) / (vote?.totalVotes ?? 0)) * 100
+		((election?.winnerVoteCount ?? 0) / (election?.totalVotes ?? 0)) * 100
 
 	return (
 		<main className="w-full md:w-10/12 mx-auto mt-10">
@@ -135,8 +143,8 @@ export function CandidateWinner() {
 					</div>
 					<div>
 						<h4>Total de votos</h4>
-						<data value={vote?.totalVotes}>
-							{(vote?.totalVotes ?? 0).toLocaleString()}
+						<data value={election?.totalVotes}>
+							{(election?.totalVotes ?? 0).toLocaleString()}
 						</data>
 					</div>
 				</div>
@@ -170,12 +178,12 @@ export function CandidateWinner() {
 							<img
 								className="size-full object-cover"
 								src={`${API_URL}/candidate/image/${candidateWinner.id}`}
-								alt={`Foto de el candidato ganador ${candidateWinner.user.name}`}
+								alt={`Foto de el candidato ganador ${candidateWinner.user.profile.name}`}
 							/>
 						</div>
 						<div className="flex flex-col items-center gap-3 w-10/12 mx-auto">
 							<h2 className="text-2xl font-semibold text-center">
-								{candidateWinner.user.name}
+								{candidateWinner.user.profile.name}
 							</h2>
 							<div className="w-full h-2 bg-gray-300 rounded">
 								<div
@@ -191,8 +199,8 @@ export function CandidateWinner() {
 							<div className="text-gray-500 flex flex-col items-center leading-4.5 dark:text-gray-400 text-sm md:text-base">
 								<p>{votesPercent}% de los votos totales</p>
 								<p className="text-xs md:text-sm">
-									{candidateWinner.votes ?? 0}{' '}
-									{candidateWinner.votes === 1 ? 'voto' : 'votos'}
+									{election?.winnerVoteCount ?? 0}{' '}
+									{election?.winnerVoteCount === 1 ? 'voto' : 'votos'}
 								</p>
 							</div>
 						</div>
@@ -248,11 +256,11 @@ export function CandidateWinner() {
 							</li>
 							<li>
 								<span>Votantes registrados</span>
-								<span>{vote?.finishVoteInfo.totalVotes}</span>
+								<span>{election?.totalVotes}</span>
 							</li>
 							<li>
 								<span>Votos validos</span>
-								<span>{vote?.finishVoteInfo.totalVotes}</span>
+								<span>{election?.totalVotes}</span>
 							</li>
 						</ul>
 					</main>

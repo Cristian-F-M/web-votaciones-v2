@@ -1,4 +1,4 @@
-import type { VoteResponse } from '@/types/api'
+import type { CandidateVoteResponse } from '@/types/api'
 import type { Candidate } from '@/types/models'
 import { doFetch } from '@/utils/fetch'
 import { snackbar } from '@/utils/dom'
@@ -20,7 +20,7 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
 
 		setIsVoting(true)
 
-		const data = await doFetch<VoteResponse>({
+		const data = await doFetch<CandidateVoteResponse>({
 			url: '/candidate/vote',
 			method: 'POST',
 			body: {
@@ -49,9 +49,9 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
 	}, [user, candidate])
 
 	const buttonText = alreadyVoted ? 'Ya votaste' : 'Votar'
-	const imageUrl = candidate.imageUrl?.startsWith('http')
-		? candidate.imageUrl
-		: `${API_URL}/candidate/image/${candidate.imageUrl}`
+	const imageUrl = candidate.user.profile.imageUrl?.startsWith('http')
+		? candidate.user.profile.imageUrl
+		: `${API_URL}/candidate/image/${candidate.user.profile.imageUrl}`
 
 	return (
 		<div className="md:w-[260px] w-[220px] max-h-[380px] border border-gray-400/60 rounded shadow relative">
@@ -62,12 +62,12 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
 				</div>
 			)}
 			<div className="md:w-11/12 w-full h-auto mx-auto border-b border-gray-300">
-				<img alt={`Foto del candidate ${candidate.user.name}`} src={imageUrl} />
+				<img alt={`Foto del candidate ${candidate.user.profile.name}`} src={imageUrl} />
 			</div>
 
 			<div className="py-2 px-4">
 				<div className="md:w-fit w-full mx-auto flex flex-col items-center mb-4">
-					<h4 className="md:text-2xl text-xl">{candidate.user.name}</h4>
+					<h4 className="md:text-2xl text-xl">{candidate.user.profile.name}</h4>
 					<p className="text-xs text-gray-700 dark:text-gray-400 text-center line-clamp-2">
 						{candidate.description}
 					</p>

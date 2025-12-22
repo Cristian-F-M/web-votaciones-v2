@@ -11,9 +11,9 @@ import type {
 	ValidateFieldsProps
 } from '@/types/forms'
 import type {
-	RegisterResponse,
-	GetTypeDocumentsResponse,
-	GetProcessedErrorsReturnType
+	AuthRegisterResponse,
+	TypeDocumentGetAllResponse,
+	ProcessedErrors
 } from '@/types/api'
 import { doFetch } from '@/utils/fetch'
 import { snackbar } from '@/utils/dom'
@@ -28,22 +28,22 @@ import {
 } from '@/utils/form'
 import { scrollSmooth } from '@/utils/dom'
 import { useRouter } from 'next/navigation'
-import type { TypeDocument } from '@/types/models'
 import { Button } from '@/components/Button'
 import { PASSWORD_REGEX } from '@/constants/form'
 import { REGISTER_SCHEME } from '@/zod-validations'
 import * as z from 'zod'
+import type { SelectItem } from '@/types/input'
 
 export default function Register() {
 	const router = useRouter()
 	const [isRegistering, setIsRegistering] = useState(false)
-	const [typesDocuments, setTypesDocuments] = useState<TypeDocument[] | null>(
+	const [typesDocuments, setTypesDocuments] = useState<SelectItem[] | null>(
 		null
 	)
 	const [errors, setErrors] = useState<RegisterErrors>({})
 
 	const getTypeDocuments = useCallback(async () => {
-		const res = await doFetch<GetTypeDocumentsResponse>({
+		const res = await doFetch<TypeDocumentGetAllResponse>({
 			url: '/typeDocument',
 			cache: 'force-cache'
 		})
@@ -54,7 +54,13 @@ export default function Register() {
 				typeDocument: 'Ocurrio un error al cargar los tipos de documento'
 			}))
 
-		setTypesDocuments(res.typesDocuments)
+		const typeDocumentItems = res.data.map(({ id, code, name }) => ({
+			id,
+			value: code,
+			name
+		}))
+
+		setTypesDocuments(typeDocumentItems)
 	}, [])
 
 	useEffect(() => {
@@ -81,7 +87,9 @@ export default function Register() {
 				confirmPassword
 			} = target.elements as RegisterFormElements
 
-			const serializedForm = serializeForm<GetProcessedErrorsReturnType>(target.elements as RegisterFormElements)
+			const serializedForm = serializeForm<ProcessedErrors>(
+				target.elements as RegisterFormElements
+			)
 			const result = z.safeParse(REGISTER_SCHEME, serializedForm)
 
 			if (!result.success) {
@@ -127,8 +135,8 @@ export default function Register() {
 	const register = useCallback(
 		async (elements: RegisterFormElements) => {
 			setIsRegistering(true)
-			const serializedForm = serializeForm<GetProcessedErrorsReturnType>(elements)
-			const { ok, ...data } = await doFetch<RegisterResponse>({
+			const serializedForm = serializeForm<ProcessedErrors>(elements)
+			const { ok, ...data } = await doFetch<AuthRegisterResponse>({
 				url: '/register',
 				method: 'POST',
 				body: serializedForm

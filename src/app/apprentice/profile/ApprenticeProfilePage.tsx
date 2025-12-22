@@ -5,10 +5,7 @@ import { Select } from '@/components/Select'
 import { UploadFile } from '@/components/UploadFile'
 import X from '@/icons/X'
 import { useUser } from '@/states/useUser'
-import type {
-	GetProcessedErrorsReturnType,
-	UpdateProfileResponse
-} from '@/types/api'
+import type { ProcessedErrors, UserUpdateProfileResponse } from '@/types/api'
 import type {
 	UpdateProfileErrors,
 	UpdateProfileFormElements
@@ -24,6 +21,8 @@ import { snackbar } from '@/utils/dom'
 import { useCallback, useState, Activity } from 'react'
 import * as z from 'zod'
 import { UPDATE_PROFILE_SCHEME } from '@/zod-validations'
+import { Profile as CandidateProfile } from '@/components/candidate/Profile'
+import { useCandidate } from '@/states/useCandidate'
 
 export default function ApprenticeProfilePage() {
 	const { user, getUser, setUser } = useUser((state) => state)
@@ -33,6 +32,7 @@ export default function ApprenticeProfilePage() {
 	const [errors, setErrors] = useState<Partial<UpdateProfileErrors>>({})
 	const imageUrlFallback =
 		'https://res.cloudinary.com/dp6ucd28f/image/upload/v1763591326/votaciones-v2/users/base_user.webp'
+	const { candidate } = useCandidate()
 
 	const handleChangeProfileImage = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +72,7 @@ export default function ApprenticeProfilePage() {
 
 			const target = event.currentTarget as HTMLFormElement
 
-			const serializedFrom = serializeForm<GetProcessedErrorsReturnType>(
+			const serializedFrom = serializeForm<ProcessedErrors>(
 				target.elements as UpdateProfileFormElements
 			)
 
@@ -95,7 +95,7 @@ export default function ApprenticeProfilePage() {
 
 			if (!confirmedImage) formData.delete('image')
 
-			const data = await doFetch<UpdateProfileResponse>({
+			const data = await doFetch<UserUpdateProfileResponse>({
 				url: '/user/profile',
 				method: 'PUT',
 				body: formData
@@ -106,7 +106,7 @@ export default function ApprenticeProfilePage() {
 			if (!data.ok) {
 				console.log({ data })
 
-				if ('errors' in data) {
+				if ('errors' in data && data.errors) {
 					const errors = getProcessedErrors(data.errors)
 					setErrors(errors)
 				}
@@ -277,6 +277,16 @@ export default function ApprenticeProfilePage() {
 						</Button>
 					</div>
 				</form>
+
+				{candidate && user?.roleUser.code === 'Candidate' && (
+					<div className="flex flex-col lg:grid grid-cols-2 space-y-10 gap-x-7 w-9/12 border border-gray-400/60 border-t-0 lg:border-t rounded-t-none lg:rounded-t lg:shadow rounded px-9 py-10 mb-10">
+						{/* <hr className="col-span-2 text-gray-400 mt-10 mb-6" /> */}
+
+						<div className="col-span-2">
+							<CandidateProfile />
+						</div>
+					</div>
+				)}
 			</main>
 		</>
 	)

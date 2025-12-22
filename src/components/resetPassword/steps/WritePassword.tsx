@@ -5,13 +5,14 @@ import { useCallback, useState } from 'react'
 import type { WritePasswordErrors, WritePasswordElements } from '@/types/forms'
 import { getErrorEntries, getProcessedErrors } from '@/utils/form'
 import { doFetch } from '@/utils/fetch'
-import type { FindUserUser, UpdatePasswordResponse } from '@/types/api'
+import type { PasswordResetUpdateResponse } from '@/types/api'
+import type { ResetPasswordFindUser } from '@/types/responseModels'
 import { snackbar } from '@/utils/dom'
 import { useRouter } from 'next/navigation'
 
 interface WritePasswordStepProps extends Omit<StepProps, 'onComplete'> {
 	code: string | null
-	user: FindUserUser | null
+	user: ResetPasswordFindUser | null
 }
 
 export function WritePassword({ user, code }: WritePasswordStepProps) {
@@ -48,9 +49,9 @@ export function WritePassword({ user, code }: WritePasswordStepProps) {
 
 			if (locallyErrorsEntries.length > 0 || errorsEntries.length > 0) return
 
-			const data = await doFetch<UpdatePasswordResponse>({
-				url: '/user/update-password',
-				method: 'PUT',
+			const data = await doFetch<PasswordResetUpdateResponse>({
+				url: '/reset-password/update-password',
+				method: 'PATCH',
 				body: {
 					password: password.value,
 					passwordConfirmation: passwordConfirmation.value,
@@ -71,8 +72,8 @@ export function WritePassword({ user, code }: WritePasswordStepProps) {
 
 			snackbar({ message: 'Contraseña restablecida', variant: 'success' })
 
-			if ('urlReturn' in data && data.urlReturn)
-				return router.push(data.urlReturn)
+			if ('urlRedirect' in data && data.urlRedirect)
+				return router.push(data.urlRedirect)
 			router.push('/login')
 		},
 		[errors, user, code, router]
