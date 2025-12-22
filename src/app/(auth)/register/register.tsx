@@ -1,15 +1,10 @@
 'use client'
 import { Input } from '@/components/Input'
-import { Loader } from '@/components/Loader'
 import { Select } from '@/components/Select'
 import { ToggleTheme } from '@/components/ToggleTheme'
 import LogoSena from '@/icons/LogoSena'
 import { useCallback, useEffect, useState } from 'react'
-import type {
-	RegisterErrors,
-	RegisterFormElements,
-	ValidateFieldsProps
-} from '@/types/forms'
+import type { RegisterErrors, RegisterForm } from '@/types/forms'
 import type {
 	AuthRegisterResponse,
 	TypeDocumentGetAllResponse,
@@ -17,21 +12,11 @@ import type {
 } from '@/types/api'
 import { doFetch } from '@/utils/fetch'
 import { snackbar } from '@/utils/dom'
-import {
-	getErrorEntries,
-	getProcessedErrors,
-	isEmailValid,
-	isPasswordValid,
-	parseZodMessages,
-	serializeForm,
-	validateFieldsNotEmpty
-} from '@/utils/form'
-import { scrollSmooth } from '@/utils/dom'
+import { getProcessedErrors, serializeForm, validateForm } from '@/utils/form'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/Button'
 import { PASSWORD_REGEX } from '@/constants/form'
 import { REGISTER_SCHEME } from '@/zod-validations'
-import * as z from 'zod'
 import type { SelectItem } from '@/types/input'
 
 export default function Register() {
@@ -43,18 +28,17 @@ export default function Register() {
 	const [errors, setErrors] = useState<RegisterErrors>({})
 
 	const getTypeDocuments = useCallback(async () => {
-		const res = await doFetch<TypeDocumentGetAllResponse>({
-			url: '/typeDocument',
-			cache: 'force-cache'
+		const response = await doFetch<TypeDocumentGetAllResponse>({
+			url: '/typeDocument/all'
 		})
 
-		if (!res.ok)
+		if (!response.ok)
 			return setErrors((prev) => ({
 				...prev,
 				typeDocument: 'Ocurrio un error al cargar los tipos de documento'
 			}))
 
-		const typeDocumentItems = res.data.map(({ id, code, name }) => ({
+		const typeDocumentItems = response.data.map(({ id, code, name }) => ({
 			id,
 			value: code,
 			name
@@ -74,93 +58,53 @@ export default function Register() {
 			if (isRegistering)
 				return snackbar({ message: 'Espera un momento', variant: 'warning' })
 
-			const target = event.target as HTMLFormElement
+			const form = event.target as RegisterForm
+			const { elements } = form
 
-			const {
-				name,
-				lastname,
-				typeDocumentCode,
-				document,
-				email,
-				phone,
-				password,
-				confirmPassword
-			} = target.elements as RegisterFormElements
-
-			const serializedForm = serializeForm<ProcessedErrors>(
-				target.elements as RegisterFormElements
-			)
-			const result = z.safeParse(REGISTER_SCHEME, serializedForm)
+			const result = validateForm(elements, REGISTER_SCHEME)
 
 			if (!result.success) {
-				const errors = parseZodMessages(result)
-				setErrors(errors)
+				setErrors(result.errors)
 				return
 			}
 
-			let locallyErrors: typeof errors = {}
-
-			locallyErrors = validateFieldsNotEmpty(
-				target.elements as ValidateFieldsProps
-			)
-
-			if (!locallyErrors.email && !isEmailValid(email.value))
-				locallyErrors.email = 'Ingresa un correo electronico válido '
-
-			if (!locallyErrors.password && !isPasswordValid(password.value)) {
-				locallyErrors.password =
-					'Debe contener entre 8 y 20 caracteres, al menos 1 mayúscula, 1 minúscula, 1 número y 1 símbolo especial.'
-			}
-
-			if (!locallyErrors.password && password.value !== confirmPassword.value) {
-				locallyErrors.confirmPassword = 'Las contraseñas no coinciden'
-				locallyErrors.password = 'Las contraseñas no coinciden'
-			}
-
-			const fullErrors = { ...errors, ...locallyErrors }
-			const errorsEntries = getErrorEntries(fullErrors)
-
-			if (errorsEntries.length >= 1) {
-				const inputName = errorsEntries[0][0]
-				scrollSmooth(`[name=${inputName}]`)
-				setErrors(fullErrors)
-				return
-			}
-
-			register(target.elements as RegisterFormElements)
+			register(form)
 		},
-		[isRegistering, errors]
+		[isRegistering]
 	)
 
 	const register = useCallback(
-		async (elements: RegisterFormElements) => {
-			setIsRegistering(true)
+		async (form: RegisterForm) => {
+			const elements = form.elements
 			const serializedForm = serializeForm<ProcessedErrors>(elements)
-			const { ok, ...data } = await doFetch<AuthRegisterResponse>({
+
+			setIsRegistering(true)
+
+			const response = await doFetch<AuthRegisterResponse>({
 				url: '/register',
 				method: 'POST',
 				body: serializedForm
 			})
 			setIsRegistering(false)
 
-			if (!ok) {
-				if (data.message) snackbar({ message: data.message })
+			if (!response.ok) {
+				snackbar({ message: response.message })
 
-				if ('errors' in data && data.errors) {
-					const errors = getProcessedErrors(data.errors)
+				if (response.errors) {
+					const errors = getProcessedErrors(response.errors)
 					setErrors(errors)
 				}
 				return
 			}
 
-			snackbar({ message: data.message, variant: 'success' })
+			snackbar({ message: response.message, variant: 'success' })
 
 			router.push('/login')
 		},
 		[router]
 	)
 
-	const clearError = useCallback((key: keyof RegisterFormElements) => {
+	const clearError = useCallback((key: keyof RegisterErrors) => {
 		setErrors((prev) => ({ ...prev, [key]: null }))
 	}, [])
 
