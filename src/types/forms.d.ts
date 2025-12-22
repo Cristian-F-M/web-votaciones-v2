@@ -3,6 +3,17 @@ export type ValidateFieldsProps = HTMLFormControlsCollection & {
 }
 export type ValidateFieldsReturnType = Record<string, string>
 
+export type FormErrors<T extends HTMLFormControlsCollection> = {
+	[K in keyof T as T[K] extends HTMLElement ? K : never]?: string
+}
+
+export type FormElements<T extends Record<string, unknown>> = T &
+	HTMLFormControlsCollection
+
+export type Form<T extends Record<string, unknown>> = HTMLFormElement & {
+	elements: FormElements<T>
+}
+
 export interface LoginFormElements extends HTMLFormControlsCollection {
 	typeDocumentCode: HTMLSelectElement
 	document: HTMLInputElement
