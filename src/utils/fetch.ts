@@ -40,7 +40,6 @@ export async function doFetch<T>({
 		if (!response.ok) {
 			const message =
 				responseData?.message ?? 'Ocurrio un error procesando la solicitud :c'
-			snackbar({ message, variant: 'error' })
 
 			return {
 				ok: false,
