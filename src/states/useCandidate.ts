@@ -12,7 +12,7 @@ interface CandidateState {
 const getCandidate: CandidateState['getCandidate'] = async (userId) => {
 	if (!userId) return null
 	const response = await doFetch<CandidateGetOneResponse>({
-		url: `/candidate?userId=${userId}`
+		url: `/candidate?id=${userId}`
 	})
 	if (!response.ok) return null
 	return response.data
