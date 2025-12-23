@@ -220,13 +220,13 @@ export default function Register() {
 						/>
 						<Input
 							label="Confirmar contraseña"
-							error={errors.confirmPassword}
-							id="confirmPassword"
-							name="confirmPassword"
+							error={errors.passwordConfirmation}
+							id="passwordConfirmation"
+							name="passwordConfirmation"
 							type="password"
 							required
 							onChange={() => {
-								clearError('confirmPassword')
+								clearError('passwordConfirmation')
 							}}
 						/>
 						<div className="md:col-span-2">
