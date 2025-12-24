@@ -1,5 +1,5 @@
 'use client'
-import type { UserHomeResponse } from '@/types/api'
+import type { UserGetProfileResponse } from '@/types/api'
 import { doFetch } from '@/utils/fetch'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect } from 'react'
@@ -14,19 +14,19 @@ export default function ApprenticeLayout({
 	children
 }: { children: React.ReactNode }) {
 	const router = useRouter()
-	const { user, setUser} = useUser()
+	const { user, setUser } = useUser()
 	const { getCandidate: getCandidateState, setCandidate } = useCandidate()
 
 	const getUser = useCallback(async () => {
-		const { ok, ...data } = await doFetch<UserHomeResponse>({ url: '/user' })
-		if (!ok) return
-		if ('user' in data) setUser(data.user)
+		const response = await doFetch<UserGetProfileResponse>({ url: '/user' })
+		if (!response.ok) return
+		setUser(response.data)
 	}, [setUser])
 
-  const getCandidate = useCallback(async () => {
-    const candidate = await getCandidateState(user?.id)
-    setCandidate(candidate)
-  }, [getCandidateState, setCandidate, user])
+	const getCandidate = useCallback(async () => {
+		const candidate = await getCandidateState(user?.id)
+		setCandidate(candidate)
+	}, [getCandidateState, setCandidate, user])
 
 	useEffect(() => {
 		getUser()
@@ -48,7 +48,7 @@ export default function ApprenticeLayout({
 				</div>
 			</header>
 
-			<ValidatePermission roles={['Apprentice', 'Candidate']}>
+			<ValidatePermission roles={['APPRENTICE', 'CANDIDATE']}>
 				{children}
 			</ValidatePermission>
 		</div>
