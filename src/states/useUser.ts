@@ -1,12 +1,12 @@
 import type { UserGetProfileResponse } from '@/types/api'
-import type { StateUser } from '@/types/models'
+import type { User } from '@/types/responseModels'
 import { doFetch } from '@/utils/fetch'
 import { create } from 'zustand'
 
 interface UserState {
-	user: StateUser | null
+	user: User | null
 	setUser: (user: UserState['user']) => void
-	getUser: () => Promise<StateUser | null>
+	getUser: () => Promise<User | null>
 }
 
 export const useUser = create<UserState>()((set) => ({
