@@ -81,3 +81,22 @@ export const UPDATE_CANDIDATE_PROFILE_SCHEME = z.object({
 		.min(IV.objectives.min, IV.objectives.sizeMessage)
 		.max(IV.objectives.max, IV.objectives.sizeMessage)
 })
+
+export const FIND_USER_SCHEME = z.object({
+	typeDocumentCode: SCHEMES.typeDocument,
+	document: SCHEMES.document
+})
+
+export const WRITE_CODE_SCHEME = z.object({
+	code: z.string().nonempty(IV.requiredMessage)
+})
+
+export const UPDATE_PASSWORD_SCHEME = z
+	.object({
+		password: SCHEMES.password.regex(PASSWORD_REGEX, IV.password.strongMessage),
+		passwordConfirmation: SCHEMES.password
+	})
+	.refine((d) => d.password === d.passwordConfirmation, {
+		error: IV.password.confirmMessage,
+		path: ['passwordConfirmation']
+	})
