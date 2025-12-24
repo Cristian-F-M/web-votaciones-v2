@@ -8,7 +8,7 @@ import { SendEmail as StepSendEmail } from '@/components/resetPassword/steps/Sen
 import { WriteCode as StepWriteCode } from '@/components/resetPassword/steps/WriteCode'
 import { StepIndicator } from '@/components/resetPassword/StepIndicator'
 import { WritePassword as StepWritePassword } from '@/components/resetPassword/steps/WritePassword'
-import type { FindUserUser } from '@/types/api'
+import type { ResetPasswordFindUser } from '@/types/responseModels'
 
 enum ResetPasswordStep {
 	FIND_USER,
@@ -21,7 +21,7 @@ export function ResetPasswordPage() {
 	const [resetPasswordStep, setResetPasswordStep] = useState<ResetPasswordStep>(
 		ResetPasswordStep.FIND_USER
 	)
-	const [user, setUser] = useState<FindUserUser | null>(null)
+	const [user, setUser] = useState<ResetPasswordFindUser | null>(null)
 	const [dateNewCode, setDateNewCode] = useState<Date | null>(null)
 	const [code, setCode] = useState<string | null>(null)
 
@@ -74,7 +74,7 @@ export function ResetPasswordPage() {
 
 						{resetPasswordStep === ResetPasswordStep.FIND_USER && (
 							<StepFindUser
-								onComplete={(user: FindUserUser) => {
+								onComplete={(user: ResetPasswordFindUser) => {
 									setUser(user)
 									nextStep()
 								}}
