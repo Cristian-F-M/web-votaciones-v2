@@ -277,9 +277,9 @@ export type RoleDeleteResponse =
 export type PasswordResetFindUserResponse =
 	| {
 			ok: true
-			user: ResetPasswordFindUser
-			nextSendAt: Date | false
+			urlRedirect: string
 	  }
+	| { ok: false; message: string; urlRedirect: string }
 	| ValidationErrorResponse
 
 /**
