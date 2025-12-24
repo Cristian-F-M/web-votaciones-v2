@@ -10,6 +10,7 @@ export interface User {
 	typeDocument: Pick<TypeDocument, 'id' | 'name' | 'code'>
 	role: Pick<Role, 'id' | 'name' | 'code'>
 	profile: Pick<Profile, 'name' | 'lastname' | 'phone' | 'imageUrl'>
+	shiftType: Pick<ShiftType, 'id' | 'name' | 'code'>
 }
 
 export interface ResetPasswordFindUser {
