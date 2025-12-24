@@ -70,7 +70,7 @@ export function CodeInput({ size, className, ...props }: CodeInputProps) {
 				readOnly
 				{...props}
 			/>
-			<div className="flex gap-3">
+			<div className="flex gap-2 md:gap-3">
 				{Array.from({ length: size }).map((_, index) => (
 					<SingleCodeInput
 						// biome-ignore lint/suspicious/noArrayIndexKey: It does not matter

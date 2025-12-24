@@ -69,7 +69,7 @@ export function SingleCodeInput({
 
 	return (
 		<input
-			className="aspect-[1/1.3] w-12 bg-gray-300 dark:bg-gray-900 border border-gray-400/60 dark:border-gray-700/80 rounded flex items-center justify-center text-black dark:text-white text-lg text-center uppercase focus:outline-1.5 outline-primary dark:outline-primary caret-black dark:caret-white"
+			className="aspect-[1/1.3] w-full max-w-12 md:w-12 bg-gray-300 dark:bg-gray-900 border border-gray-400/60 dark:border-gray-700/80 rounded flex items-center justify-center text-black dark:text-white text-lg text-center uppercase focus:outline-1.5 outline-primary dark:outline-primary caret-black dark:caret-white"
 			type="text"
 			maxLength={1}
 			onKeyDown={handleKeyDown}
