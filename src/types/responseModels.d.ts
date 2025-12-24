@@ -7,8 +7,8 @@ export interface User {
 	typeDocumentId: User['typeDocumentId']
 	roleId: User['roleId']
 
-	typeDocument: Pick<TypeDocument, 'id' | 'name'>
-	role: Pick<Role, 'id' | 'name'>
+	typeDocument: Pick<TypeDocument, 'id' | 'name' | 'code'>
+	role: Pick<Role, 'id' | 'name' | 'code'>
 	profile: Pick<Profile, 'name' | 'lastname' | 'phone' | 'imageUrl'>
 }
 
