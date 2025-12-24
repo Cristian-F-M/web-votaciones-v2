@@ -1,5 +1,12 @@
 import type { AllowedSessionType, ConfigScope } from '.'
 
+export type AllowedRole =
+	| 'USER'
+	| 'APPRENTICE'
+	| 'ADMINISTRATOR'
+	| 'DEVELOPER'
+	| 'CANDIDATE'
+
 export interface Candidate {
 	id: string
 	userId: string
@@ -27,7 +34,7 @@ export interface Config {
 export interface Role {
 	id: string
 	name: string
-	code: string
+	code: AllowedRole
 	description: string
 	createdAt?: Date
 	updatedAt?: Date

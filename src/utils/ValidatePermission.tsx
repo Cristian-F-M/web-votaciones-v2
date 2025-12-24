@@ -6,18 +6,12 @@ import { useEffect, useState } from 'react'
 import { Loader } from '@/components/Loader'
 import { snackbar } from '@/utils/dom'
 import { Forbidden } from '@/components/user/Forbidden'
-
-type AllowRoles =
-	| 'USER'
-	| 'APPRENTICE'
-	| 'ADMINISTRATOR'
-	| 'DEVELOPER'
-	| 'CANDIDATE'
+import type { AllowedRole } from '@/types/models'
 
 export function ValidatePermission({
 	children,
 	roles
-}: { children: React.ReactNode; roles: AllowRoles[] }) {
+}: { children: React.ReactNode; roles: AllowedRole[] }) {
 	const router = useRouter()
 	const [isAllowed, setIsAllowed] = useState(false)
 	const [isLoading, setIsLoading] = useState(true)
