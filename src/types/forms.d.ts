@@ -38,6 +38,7 @@ export interface RegisterFormValues {
 	name: string
 	lastname: string
 	typeDocumentCode: string
+	shiftTypeCode: string
 	document: string
 	phone: string
 	email: string
@@ -49,6 +50,7 @@ export interface RegisterFormElements extends HTMLFormControlsCollection {
 	name: HTMLInputElement
 	lastname: HTMLInputElement
 	typeDocumentCode: HTMLSelectElement
+	shiftTypeCode: HTMLSelectElement
 	document: HTMLInputElement
 	phone: HTMLInputElement
 	email: HTMLInputElement
