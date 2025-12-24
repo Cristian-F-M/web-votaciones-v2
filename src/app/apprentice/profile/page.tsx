@@ -1,4 +1,4 @@
-import ApprenticeProfilePage from './ApprenticeProfilePage'
+import ApprenticeProfilePage from './profile'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
