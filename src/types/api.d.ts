@@ -6,7 +6,8 @@ import type {
 	Role,
 	Config,
 	Profile,
-	User
+	User,
+	ShiftType
 } from './responseModels'
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
@@ -298,4 +299,30 @@ export type PasswordResetVerifyCodeResponse =
 export type PasswordResetUpdateResponse =
 	| { ok: true; message: string; urlRedirect: string }
 	| { ok: false; message: string }
+	| ValidationErrorResponse
+
+/**
+ * Response for the endpoint `/shiftType/all`
+ */
+export type ShiftTypeGetAllResponse = { ok: true; data: ShiftType[] }
+
+/**
+ * Response for the endpoint `/shiftType/:q`
+ */
+export type ShiftTypeGetOneResponse =
+	| { ok: true; data: ShiftType }
+	| ValidationErrorResponse
+
+/**
+ * Response for the endpoint `/shiftType/`
+ */
+export type ShiftTypeCreateResponse =
+	| { ok: true; message: string; shiftType: ShiftType }
+	| ValidationErrorResponse
+
+/**
+ * Response for the endpoint `/shiftType/:id`
+ */
+export type ShiftTypeDeleteResponse =
+	| { ok: true; message: string; shiftType: ShiftType }
 	| ValidationErrorResponse
