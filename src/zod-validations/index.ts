@@ -51,11 +51,11 @@ export const REGISTER_SCHEME = z
 		phone: SCHEMES.phone,
 		email: SCHEMES.email,
 		password: SCHEMES.password.regex(PASSWORD_REGEX, IV.password.strongMessage),
-		confirmPassword: SCHEMES.password
+		passwordConfirmation: SCHEMES.password
 	})
-	.refine((d) => d.password === d.confirmPassword, {
+	.refine((d) => d.password === d.passwordConfirmation, {
 		error: IV.password.confirmMessage,
-		path: ['confirmPassword']
+		path: ['passwordConfirmation']
 	})
 
 export const UPDATE_PROFILE_SCHEME = z.object({
