@@ -8,11 +8,11 @@ import { snackbar } from '@/utils/dom'
 import { Forbidden } from '@/components/user/Forbidden'
 
 type AllowRoles =
-	| 'User'
-	| 'Apprentice'
-	| 'Administrator'
-	| 'Developer'
-	| 'Candidate'
+	| 'USER'
+	| 'APPRENTICE'
+	| 'ADMINISTRATOR'
+	| 'DEVELOPER'
+	| 'CANDIDATE'
 
 export function ValidatePermission({
 	children,
