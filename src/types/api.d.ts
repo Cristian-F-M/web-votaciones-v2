@@ -1,13 +1,13 @@
 import type { LoginErrors, RegisterErrors } from './forms'
 import type { SelectItem } from './input'
 import type {
-	ResetPasswordFindUser,
-	TypeDocument,
-	Role,
 	Config,
 	Profile,
-	User,
-	ShiftType
+	ResetPasswordFindUser,
+	Role,
+	ShiftType,
+	TypeDocument,
+	User
 } from './responseModels'
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
@@ -286,23 +286,32 @@ export type PasswordResetFindUserResponse =
  * Response for the endpoint `/reset-password/send-password-reset-code`
  */
 export type PasswordResetSendCodeResponse =
-	| { ok: true; message: string; nextSendAt: Date }
-	| { ok: false; message: string; nextSendAt?: Date }
-	| ValidationErrorResponse
+	| { ok: true; message: string; nextSendAt: Date; urlRedirect: string }
+	| { ok: false; message: string; nextSendAt: Date; urlRedirect: string }
 
 /**
  * Response for the endpoint `/reset-password/verify-password-reset-code`
  */
-export type PasswordResetVerifyCodeResponse =
-	| { ok: true; message: string }
-	| ValidationErrorResponse
+export type PasswordResetVerifyCodeResponse = {
+	ok: boolean
+	message: string
+	urlRedirect: string
+}
 
 /**
  * Response for the endpoint `/reset-password/update-password`
  */
 export type PasswordResetUpdateResponse =
 	| { ok: true; message: string; urlRedirect: string }
-	| { ok: false; message: string }
+	| ValidationErrorResponse
+
+export type PasswordResetGetDataResponse =
+	| {
+			ok: true
+			data: { email: string; nextSendAt: string | null }
+			urlRedirect?: string
+	  }
+	| { ok: false; message: string; urlRedirect?: string }
 	| ValidationErrorResponse
 
 /**
