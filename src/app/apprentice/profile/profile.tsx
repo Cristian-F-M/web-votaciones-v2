@@ -126,8 +126,14 @@ export default function ApprenticeProfilePage() {
 		[updatingProfile, errors, profileImageUrl, confirmedImage, getUser, setUser]
 	)
 
-	const apprenticeImageUrl = user?.imageUrl
+	const apprenticeImageUrl = user?.profile.imageUrl
 	const showUploadFile = !profileImageUrl || (profileImageUrl && confirmedImage)
+
+	const typeDocuments = user
+		? [{ ...user.typeDocument, value: user.typeDocument.code }]
+		: null
+
+	const roles = user ? [{ ...user.role, value: user.role.code }] : null
 
 	return (
 		<>
@@ -162,7 +168,7 @@ export default function ApprenticeProfilePage() {
 									src={
 										profileImageUrl || apprenticeImageUrl || imageUrlFallback
 									}
-									alt={`Foto de el usuario ${user?.name}`}
+									alt={`Foto de el usuario ${user?.profile.name}`}
 								/>
 							</a>
 						</div>
@@ -201,6 +207,9 @@ export default function ApprenticeProfilePage() {
 							)}
 						</div>
 					</div>
+
+					{/* // TODO: Change all selects to use the <Input /> component */}
+
 					<div className="flex flex-col lg:grid grid-cols-2  space-y-10 gap-x-7 w-full lg:w-8/12 border border-gray-400/60 border-t-0 lg:border-t rounded-t-none lg:rounded-t lg:shadow rounded px-9 py-10">
 						<Input
 							label="Nombre"
@@ -208,7 +217,7 @@ export default function ApprenticeProfilePage() {
 							id="name"
 							type="text"
 							error={errors.name}
-							defaultValue={user?.name}
+							defaultValue={user?.profile.name}
 							onChange={handleInputChange}
 						/>
 						<Input
@@ -217,17 +226,26 @@ export default function ApprenticeProfilePage() {
 							id="lastname"
 							type="text"
 							error={errors.lastname}
-							defaultValue={user?.lastname}
+							defaultValue={user?.profile.lastname}
 							onChange={handleInputChange}
 						/>
 						<Select
 							error={null}
-							items={user ? [user.typeDocumentUser] : null}
+							items={typeDocuments}
 							label="Tipo de documento"
 							id="typeDocumentCode"
 							name="typeDocumentCode"
 							required
-							selectedItem={user?.typeDocumentUser.code}
+							selectedItem={user?.typeDocument.code}
+							disabled
+						/>
+						<Input
+							label="Jornada"
+							name="shift"
+							id="shift"
+							type="text"
+							error={null}
+							defaultValue={user?.shiftType.name}
 							disabled
 						/>
 						<Input
@@ -245,7 +263,7 @@ export default function ApprenticeProfilePage() {
 							id="phone"
 							type="number"
 							error={errors.phone}
-							defaultValue={user?.phone}
+							defaultValue={user?.profile.phone}
 							onChange={handleInputChange}
 						/>
 						<Input
@@ -263,8 +281,8 @@ export default function ApprenticeProfilePage() {
 							name="role"
 							id="role"
 							error={null}
-							items={user ? [user.roleUser] : null}
-							selectedItem={user?.roleUser.code}
+							items={roles}
+							selectedItem={user?.role.code}
 						/>
 						<Button
 							loading={updatingProfile}
@@ -278,7 +296,7 @@ export default function ApprenticeProfilePage() {
 					</div>
 				</form>
 
-				{candidate && user?.roleUser.code === 'Candidate' && (
+				{candidate && user?.role.code === 'CANDIDATE' && (
 					<div className="flex flex-col lg:grid grid-cols-2 space-y-10 gap-x-7 w-9/12 border border-gray-400/60 border-t-0 lg:border-t rounded-t-none lg:rounded-t lg:shadow rounded px-9 py-10 mb-10">
 						{/* <hr className="col-span-2 text-gray-400 mt-10 mb-6" /> */}
 
