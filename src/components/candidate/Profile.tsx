@@ -76,10 +76,6 @@ export function Profile() {
 		}))
 	}
 
-  useEffect(() => {
-    console.log(candidate)
-  }, [candidate])
-
 	return (
 		<div>
 			<header className="w-full">
@@ -116,7 +112,7 @@ export function Profile() {
 							onChange={() => {
 								clearError('objectives')
 							}}
-							defaultItems={candidate?.objectives as any as Item[] ?? []}
+							defaultItems={(candidate?.objectives as any as Item[]) ?? []}
 							name="objectives"
 							textKey="text"
 						/>
