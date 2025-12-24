@@ -12,7 +12,7 @@ import { UPDATE_CANDIDATE_PROFILE_SCHEME } from '@/zod-validations'
 import * as z from 'zod'
 import { TextArea } from '../TextArea'
 import { snackbar } from '@/utils/dom'
-import type { UpdateCandidateProfileResponse } from '@/types/api'
+import type { CandidateUpdateProfileResponse } from '@/types/api'
 import { INPUTS_VALIDATIONS as IV } from '@/constants/form'
 import { useCandidate } from '@/states/useCandidate'
 
@@ -46,7 +46,7 @@ export function Profile() {
 			const formData = new FormData(event.currentTarget)
 			setUpdatingProfile(true)
 
-			const data = await doFetch<UpdateCandidateProfileResponse>({
+			const response = await doFetch<CandidateUpdateProfileResponse>({
 				url: '/candidate/profile',
 				method: 'PUT',
 				body: serializedForm
@@ -54,13 +54,12 @@ export function Profile() {
 
 			setUpdatingProfile(false)
 
-			const messageVariant = data.ok ? 'success' : 'error'
-			if ('message' in data)
-				snackbar({ message: data.message, variant: messageVariant })
+			const messageVariant = response.ok ? 'success' : 'error'
+			snackbar({ message: response.message, variant: messageVariant })
 
-			if (!data.ok) {
-				if ('errors' in data) {
-					const errors = getProcessedErrors(data.errors)
+			if (!response.ok) {
+				if (response.errors) {
+					const errors = getProcessedErrors(response.errors)
 					setErrors(errors)
 				}
 
