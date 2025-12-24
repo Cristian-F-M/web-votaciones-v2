@@ -129,12 +129,6 @@ export default function ApprenticeProfilePage() {
 	const apprenticeImageUrl = user?.profile.imageUrl
 	const showUploadFile = !profileImageUrl || (profileImageUrl && confirmedImage)
 
-	const typeDocuments = user
-		? [{ ...user.typeDocument, value: user.typeDocument.code }]
-		: null
-
-	const roles = user ? [{ ...user.role, value: user.role.code }] : null
-
 	return (
 		<>
 			<link rel="stylesheet" href="/assets/css/form-ntw.css" />
@@ -208,8 +202,6 @@ export default function ApprenticeProfilePage() {
 						</div>
 					</div>
 
-					{/* // TODO: Change all selects to use the <Input /> component */}
-
 					<div className="flex flex-col lg:grid grid-cols-2  space-y-10 gap-x-7 w-full lg:w-8/12 border border-gray-400/60 border-t-0 lg:border-t rounded-t-none lg:rounded-t lg:shadow rounded px-9 py-10">
 						<Input
 							label="Nombre"
@@ -229,14 +221,14 @@ export default function ApprenticeProfilePage() {
 							defaultValue={user?.profile.lastname}
 							onChange={handleInputChange}
 						/>
-						<Select
+						<Input
 							error={null}
-							items={typeDocuments}
 							label="Tipo de documento"
 							id="typeDocumentCode"
 							name="typeDocumentCode"
+							type="text"
 							required
-							selectedItem={user?.typeDocument.code}
+							defaultValue={user?.typeDocument.name}
 							disabled
 						/>
 						<Input
@@ -275,14 +267,14 @@ export default function ApprenticeProfilePage() {
 							defaultValue={user?.email}
 							onChange={handleInputChange}
 						/>
-						<Select
+						<Input
+							type="text"
 							disabled
 							label="Rol"
 							name="role"
 							id="role"
 							error={null}
-							items={roles}
-							selectedItem={user?.role.code}
+							defaultValue={user?.role.name}
 						/>
 						<Button
 							loading={updatingProfile}
