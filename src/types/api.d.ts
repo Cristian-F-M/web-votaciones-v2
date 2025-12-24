@@ -68,7 +68,11 @@ export type StandardAPIResponse<T = undefined> =
 /**
  * Response for the endpoint `/` (GET)
  */
-export type AuthCheckSessionResponse = { ok: boolean; urlRedirect: string, message: string }
+export type AuthCheckSessionResponse = {
+	ok: boolean
+	urlRedirect: string
+	message: string
+}
 
 /**
  * Response for the endpoint `/register` (POST)
