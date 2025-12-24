@@ -8,7 +8,8 @@ import type { RegisterErrors, RegisterForm } from '@/types/forms'
 import type {
 	AuthRegisterResponse,
 	TypeDocumentGetAllResponse,
-	ProcessedErrors
+	ProcessedErrors,
+	ShiftTypeGetAllResponse
 } from '@/types/api'
 import { doFetch } from '@/utils/fetch'
 import { snackbar } from '@/utils/dom'
@@ -26,6 +27,7 @@ export default function Register() {
 		null
 	)
 	const [errors, setErrors] = useState<RegisterErrors>({})
+	const [shiftTypes, setShiftTypes] = useState<SelectItem[] | null>(null)
 
 	const getTypeDocuments = useCallback(async () => {
 		const response = await doFetch<TypeDocumentGetAllResponse>({
@@ -47,9 +49,33 @@ export default function Register() {
 		setTypesDocuments(typeDocumentItems)
 	}, [])
 
+	const getShiftTypes = useCallback(async () => {
+		const response = await doFetch<ShiftTypeGetAllResponse>({
+			url: '/shiftType/all'
+		})
+
+		if (!response.ok)
+			return setErrors((prev) => ({
+				...prev,
+				shiftType: 'Ocurrio un error al cargar las jornadas'
+			}))
+
+		const shiftTypeItems = response.data.map(({ id, code, name }) => ({
+			id,
+			value: code,
+			name
+		}))
+
+		setShiftTypes(shiftTypeItems)
+	}, [])
+
 	useEffect(() => {
 		getTypeDocuments()
 	}, [getTypeDocuments])
+
+	useEffect(() => {
+		getShiftTypes()
+	}, [getShiftTypes])
 
 	const handleSubmit = useCallback(
 		async (event: React.SyntheticEvent<HTMLFormElement>) => {
@@ -59,9 +85,8 @@ export default function Register() {
 				return snackbar({ message: 'Espera un momento', variant: 'warning' })
 
 			const form = event.target as RegisterForm
-			const { elements } = form
 
-			const result = validateForm(elements, REGISTER_SCHEME)
+			const result = validateForm(form, REGISTER_SCHEME)
 
 			if (!result.success) {
 				setErrors(result.errors)
@@ -168,6 +193,18 @@ export default function Register() {
 							required
 							onChange={() => {
 								clearError('typeDocumentCode')
+							}}
+						/>
+
+						<Select
+							error={errors.shiftTypeCode}
+							items={shiftTypes}
+							label="Jornada"
+							id="shiftTypeCode"
+							name="shiftTypeCode"
+							required
+							onChange={() => {
+								clearError('shiftTypeCode')
 							}}
 						/>
 
