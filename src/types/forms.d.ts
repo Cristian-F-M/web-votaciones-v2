@@ -109,10 +109,10 @@ export interface WriteCodeErrors extends FormErrors<WriteCodeFormValues> {}
 export interface WriteCodeForm extends Form<WriteCodeFormElements> {}
 
 // Write password
-interface WritePasswordFormValues {
+interface UpdatePasswordFormValues {
 	password: string
 	passwordConfirmation: string
 }
 
-export type WritePasswordErrors = FormErrors<WritePasswordFormValues>
-export interface WritePasswordForm extends Form<WritePasswordFormElements> {}
+export type UpdatePasswordErrors = FormErrors<UpdatePasswordFormValues>
+export interface UpdatePasswordForm extends Form<UpdatePasswordFormElements> {}
