@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { SingleCodeInput } from './SingleCodeInput'
+import { InputError } from './InputError'
 
 type ControlledProps = {
 	value: string
@@ -15,10 +16,16 @@ type UncontrolledProps = {
 
 type CodeInputProps = {
 	size: number
+	error?: string
 } & (ControlledProps | UncontrolledProps) &
 	React.InputHTMLAttributes<HTMLInputElement>
 
-export function CodeInput({ size, className, ...props }: CodeInputProps) {
+export function CodeInput({
+	size,
+	className,
+	error,
+	...props
+}: CodeInputProps) {
 	const [code, setCode] = useState(''.padEnd(size, ' '))
 	const isControled = 'value' in props && 'setValue' in props
 	const inputRefs = useRef<HTMLInputElement[]>([])
@@ -85,6 +92,7 @@ export function CodeInput({ size, className, ...props }: CodeInputProps) {
 					/>
 				))}
 			</div>
+			<InputError error={error} id="input-code--input-result" />
 		</div>
 	)
 }
