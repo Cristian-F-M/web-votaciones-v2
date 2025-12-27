@@ -23,7 +23,7 @@ export function Select({ className, error, items, ...restProps }: SelectProps) {
 			[key: string]: any
 		}
 
-	if (!items) {
+	if (!items || items.length === 0) {
 		return (
 			<div>
 				<SelectWrapper>
