@@ -1,5 +1,5 @@
 import type { ErrorResponse, FetchProps } from '@/types/api'
-import { snackbar } from './dom'
+import { redirect } from 'next/navigation'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -51,7 +51,9 @@ export async function doFetch<T>({
 		return responseData
 	} catch (error: any) {
 		const message = 'Ocurrio un error procesando la solicitud :c'
-		snackbar({ message, variant: 'error' })
+
+		if (window.location.pathname !== '/no-server')
+			redirect(`/no-server?intented=${window.location.pathname}`)
 
 		return {
 			ok: false,
