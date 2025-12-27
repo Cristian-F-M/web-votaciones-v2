@@ -1,0 +1,25 @@
+@reference '../app/globals.css';
+
+.help-card {
+	@apply w-full space-y-2 p-2 rounded-lg border border-gray-300/70 bg-gray-100/70 dark:border-gray-700/70 dark:bg-gray-900/40;
+}
+
+.help-card header {
+	@apply flex gap-2 items-center font-semibold text-sm md:text-base;
+}
+
+.help-card header div {
+	@apply bg-red-200/80 dark:bg-red-900/50 text-red-600 dark:text-red-300 p-1 rounded-full [&_svg]:size-4;
+}
+
+.help-card ul {
+	@apply list-disc list-inside ml-2.5 md:ml-8 text-gray-700/90 text-xs md:text-sm dark:text-gray-400;
+}
+
+.help-card ul li::marker {
+	@apply text-primary dark:text-dark-primary;
+}
+
+hr {
+	@apply w-full my-6 border-gray-400/70 dark:border-gray-600;
+}
