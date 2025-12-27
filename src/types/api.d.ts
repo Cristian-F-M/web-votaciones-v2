@@ -339,3 +339,11 @@ export type ShiftTypeCreateResponse =
 export type ShiftTypeDeleteResponse =
 	| { ok: true; message: string; shiftType: ShiftType }
 	| ValidationErrorResponse
+
+/**
+ * Response for the endpoint `/server`
+ */
+export interface GetServerResponse {
+	ok: true
+	message: string
+}
