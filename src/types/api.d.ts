@@ -232,9 +232,7 @@ export type CandidateDeleteResponse =
 /**
  * Response for the endpoint `/candidate/vote/:id`
  */
-export type CandidateVoteResponse =
-	| { ok: true; message: string }
-	| ValidationErrorResponse
+export type CandidateVoteResponse = { ok: true; message: string }
 
 /**
  * Response for the endpoint `/candidate/profile`
