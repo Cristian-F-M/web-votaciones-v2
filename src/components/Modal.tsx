@@ -1,10 +1,11 @@
 import X from '@/icons/X'
 import { useCallback, useEffect, useRef } from 'react'
 
-interface ModalProps extends React.DialogHTMLAttributes<HTMLDialogElement> {
+interface ModalProps
+	extends Omit<React.DialogHTMLAttributes<HTMLDialogElement>, 'children'> {
 	triggerRef: React.RefObject<HTMLElement | null>
+	children: (closeModal: () => void, openModal: () => void) => React.ReactNode
 }
-
 export function Modal({
 	children,
 	triggerRef,
@@ -58,7 +59,7 @@ export function Modal({
 					<X />
 				</button>
 
-				{children}
+				{children(handleCloseModal, handleOpenModal)}
 			</dialog>
 		</>
 	)
