@@ -6,6 +6,34 @@ interface ModalProps
 	triggerRef: React.RefObject<HTMLElement | null>
 	children: (closeModal: () => void, openModal: () => void) => React.ReactNode
 }
+/**
+ * @description Modal component is a wrapper for the content of the modal it receives a triggerRef to open the modal and a function that returns the content of the modal
+ * 
+ * @param children - The children to render inside the modal
+ * @param triggerRef - The ref to the trigger element
+ *
+ * - triggerRef is used to open the modal
+ * @example
+ * ```tsx
+ * const triggerRef = useRef<HTMLButtonElement>(null)
+ * <Modal triggerRef={triggerRef}></Modal>
+ * ```
+ *
+ * - children is a function that returns the content of the modal it receives two arguments closeModal and openModal
+ * @param closeModal - A function that closes the modal
+ * @param openModal - A function that opens the modal
+ * @example
+ * ```tsx
+ * <Modal triggerRef={triggerRef}>
+ * 	{(closeModal, openModal) => (
+ * 		<button onClick={closeModal}>
+ *  			<CloseIcon />
+ * 		</button>
+ * 	)}
+ * </Modal>
+ * ```
+ *
+ */
 export function Modal({
 	children,
 	triggerRef,
