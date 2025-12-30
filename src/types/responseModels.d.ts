@@ -11,6 +11,7 @@ export interface User {
 	role: Pick<Role, 'id' | 'name' | 'code'>
 	profile: Pick<Profile, 'name' | 'lastname' | 'phone' | 'imageUrl'>
 	shiftType: Pick<ShiftType, 'id' | 'name' | 'code'>
+	vote: Vote | null
 }
 
 export interface ResetPasswordFindUser {
@@ -59,7 +60,20 @@ export interface Candidate {
 	userId: Models.Candidate['userId']
 	description: Models.Candidate['description']
 	isActive: Models.Candidate['isActive']
-	objectives: Models.Candidate['objectives']
+	objectives: Objective[]
 
-	user: User
+	user: Omit<User, 'vote'>
+}
+
+export interface Objective {
+	id: Models.Objective['id']
+	text: Models.Objective['text']
+	candidateId: Models.Objective['candidateId']
+}
+
+export interface Vote {
+	id: Models.Vote['id']
+	userId: Models.Vote['userId']
+	candidateId: Models.Vote['candidateId']
+	electionId: Models.Vote['electionId']
 }
