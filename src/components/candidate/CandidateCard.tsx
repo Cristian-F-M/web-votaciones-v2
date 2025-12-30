@@ -1,85 +1,110 @@
-import type { CandidateVoteResponse } from '@/types/api'
-import type { Candidate } from '@/types/models'
-import { doFetch } from '@/utils/fetch'
-import { snackbar } from '@/utils/dom'
-import { useCallback, useEffect, useState } from 'react'
+import type { Candidate } from '@/types/responseModels'
+import Image from 'next/image'
 import { Button } from '@/components/Button'
+import { useCallback, useEffect, useState } from 'react'
+import { doFetch } from '@/utils/fetch'
+import type { CandidateVoteResponse } from '@/types/api'
+import { snackbar } from '@/utils/dom'
 import { useUser } from '@/states/useUser'
-import Sparkles from '@/icons/Sparkles'
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+import { YourVoteBadge } from './YourVoteBadge'
 
 export function CandidateCard({ candidate }: { candidate: Candidate }) {
-	const [isVoting, setIsVoting] = useState(false)
-	const [alreadyVoted, setAlreadyVoted] = useState(false)
+	const [voting, setVoting] = useState(false)
+	const { user, getUser, setUser } = useUser()
 	const [isThisCandidateVoted, setIsThisCandidateVoted] = useState(false)
-	const user = useUser((state) => state.user)
+	const [alreadyVoted, setAlreadyVoted] = useState(false)
 
-	const handleVote = useCallback(async () => {
-		if (isVoting) return
+	const handleMouseEnter = useCallback(
+		(event: React.MouseEvent<HTMLDivElement>) => {
+			event.currentTarget.style.setProperty(
+				'--rotate-deg',
+				Math.random() > 0.5 ? '-1deg' : '1deg'
+			)
+		},
+		[]
+	)
 
-		setIsVoting(true)
+	const handleMouseClick = useCallback((event: React.MouseEvent) => {
+		event.preventDefault()
+		window.location.hash = `details-${event.currentTarget.id}`
+	}, [])
 
-		const data = await doFetch<CandidateVoteResponse>({
-			url: '/candidate/vote',
-			method: 'POST',
-			body: {
-				id: candidate.id
-			}
-		})
+	const handleVote = useCallback(
+		async (event: React.MouseEvent) => {
+			event.stopPropagation()
+			event.preventDefault()
 
-		setIsVoting(false)
+			setVoting(true)
 
-		if (!data.ok) {
-			snackbar({ message: data.message, variant: 'error' })
-			return
-		}
+			const response = await doFetch<CandidateVoteResponse>({
+				url: `/candidate/vote/${candidate.id}`,
+				method: 'POST',
+				body: {}
+			})
 
-		setAlreadyVoted(true)
-		setIsThisCandidateVoted(true)
-		snackbar({ message: data.message, variant: 'success' })
-	}, [candidate, isVoting])
+			setVoting(false)
+
+			const variant = response.ok ? 'success' : 'error'
+			snackbar({ message: response.message, variant })
+
+			if (!response.ok) return
+
+			const user = await getUser()
+			setUser(user)
+		},
+		[candidate, getUser, setUser]
+	)
 
 	useEffect(() => {
-		if (!user) return
-		setAlreadyVoted(user.voted)
-		setIsThisCandidateVoted(user.votedCandidateId === candidate.id)
+		if (!user || !user.vote) return
 
-		console.log(user.votedCandidateId, candidate.id)
+		setAlreadyVoted(!!user.vote)
+		setIsThisCandidateVoted(user.vote.candidateId === candidate.id)
 	}, [user, candidate])
 
-	const buttonText = alreadyVoted ? 'Ya votaste' : 'Votar'
-	const imageUrl = candidate.user.profile.imageUrl?.startsWith('http')
-		? candidate.user.profile.imageUrl
-		: `${API_URL}/candidate/image/${candidate.user.profile.imageUrl}`
+	let buttonText = 'Votar'
+
+	if (alreadyVoted) buttonText = 'Ya votaste'
+	if (isThisCandidateVoted) buttonText = 'Tu voto'
 
 	return (
-		<div className="md:w-[260px] w-[220px] max-h-[380px] border border-gray-400/60 rounded shadow relative">
+		<div
+			onClick={handleMouseClick}
+			onMouseEnter={handleMouseEnter}
+			className="group md:w-[240px] w-[220px] max-h-[420px] border border-gray-400/60 rounded shadow relative pb-5 flex flex-col hover:scale-105 transition-all hover:rotate-(--rotate-deg) cursor-pointer"
+			id={`${candidate.id}`}
+		>
 			{isThisCandidateVoted && (
-				<div className="absolute -top-1 -left-4 px-1.5 py-0.5 -rotate-25 bg-green-600 rounded text-sm flex items-center gap-1 [&_svg]:size-5">
-					<Sparkles />
-					Tu voto
-				</div>
+				<YourVoteBadge className="absolute -rotate-25 -top-1 -left-4" />
 			)}
-			<div className="md:w-11/12 w-full h-auto mx-auto border-b border-gray-300">
-				<img alt={`Foto del candidate ${candidate.user.profile.name}`} src={imageUrl} />
+
+			<div className="mx-auto h-7/12">
+				<Image
+					src={candidate.user.profile.imageUrl}
+					alt={`Foto de perfil de el candidato ${candidate.user.profile.name} ${candidate.user.profile.lastname ?? ''}`}
+					width={250}
+					height={300}
+					className="size-full object-cover aspect-square"
+					loading="eager"
+				/>
 			</div>
 
-			<div className="py-2 px-4">
-				<div className="md:w-fit w-full mx-auto flex flex-col items-center mb-4">
-					<h4 className="md:text-2xl text-xl">{candidate.user.profile.name}</h4>
-					<p className="text-xs text-gray-700 dark:text-gray-400 text-center line-clamp-2">
-						{candidate.description}
-					</p>
-				</div>
+			<hr />
+
+			<div className="px-3.5 flex flex-col flex-1 gap-1.5">
+				<h2 className="text-center text-2xl font-semibold underline md:no-underline group-hover:underline">
+					{candidate.user.profile.name} {candidate.user.profile.lastname ?? ''}
+				</h2>
+				<p className="text-sm text-gray-600 dark:text-gray-500 text-center text-balance line-clamp-3">
+					{candidate.description}
+				</p>
 
 				<Button
+					className="mt-auto"
+					showLoader
 					type="button"
 					onClick={handleVote}
-					disabled={isVoting || alreadyVoted}
-					loading={isVoting}
-					showLoader={true}
-					className=""
+					disabled={voting || alreadyVoted}
 				>
 					{buttonText}
 				</Button>
