@@ -32,6 +32,17 @@ export function Modal({
 		}
 	}, [triggerRef, handleOpenModal])
 
+	useEffect(() => {
+		const closeElements = document.querySelectorAll('.close-modal')
+
+		for (const e of closeElements) e.addEventListener('click', handleCloseModal)
+
+		return () => {
+			for (const e of closeElements)
+				e.removeEventListener('click', handleCloseModal)
+		}
+	}, [handleCloseModal])
+
 	return (
 		<>
 			<dialog
