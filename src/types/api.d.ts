@@ -19,7 +19,7 @@ export interface ProcessedErrors {
 export interface FetchProps {
 	url: `/${string}`
 	method?: HttpMethod
-	body?: FormData | Record<string, any> | string | null
+	body?: FormData | Record<string, any> | null
 	headers?: HeadersInit
 	cache?: RequestInit['cache']
 }
