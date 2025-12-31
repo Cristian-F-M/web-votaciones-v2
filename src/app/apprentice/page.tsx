@@ -1,86 +1,44 @@
 'use client'
-import { useUser } from '@/states/useUser'
 import '@/styles/apprentice.css'
-import { Vote } from '@/components/apprentice/vote'
 import { useCallback, useEffect, useState } from 'react'
 import { doFetch } from '@/utils/fetch'
-import { snackbar } from '@/utils/dom'
 import type { ElectionGetCurrentResponse } from '@/types/api'
 import { useElection } from '@/states/useElection'
-import { LoaderVote } from '@/components/apprentice/LoaderVote'
-import { NoElection } from '@/components/apprentice/NoElection'
-import { LoadingWinner } from '@/components/apprentice/LoadingWinner'
-import { CandidateWinner } from '@/components/apprentice/CandidateWinner'
+import { useRouter } from 'next/navigation'
+import { Loader } from '@/components/Loader'
 
 export default function IndexPage() {
-	const [loading, setLoading] = useState(true)
-	const [isFinished, setIsFinished] = useState(false)
-	const [timeIsUp, setTimeIsUp] = useState(false)
-	const user = useUser((state) => state.user)
-	const setElection = useElection((state) => state.setElection)
-	const election = useElection((state) => state.election)
+	const { election, setElection } = useElection()
+	const router = useRouter()
 
-	const getVote = useCallback(async () => {
-		const res = await doFetch<ElectionGetCurrentResponse>({
+	const getElection = useCallback(async () => {
+		const response = await doFetch<ElectionGetCurrentResponse>({
 			url: '/election'
 		})
 
-		setLoading(false)
-
-		if (!res.ok) {
-			snackbar({ message: res.message, variant: 'error' })
-			return
-		}
-
-		setElection(res.data)
+		if (!response.ok) return
+		setElection(response.data)
 	}, [setElection])
 
 	useEffect(() => {
-		getVote()
-	}, [getVote])
+		getElection()
+	}, [getElection])
 
 	useEffect(() => {
-		if (!election) return
+		if (!election) return router.push('apprentice/no-election')
+
 		const startDate = new Date(election.startDate)
 		const endDate = new Date(election.endDate)
 
-		const now = new Date()
+		if (new Date() > startDate)
+			return router.push('apprentice/waiting-start-elections')
 
-		setIsFinished(election.status === 'finished')
-
-		if (now < startDate) {
-			return
+		if (new Date() > endDate) {
+			if (election.status !== 'finished')
+				return router.push('apprentice/waiting-election-result')
+			return router.push('apprentice/winner')
 		}
-
-		if (now > endDate) {
-			setTimeIsUp(true)
-			return
-		}
-	}, [election])
-
-	const loadingVote = !election && loading
-	const loadingWinner = election && timeIsUp && !isFinished
-	const voteNotStarted = election && !timeIsUp
-	const voteFinished = election && timeIsUp && isFinished
-
-	useEffect(() => {
-		const currentYear = new Date().getFullYear()
-
-		let newTitle =
-			'Votaciones - Vota en línea por tu candidato preferido en CGAO'
-
-		if (loadingVote)
-			newTitle = `Votaciones - Cargando votaciones para el año ${currentYear}`
-		if (loadingWinner)
-			newTitle = `Votaciones - Cargando resultados para conocer el ganador del año ${currentYear}`
-		if (voteNotStarted)
-			newTitle =
-				'Votaciones - Las votaciones aún no han iniciado, por favor vuelva pronto'
-		if (voteFinished)
-			newTitle = `Votaciones - Mira los resultados de la votación del año ${currentYear}`
-
-		document.title = newTitle
-	}, [loadingVote, loadingWinner, voteNotStarted, voteFinished])
+	}, [election, router])
 
 	return (
 		<>
@@ -92,11 +50,20 @@ export default function IndexPage() {
 					Participa en el proceso democrático y elige a tu candidato preferido
 				</span>
 
-				{loadingVote && <LoaderVote />}
-				{!loadingVote && !election && <NoElection />}
-				{voteNotStarted && <Vote />}
-				{loadingWinner && <LoadingWinner />}
-				{voteFinished && <CandidateWinner />}
+				<div className="w-11/12 md:max-w-[600px] mx-auto flex flex-col items-center border border-gray-300 dark:border-gray-600/70 rounded p-5 mt-10 bg-page-contrast shadow-xl dark:shadow-gray-500/10">
+					<h2 className="text-base text-center md:text-2xl mt-2">
+						Cargando información de la votación
+					</h2>
+					<h4 className="text-sm md:text-base text-center text-gray-700 dark:text-gray-500">
+						Obteniendo los datos más recientes...
+					</h4>
+					<p className="text-gray-600 text-center mt-3 dark:text-gray-400 text-xs md:text-base">
+						Estamos preparando toda la información necesaria para las
+						votaciones. Por favor espera un momento mientras verificamos los
+						datos.
+					</p>
+					<Loader className="size-10 text-primary mt-5" />
+				</div>
 			</main>
 		</>
 	)
