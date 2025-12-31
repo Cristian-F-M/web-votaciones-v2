@@ -11,7 +11,7 @@ export async function doFetch<T>({
 	cache = 'default'
 }: FetchProps): Promise<T | ErrorResponse> {
 	try {
-		let defaultBody: typeof body = null
+		let defaultBody: typeof body | string = null
 
 		const defaultHeaders = new Headers(headers)
 		const isBodyFormData = body && body instanceof FormData
