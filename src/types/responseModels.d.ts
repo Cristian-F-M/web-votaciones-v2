@@ -12,6 +12,7 @@ export interface User {
 	profile: Pick<Profile, 'name' | 'lastname' | 'phone' | 'imageUrl'>
 	shiftType: Pick<ShiftType, 'id' | 'name' | 'code'>
 	vote: Vote | null
+	deviceToken: DeviceToken | null
 }
 
 export interface ResetPasswordFindUser {
@@ -76,4 +77,10 @@ export interface Vote {
 	userId: Models.Vote['userId']
 	candidateId: Models.Vote['candidateId']
 	electionId: Models.Vote['electionId']
+}
+
+export interface DeviceToken {
+	id: Models.DeviceToken['id']
+	userId: Models.DeviceToken['userId']
+	deviceToken: Models.DeviceToken['deviceToken']
 }
