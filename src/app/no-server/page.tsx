@@ -27,7 +27,7 @@ export default function NoServerPage() {
 		await new Promise((r) => setTimeout(r, 500))
 
 		const response = await doFetch<GetServerResponse>({
-			url: '/config/server'
+			url: '/server'
 		})
 
 		setRefreshing(false)
