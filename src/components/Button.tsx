@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes } from 'react'
+import { forwardRef, type ButtonHTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Loader } from '@/components/Loader'
 
@@ -8,28 +8,38 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	primary?: boolean
 }
 
-export function Button({
-	children,
-	className,
-	loading,
-	showLoader,
-	primary = true,
-	...props
-}: ButtonProps) {
-	const buttonText =
-		loading && showLoader ? <Loader className="size-6 text-white" /> : children
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+	(
+		{
+			children,
+			className,
+			loading,
+			showLoader,
+			primary = true,
+			...props
+		}: ButtonProps,
+		ref
+	) => {
+		const buttonText =
+			loading && showLoader ? (
+				<Loader className="size-6 text-white" />
+			) : (
+				children
+			)
 
-	return (
-		<button
-			className={twMerge([
-				'button',
-				primary ? 'primary-button' : 'secondary-button',
-				className,
-				loading && '!cursor-progress'
-			])}
-			{...props}
-		>
-			{buttonText}
-		</button>
-	)
-}
+		return (
+			<button
+				className={twMerge([
+					'button',
+					primary ? 'primary-button' : 'secondary-button',
+					className,
+					loading && '!cursor-progress'
+				])}
+				{...props}
+				ref={ref}
+			>
+				{buttonText}
+			</button>
+		)
+	}
+)
