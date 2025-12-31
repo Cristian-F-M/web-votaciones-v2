@@ -21,6 +21,7 @@ export async function doFetch<T>({
 		if (!isBodyFormData) defaultHeaders.set('Content-Type', 'application/json')
 
 		defaultHeaders.set('Session-Type', 'WEB')
+		defaultHeaders.set('Device-Type', 'WEB')
 
 		const options: RequestInit = {
 			method: method,
