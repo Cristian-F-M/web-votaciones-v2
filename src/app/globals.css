@@ -160,5 +160,5 @@ input[type="number"] {
 }
 
 hr {
-  @apply w-full border-gray-300 dark:border-gray-700 my-4;
+	@apply w-full border-gray-300 dark:border-gray-700 my-6;
 }
