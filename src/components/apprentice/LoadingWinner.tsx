@@ -1,7 +1,6 @@
-import Bell from '@/icons/Bell'
-import Check from '@/icons/Check'
 import { useRef } from 'react'
 import { ActivateNotificationsModal } from './ActivateNotificationsModal'
+import { IconBell, IconCheck } from '@tabler/icons-react'
 
 export function LoadingWinner() {
 	const buttonTrigger = useRef<HTMLButtonElement>(null)
@@ -11,7 +10,7 @@ export function LoadingWinner() {
 			<div className="w-11/12 md:max-w-[550px] mx-auto flex flex-col items-center mt-4">
 				<div className="p-4 bg-green-500/20 rounded-full">
 					<div className="bg-green-700 p-2 rounded-full text-white [&_svg]:size-7">
-						<Check />
+						<IconCheck />
 					</div>
 				</div>
 
@@ -34,7 +33,7 @@ export function LoadingWinner() {
 							className="flex items-center gap-1 mt-4 mx-auto bg-primary text-white px-4 py-1.5 rounded [&_svg]:size-5 cursor-pointer hover:bg-primary/80 dark:hover:bg-primary/60 active:bg-primary/60 dark:active:bg-primary/60 dark:bg-dark-primary"
 							ref={buttonTrigger}
 						>
-							<Bell />
+							<IconBell />
 							Recibir notificación
 						</button>
 					</main>

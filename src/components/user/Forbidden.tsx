@@ -1,10 +1,12 @@
-import ShieldX from '@/icons/ShieldX'
-import AlertIcon from '@/icons/Alert'
-import House from '@/icons/House'
-import CaretDown from '@/icons/CaretDown'
 import { useMemo, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { useUser } from '@/states/useUser'
+import {
+	IconAlertCircle,
+	IconHome,
+	IconCaretDown,
+	IconShieldX
+} from '@tabler/icons-react'
 
 export function Forbidden() {
 	const [showDetails, setShowDetails] = useState(false)
@@ -45,11 +47,11 @@ export function Forbidden() {
 
 			`}</style>
 			<div className="p-4 rounded-full bg-(--color)/20 [&_svg]:text-(--color) [&_svg]:size-10">
-				<ShieldX />
+				<IconShieldX />
 			</div>
 			<div className="rounded border border-(--color)/80 p-4 w-8/12 mt-6 flex flex-col items-center gap-1 px-6">
 				<header className="flex flex-row gap-1.5 items-center text-(--color) [&_svg]:size-6">
-					<AlertIcon />
+					<IconAlertCircle />
 					<h1 className="text-2xl font-semibold -mt-1">Acceso denegado</h1>
 				</header>
 				<h3 className="text-gray-800 dark:text-gray-300">
@@ -72,7 +74,7 @@ export function Forbidden() {
 					className="bg-(--color) w-fit flex flex-row gap-1 items-center px-4 py-2 rounded [&_svg]:size-5 text-white mt-3 hover:bg-(--color)/80 transition-colors dark:bg-(--color)/90 hover:dark:bg-(--color)/70"
 					href="/"
 				>
-					<House />
+					<IconHome />
 					Ir a inicio
 				</a>
 
@@ -94,7 +96,7 @@ export function Forbidden() {
 						onClick={() => setShowDetails((prev) => !prev)}
 						className="details-marker flex flex-row items-center cursor-pointer transition [&_svg]:size-4 [&_svg]:text-gray-600 hover:bg-gray-200 py-1 rounded h-8 dark:hover:bg-gray-900 dark:[&_svg]:text-gray-400"
 					>
-						<CaretDown />
+						<IconCaretDown />
 						<span>Detalles técnicos</span>
 					</div>
 
@@ -106,8 +108,8 @@ export function Forbidden() {
 							<strong>URL solicitada:</strong> {pathname}
 						</span>
 						<span>
-							<strong>Usuario:</strong> {user?.profile.name ?? '~'} {user?.profile.lastname} (
-							{user?.role.name ?? '~'})
+							<strong>Usuario:</strong> {user?.profile.name ?? '~'}{' '}
+							{user?.profile.lastname} ({user?.role.name ?? '~'})
 						</span>
 						<span>
 							<strong>Timestamp:</strong>

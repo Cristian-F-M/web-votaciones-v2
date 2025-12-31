@@ -3,12 +3,12 @@ import { CountDown } from '@/components/apprentice/CountDown'
 import { CandidateCard } from '@/components/candidate/CandidateCard'
 import { CandidateCardFallback } from '@/components/candidate/CandidateCardFallback'
 import { Details } from '@/components/candidate/Details'
-import AlertIcon from '@/icons/Alert'
 import { useUser } from '@/states/useUser'
 import type { Candidate } from '@/types/responseModels'
 import { useCallback, useEffect, useState } from 'react'
 import { useElection } from '@/states/useElection'
 import { redirect } from 'next/navigation'
+import { IconAlertCircle } from '@tabler/icons-react'
 
 export function Vote() {
 	const { user } = useUser()
@@ -53,6 +53,7 @@ export function Vote() {
 		}
 	}, [handleHashChange])
 
+  // TODO -> use candidate from the api
 	useEffect(() => {
 		const candidates: Candidate[] = [
 			{
@@ -320,7 +321,7 @@ export function Vote() {
 				<CountDown targetDate={election.endDate} />
 
 				<div className="[&_svg]:size-5 dark:[&_svg]:text-yellow-400 [&_svg]:text-red-700 w-fit mx-auto mt-10 flex flex-row gap-1.5 items-center ">
-					<AlertIcon />
+					<IconAlertCircle />
 					<span className="block">Solo puedes votar una vez</span>
 				</div>
 				<div>

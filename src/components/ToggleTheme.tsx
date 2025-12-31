@@ -1,7 +1,6 @@
 'use client'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import Moon from '@/icons/Moon'
-import Sun from '@/icons/Sun'
+import { IconMoon, IconSunHigh, IconSunMoon } from '@tabler/icons-react'
 
 export function ToggleTheme({ className }: { className?: string }) {
 	const toggleThemeRef = useRef<HTMLDivElement>(null)
@@ -60,9 +59,9 @@ export function ToggleTheme({ className }: { className?: string }) {
         }
       `}
 			</style>
-
-			<Moon className={`${theme === 'dark' ? 'block' : 'hidden'}`} />
-			<Sun className={`${theme === 'light' ? 'block' : 'hidden'}`} />
+			<IconSunMoon className={`${!theme ? 'block' : 'hidden'}`} />
+			<IconMoon className={`${theme === 'dark' ? 'block' : 'hidden'}`} />
+			<IconSunHigh className={`${theme === 'light' ? 'block' : 'hidden'}`} />
 		</div>
 	)
 }

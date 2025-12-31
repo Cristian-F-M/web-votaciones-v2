@@ -1,16 +1,14 @@
-import X from '@/icons/X'
 import type { Candidate, Objective } from '@/types/responseModels'
 import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { YourVoteBadge } from './YourVoteBadge'
-import Clock from '@/icons/Clock'
-import Target from '@/icons/Target'
 import { useUser } from '@/states/useUser'
 import { useState, useCallback, useEffect } from 'react'
 import { Button } from '../Button'
 import type { CandidateVoteResponse } from '@/types/api'
 import { snackbar } from '@/utils/dom'
 import { doFetch } from '@/utils/fetch'
+import { IconX, IconClock, IconTarget } from '@tabler/icons-react'
 
 function ObjectiveItem({
 	objective,
@@ -114,7 +112,7 @@ export function Details({
 								className="cursor-pointer p-0.5 [&_svg]:size-5 hover:bg-gray-200 transition-colors rounded active:bg-gray-300 text-gray-700 dark:hover:bg-gray-700 dark:text-gray-400 dark:active:bg-gray-700"
 								onClick={handleCloseCandidateDetails}
 							>
-								<X />
+								<IconX />
 							</button>
 						</header>
 
@@ -148,7 +146,7 @@ export function Details({
 							<hr />
 
 							<div className="flex flex-row items-center gap-2 bg-gray-200/70 dark:bg-gray-700/90 p-3 rounded">
-								<Clock className="size-5 text-primary dark:text-dark-primary" />
+								<IconClock className="size-5 text-primary dark:text-dark-primary" />
 								<span className="text-sm text-gray-800 dark:text-gray-300">
 									Jornada:{' '}
 									<strong className="text-base font-semibold text-primary dark:text-dark-primary">
@@ -170,7 +168,7 @@ export function Details({
 
 							<div className="mt-4">
 								<h4 className="font-semibold flex flex-row items-center gap-1">
-									<Target className="size-5 text-primary dark:text-dark-primary" />
+									<IconTarget className="size-5 text-primary dark:text-dark-primary" />
 									Objetivos
 								</h4>
 								<div className="mt-3 flex flex-col justify-center">

@@ -1,15 +1,11 @@
 import '@/styles/candidateWinner.css'
-import Icon from '@/icons/Alert'
-import Users from '@/icons/Users'
-import ChartLine from '@/icons/ChartLine'
-import MilitaryAward from '@/icons/MilitaryAward'
 import { useElection } from '@/states/useElection'
-import Calendar from '@/icons/Calendar'
 import type { CandidateGetAllResponse } from '@/types/api'
 import { doFetch } from '@/utils/fetch'
 import { snackbar } from '@/utils/dom'
 import { useCallback, useEffect, useState } from 'react'
 import type { Candidate, User } from '@/types/responseModels'
+import { IconUsers, IconChartLine, IconMilitaryAward, IconCalendar } from '@tabler/icons-react'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -139,7 +135,7 @@ export function CandidateWinner() {
 			<div className="flex flex-row gap-4 flex-wrap lg:flex-nowrap">
 				<div className="card-stat single--card-stat">
 					<div className="card-stat--icon bg-blue-200 text-blue-600">
-						<Users />
+						<IconUsers />
 					</div>
 					<div>
 						<h4>Total de votos</h4>
@@ -150,7 +146,7 @@ export function CandidateWinner() {
 				</div>
 				<div className="card-stat single--card-stat">
 					<div className="card-stat--icon bg-green-200 text-green-600">
-						<ChartLine />
+						<IconChartLine />
 					</div>
 					<div>
 						<h4>Participación</h4>
@@ -159,7 +155,7 @@ export function CandidateWinner() {
 				</div>
 				<div className="card-stat single--card-stat">
 					<div className="card-stat--icon bg-orange-200 text-orange-600">
-						<MilitaryAward />
+						<IconMilitaryAward />
 					</div>
 					<div>
 						<h4>Candidatos</h4>
@@ -231,7 +227,7 @@ export function CandidateWinner() {
 				</div>
 				<div className="col-span-5 row-span-1 col-start-1 row-start-8 flex items-center gap-2 card-stat order-4">
 					<div className="text-primary dark:text-dark-primary">
-						<Calendar />
+						<IconCalendar />
 					</div>
 					<div>
 						<h3 className="text-gray-700 text-xs md:text-sm leading-3 dark:text-gray-400">

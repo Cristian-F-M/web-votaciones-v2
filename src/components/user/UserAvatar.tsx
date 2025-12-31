@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge'
-import UserIcon from '@/icons/User'
+import { IconUser } from '@tabler/icons-react'
 import { useUser } from '@/states/useUser'
 
 interface UserAvatarProps {
@@ -18,7 +18,7 @@ export function UserAvatarFallback() {
 				'cursor-progress [&_svg]:size-5 [&_svg]:pointer-events-none text-gray-900/90 dark:text-gray-200/90'
 			)}
 		>
-			<UserIcon />
+			<IconUser />
 		</div>
 	)
 }

@@ -1,5 +1,5 @@
-import Sparkles from '@/icons/Sparkles'
 import { twMerge } from 'tailwind-merge'
+import { IconSparkles } from '@tabler/icons-react'
 
 interface YourVoteBadgeProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -12,7 +12,7 @@ export function YourVoteBadge({ className, ...props }: YourVoteBadgeProps) {
 			)}
 			{...props}
 		>
-			<Sparkles />
+			<IconSparkles />
 			Tu voto
 		</div>
 	)

@@ -1,14 +1,12 @@
 import { useUser } from '@/states/useUser'
 import { UserAvatar } from './UserAvatar'
-import UserIcon from '@/icons/User'
-import SettingsIcon from '@/icons/Settings'
-import SquareArrowRightIcon from '@/icons/SquareArrowRight'
 import { useCallback, useEffect } from 'react'
 import { doFetch } from '@/utils/fetch'
 import type { AuthLogoutResponse } from '@/types/api'
 import type { BaseVariant } from 'notistack'
 import { snackbar } from '@/utils/dom'
 import { useRouter } from 'next/navigation'
+import { IconUser, IconSettings, IconLogout } from '@tabler/icons-react'
 import '@/styles/user-avatar.css'
 
 export function UserSettings() {
@@ -75,15 +73,15 @@ export function UserSettings() {
 				</header>
 				<main className="px-1">
 					<a href="/apprentice/profile">
-						<UserIcon />
+						<IconUser />
 						<span>Perfil</span>
 					</a>
 					<a href="/apprentice/settings">
-						<SettingsIcon />
+						<IconSettings />
 						<span>Configuración</span>
 					</a>
 					<button className="block w-full" type="button" onClick={handleLogout}>
-						<SquareArrowRightIcon />
+						<IconLogout />
 						<span>Cerrar sesión</span>
 					</button>
 				</main>

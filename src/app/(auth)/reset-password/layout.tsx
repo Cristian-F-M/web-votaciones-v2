@@ -1,13 +1,13 @@
 'use client'
 import { StepIndicator } from '@/components/resetPassword/StepIndicator'
 import { ToggleTheme } from '@/components/ToggleTheme'
-import ArrowLeft from '@/icons/ArrowLeft'
 import LogoSena from '@/icons/LogoSena'
 import { snackbar } from '@/utils/dom'
 import { doFetch } from '@/utils/fetch'
 import { useCallback } from 'react'
 import { create } from 'zustand'
 import { useRouter, redirect } from 'next/navigation'
+import { IconArrowLeft } from '@tabler/icons-react'
 
 export enum ResetPasswordStep {
 	FIND_USER,
@@ -63,7 +63,7 @@ export default function ResetPasswordLayout({
 					className="flex items-center [&_svg]:size-4.5 text-gray-600 text-xs m-1.5 w-fit py-1.5 px-2 rounded hover:bg-gray-200/60 transition-colors dark:text-gray-400 dark:hover:bg-gray-700"
 					href="/login"
 				>
-					<ArrowLeft />
+					<IconArrowLeft />
 					Volver al login
 				</a>
 				<header className="flex flex-col items-center justify-center [&_svg]:size-30 [&_svg]:text-primary mt-4">

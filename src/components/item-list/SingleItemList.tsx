@@ -1,8 +1,7 @@
-import Check from '@/icons/Check'
-import X from '@/icons/X'
 import type { Item } from '@/types/ItemList'
 import { useCallback, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { IconCheck, IconX } from '@tabler/icons-react'
 
 interface SingleItemListProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -82,7 +81,7 @@ export function SingleItemList({
               title="Guardar cambios"
               onClick={handleAcceptChange}
             >
-              <Check />
+              <IconCheck />
             </button>
             <button
               type="button"
@@ -93,7 +92,7 @@ export function SingleItemList({
               title="Descartar cambios"
               onClick={handleRejectChange}
             >
-              <X />
+              <IconX />
             </button>
           </>
         )}
@@ -107,7 +106,7 @@ export function SingleItemList({
           type="button"
           onClick={() => handleRemoveItem(item.id)}
         >
-          <X />
+          <IconX />
         </button>
       </div>
     </div>

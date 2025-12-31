@@ -1,7 +1,6 @@
 'use client'
 import { Button } from '@/components/Button'
 import { CodeInput } from '@/components/CodeInput'
-import Alert from '@/icons/Alert'
 import type {
 	PasswordResetGetDataResponse,
 	PasswordResetSendCodeResponse,
@@ -23,6 +22,7 @@ import {
 	ResetPasswordStep,
 	useResetPasswordStep
 } from '@/app/(auth)/reset-password/layout'
+import { IconAlertCircle } from '@tabler/icons-react'
 
 export function WriteCodePage() {
 	const [seconds, setSeconds] = useState(0)
@@ -161,7 +161,7 @@ export function WriteCodePage() {
 		<div>
 			<div className="bg-red-100 p-2 rounded border border-red-300/80">
 				<p className="text-xs text-pretty text-center [&_svg]:size-4 [&_svg]:inline-block [&_svg]:mr-1 text-red-900">
-					<Alert />
+					<IconAlertCircle stroke={1.5} />
 					Ten en cuenta de que el código de verificación tiene una validez de 6
 					horas
 				</p>

@@ -1,11 +1,7 @@
 'use client'
 import { Button } from '@/components/Button'
 import { ToggleTheme } from '@/components/ToggleTheme'
-import Alert from '@/icons/Alert'
 import LogoSena from '@/icons/LogoSena'
-import Refresh from '@/icons/Refresh'
-import Wifi from '@/icons/Wifi'
-import WifiOff from '@/icons/WifiOff'
 import '@/styles/no-server.css'
 import { doFetch } from '@/utils/fetch'
 import { useCallback, useEffect, useState } from 'react'
@@ -13,6 +9,12 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { snackbar } from '@/utils/dom'
 import type { GetServerResponse } from '@/types/api'
+import {
+	IconAlertCircle,
+	IconRefresh,
+	IconWifi,
+	IconWifiOff
+} from '@tabler/icons-react'
 
 export default function NoServerPage() {
 	const [refreshing, setRefreshing] = useState(false)
@@ -67,7 +69,7 @@ export default function NoServerPage() {
 					<div
 						className={`px-3 py-1 rounded-full border [&_svg]:size-5 ${isOnline ? 'bg-green-300/80 text-green-600 border-green-400/90 dark:bg-green-950 dark:text-green-300 dark:border-green-900/60' : 'bg-red-300/80 text-red-600 border-red-400/90 dark:bg-red-950 dark:text-red-300 dark:border-red-900/60'} flex items-center gap-1.5`}
 					>
-						{isOnline ? <Wifi /> : <WifiOff />}
+						{isOnline ? <IconWifi /> : <IconWifiOff />}
 						<span className="text-xs hidden md:block">
 							{isOnline ? 'Con conexión' : 'Sin conexión'}
 						</span>
@@ -95,7 +97,7 @@ export default function NoServerPage() {
 						<div className="help-card">
 							<header>
 								<div>
-									<Alert />
+									<IconAlertCircle />
 								</div>
 								<h3>Posibles causas</h3>
 							</header>
@@ -110,7 +112,7 @@ export default function NoServerPage() {
 						<div className="help-card">
 							<header>
 								<div>
-									<Refresh />
+									<IconRefresh />
 								</div>
 								<h3>¿Qué hacer?</h3>
 							</header>
@@ -129,7 +131,7 @@ export default function NoServerPage() {
 						className="[&_svg]:size-5 w-full max-w-[250px] mx-auto mt-6"
 						onClick={handleRefresh}
 					>
-						<Refresh /> Reintentar conexión
+						<IconRefresh /> Reintentar conexión
 					</Button>
 
 					<hr className="my-6" />

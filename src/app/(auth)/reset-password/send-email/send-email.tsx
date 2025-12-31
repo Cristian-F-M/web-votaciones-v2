@@ -1,6 +1,5 @@
 'use client'
 import { Button } from '@/components/Button'
-import Alert from '@/icons/Alert'
 import type {
 	PasswordResetGetDataResponse,
 	PasswordResetSendCodeResponse
@@ -15,6 +14,7 @@ import {
 	ResetPasswordStep,
 	useResetPasswordStep
 } from '@/app/(auth)/reset-password/layout'
+import { IconAlertCircle } from '@tabler/icons-react'
 
 export function SendEmailPage() {
 	const [sendingEmail, setSendingEmail] = useState(false)
@@ -98,7 +98,7 @@ export function SendEmailPage() {
 		<div>
 			<div className="border border-blue-300 bg-blue-100 p-2 rounded dark:bg-blue-400/40 dark:border-blue-500/40">
 				<p className="text-xs md:text-sm text-pretty text-center [&_svg]:size-4 [&_svg]:inline-block [&_svg]:mr-1">
-					<Alert />
+					<IconAlertCircle />
 					Se enviará un mensaje al correo <strong>{user?.email}</strong> con un
 					código para restablecer su contraseña.
 				</p>

@@ -1,6 +1,6 @@
-import Bell from '@/icons/Bell'
 import { useUser } from '@/states/useUser'
 import { useCallback, useEffect } from 'react'
+import { IconBell } from '@tabler/icons-react'
 
 export function ActivateNotificationsModal({
 	buttonTriggerRef
@@ -34,9 +34,14 @@ export function ActivateNotificationsModal({
 		modal?.[action]()
 	}, [])
 
+  // useEffect(() => {
+  //   // handleModal('open')
+  // }, [handleModal])
+
+
 	return (
 		<>
-			<style>{`
+			{/* <style>{`
       dialog::backdrop {
         background-color: rgba(0, 0, 0, 0.5);
         z-index: 10;
@@ -66,14 +71,14 @@ export function ActivateNotificationsModal({
           transition: all 0.3s allow-discrete;
         }
 
-    `}</style>
+    `}</style> */}
 
 			<dialog
 				className="m-auto rounded shadow flex-col p-5 w-11/12 md:max-w-[450px]"
 				id="activate-notifications-modal"
 			>
 				<header className="flex flex-row gap-1 items-center ">
-					<Bell className="text-primary size-5" />
+					<IconBell className="text-primary size-5" />
 					<h3 className="md:text-base text-sm font-semibold">
 						Activar notificaciones por email
 					</h3>

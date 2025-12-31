@@ -1,5 +1,5 @@
-import Upload from '@/icons/Upload'
 import { twMerge } from 'tailwind-merge'
+import { IconUpload } from '@tabler/icons-react'
 
 type LabelProps = Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'onChange'>
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>
@@ -45,7 +45,7 @@ export function UploadFile({
 				className="flex flex-row gap-2 items-center justify-center [&_svg]:size-5"
 				{...spanProps}
 			>
-				<Upload /> {text}
+				<IconUpload /> {text}
 			</span>
 		</label>
 	)

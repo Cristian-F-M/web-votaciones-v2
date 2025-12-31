@@ -3,7 +3,6 @@ import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
 import { Select } from '@/components/Select'
 import { UploadFile } from '@/components/UploadFile'
-import X from '@/icons/X'
 import { useUser } from '@/states/useUser'
 import type { ProcessedErrors, UserUpdateProfileResponse } from '@/types/api'
 import type {
@@ -23,6 +22,7 @@ import * as z from 'zod'
 import { UPDATE_PROFILE_SCHEME } from '@/zod-validations'
 import { Profile as CandidateProfile } from '@/components/candidate/Profile'
 import { useCandidate } from '@/states/useCandidate'
+import { IconX } from '@tabler/icons-react'
 
 export default function ApprenticeProfilePage() {
 	const { user, getUser, setUser } = useUser((state) => state)
@@ -154,7 +154,7 @@ export default function ApprenticeProfilePage() {
 											setProfileImageUrl(null)
 										}}
 									>
-										<X />
+										<IconX />
 									</div>
 								)}
 								<img

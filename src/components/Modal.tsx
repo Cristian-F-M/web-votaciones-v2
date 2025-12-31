@@ -1,5 +1,5 @@
-import X from '@/icons/X'
 import { useCallback, useEffect, useRef } from 'react'
+import { IconX } from '@tabler/icons-react'
 
 interface ModalProps
 	extends Omit<React.DialogHTMLAttributes<HTMLDialogElement>, 'children'> {
@@ -84,7 +84,7 @@ export function Modal({
 					onClick={handleCloseModal}
 					className="absolute top-2 right-2 w-fit cursor-pointer text-gray-600 hover:bg-gray-200 rounded p-0.5 transition-colors outline-none [&_svg]:size-5 dark:text-gray-400 dark:hover:bg-gray-700"
 				>
-					<X />
+					<IconX />
 				</button>
 
 				{children(handleCloseModal, handleOpenModal)}
