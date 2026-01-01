@@ -166,3 +166,7 @@ hr {
 svg {
 	stroke-width: 1.5;
 }
+
+.custom-scroll {
+	@apply [&::-webkit-scrollbar]:md:w-1.5 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:dark:bg-primary/60 [&::-webkit-scrollbar-thumb]:bg-primary/80 [&::-webkit-scrollbar-thumb]:rounded-[2px] [&::-webkit-scrollbar-track]:rounded-[2px] [&::-webkit-scrollbar-track]:dark:bg-gray-600 [&::-webkit-scrollbar-track]:bg-gray-400;
+}
