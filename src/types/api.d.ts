@@ -194,6 +194,11 @@ export type ElectionCreateResponse =
 	| ValidationErrorResponse
 
 /**
+ * Response for the endpoint `/election/all`
+ */
+export type ElectionGetAllResponse = { ok: true; data: Election[] }
+
+/**
  * Response for the endpoint `/election/finish`
  */
 export type ElectionFinishResponse =
