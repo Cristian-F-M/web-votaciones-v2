@@ -43,7 +43,8 @@ export interface Election {
 	totalVotes: Models.Election['totalVotes']
 	apprenticeCount: Models.Election['apprenticeCount']
 	winnerVoteCount: Models.Election['winnerVoteCount']
-	winner: Models.Election['winner']
+	winner: Candidate
+	candidates: Candidate[]
 	startDate: Models.Election['startDate']
 	endDate: Models.Election['endDate']
 	status: Models.Election['status']
