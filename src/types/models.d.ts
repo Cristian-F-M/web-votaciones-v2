@@ -128,6 +128,7 @@ export interface Election {
 	totalVotes: number
 	winnerVoteCount: number
 	winner: Candidate
+  candidates: Candidate[]
 	startDate: Date
 	endDate: Date
 	status: 'active' | 'finished' | 'canceled'
