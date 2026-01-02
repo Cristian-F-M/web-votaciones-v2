@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/Button'
 import { LOGIN_SCHEME } from '@/zod-validations'
 import type { SelectItem } from '@/types/input'
+import { useSearchParams } from 'next/navigation'
 
 export default function Login() {
 	const year = new Date().getFullYear()
@@ -23,6 +24,7 @@ export default function Login() {
 	)
 	const [isLogginIn, setIsLogginIn] = useState(false)
 	const router = useRouter()
+	const searchParams = useSearchParams()
 
 	const getTypeDocuments = useCallback(async () => {
 		const res = await doFetch<TypeDocumentGetAllResponse>({
@@ -89,9 +91,12 @@ export default function Login() {
 				return
 			}
 
+			const intented = searchParams.get('intented')
+			if (intented) return router.replace(intented)
+
 			return router.replace(response.urlRedirect)
 		},
-		[router]
+		[router, searchParams]
 	)
 
 	useEffect(() => {
