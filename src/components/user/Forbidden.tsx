@@ -72,7 +72,7 @@ export function Forbidden() {
 
 				<a
 					className="bg-(--color) w-fit flex flex-row gap-1 items-center px-4 py-2 rounded [&_svg]:size-5 text-white mt-3 hover:bg-(--color)/80 transition-colors dark:bg-(--color)/90 hover:dark:bg-(--color)/70"
-					href="/"
+					href={`/?intented=${window.location.pathname}`}
 				>
 					<IconHome />
 					Ir a inicio
