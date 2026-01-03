@@ -1,0 +1,38 @@
+@reference '../app/globals.css';
+
+.info-card {
+	@apply w-full rounded-lg p-6 border border-gray-300/70 dark:border-gray-700/70 shadow-lg;
+}
+
+.info-card {
+	@apply flex flex-row gap-2;
+}
+
+.info-card div .info-card--icon {
+	@apply [&_svg]:size-5 bg-primary/20 dark:bg-dark-primary/20 p-2 rounded-lg text-primary;
+}
+
+.info-card main {
+	@apply text-sm;
+}
+
+.info-card main h4 {
+	@apply font-semibold text-lg text-gray-800 dark:text-gray-300;
+}
+
+.info-card main p,
+ul {
+	@apply text-gray-600 dark:text-gray-400 text-xs md:text-base;
+}
+
+.info-card main ul {
+	@apply mt-0.5;
+}
+
+.info-card main ul li {
+	@apply list-disc ml-4;
+
+	&::marker {
+		@apply text-primary dark:text-dark-primary;
+	}
+}
