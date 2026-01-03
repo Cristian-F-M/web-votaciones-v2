@@ -87,6 +87,9 @@ export function Vote() {
 	if (isThisCandidateVoted) buttonText = 'Tu voto'
 
 	if (!election) redirect('no-election')
+	if (election.startDate > new Date())
+		redirect('apprentice/waiting-start-elections')
+	if (election.endDate < new Date()) redirect('apprentice/results')
 
 	return (
 		<>
