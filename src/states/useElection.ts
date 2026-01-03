@@ -8,5 +8,12 @@ interface ElectionState {
 
 export const useElection = create<ElectionState>()((set) => ({
 	election: null,
-	setElection: (election) => set({ election })
+	setElection: (election) => {
+		if (!election) return
+
+		election.startDate = new Date(election.startDate)
+		election.endDate = new Date(election.endDate)
+
+		set({ election })
+	}
 }))
