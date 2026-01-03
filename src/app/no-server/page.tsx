@@ -1,5 +1,5 @@
 'use client'
-import { Button } from '@/components/Button'
+import { Button } from '@/components/form/Button'
 import { ToggleTheme } from '@/components/ToggleTheme'
 import LogoSena from '@/icons/LogoSena'
 import '@/styles/no-server.css'

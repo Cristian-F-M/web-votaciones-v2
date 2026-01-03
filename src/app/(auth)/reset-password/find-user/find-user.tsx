@@ -1,7 +1,7 @@
 'use client'
-import { Button } from '@/components/Button'
-import { Input } from '@/components/Input'
-import { Select } from '@/components/Select'
+import { Button } from '@/components/form/Button'
+import { Input } from '@/components/form/Input'
+import { Select } from '@/components/form/Select'
 import type {
 	TypeDocumentGetAllResponse,
 	PasswordResetFindUserResponse

@@ -1,6 +1,6 @@
 'use client'
-import { Button } from '@/components/Button'
-import { Input } from '@/components/Input'
+import { Button } from '@/components/form/Button'
+import { Input } from '@/components/form/Input'
 import type {
 	PasswordResetGetDataResponse,
 	PasswordResetUpdateResponse

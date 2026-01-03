@@ -1,6 +1,6 @@
 import { ItemsList } from '@/components/item-list/ItemsList'
 import { useCallback, useEffect, useState } from 'react'
-import { Button } from '../Button'
+import { Button } from '../form/Button'
 import { doFetch } from '@/utils/fetch'
 import type { Item } from '@/types/ItemList'
 import {
@@ -10,7 +10,7 @@ import {
 } from '@/utils/form'
 import { UPDATE_CANDIDATE_PROFILE_SCHEME } from '@/zod-validations'
 import * as z from 'zod'
-import { TextArea } from '../TextArea'
+import { TextArea } from '../form/TextArea'
 import { snackbar } from '@/utils/dom'
 import type { CandidateUpdateProfileResponse } from '@/types/api'
 import { INPUTS_VALIDATIONS as IV } from '@/constants/form'

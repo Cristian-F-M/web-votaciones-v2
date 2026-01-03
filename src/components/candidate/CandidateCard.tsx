@@ -1,6 +1,6 @@
 import type { Candidate } from '@/types/responseModels'
 import Image from 'next/image'
-import { Button } from '@/components/Button'
+import { Button } from '@/components/form/Button'
 import { useCallback, useEffect, useState } from 'react'
 import { doFetch } from '@/utils/fetch'
 import type { CandidateVoteResponse } from '@/types/api'

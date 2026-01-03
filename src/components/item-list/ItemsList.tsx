@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
-import { Button } from '@/components/Button'
-import { Input } from '@/components/Input'
+import { Button } from '@/components/form/Button'
+import { Input } from '@/components/form/Input'
 import { SingleItemList } from '@/components/item-list/SingleItemList'
 import * as z from 'zod'
 import { INPUTS_VALIDATIONS as IV } from '@/constants/form'
@@ -25,7 +25,7 @@ interface BaseProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	itemInputProps?: React.InputHTMLAttributes<HTMLInputElement>
 	removeItemProps?: React.ButtonHTMLAttributes<HTMLButtonElement>
 	error?: string | null | undefined
-  defaultItems?: Item[]
+	defaultItems?: Item[]
 }
 
 type ItemsListProps =
@@ -39,7 +39,7 @@ export function ItemsList({
 	error,
 	onChange,
 	defaultItems = [],
-  name,
+	name,
 	...props
 }: ItemsListProps) {
 	const [currentText, setCurrentText] = useState('')
@@ -49,8 +49,8 @@ export function ItemsList({
 	const setItemsState = isState ? props.setItems : setItems
 
 	const handleAddItem = useCallback(() => {
-    const id = crypto.randomUUID()
-    const item = { id, text: currentText }
+		const id = crypto.randomUUID()
+		const item = { id, text: currentText }
 		const result = z.safeParse(OBJECTIVE_SCHEME, item)
 
 		if (!result.success) {
@@ -59,11 +59,7 @@ export function ItemsList({
 			return
 		}
 
-
-		setItemsState((prev) => [
-			...prev,
-			{ id, [itemsTextKey]: currentText }
-		])
+		setItemsState((prev) => [...prev, { id, [itemsTextKey]: currentText }])
 		setCurrentText('')
 	}, [setItemsState, currentText])
 
@@ -88,11 +84,11 @@ export function ItemsList({
 	const itemsTextKey = props.use === 'form' ? props.textKey : 'text'
 	const itemsIdKey = 'id'
 
-  // This is a dirty hack to remove the textKey prop from the props object
-  let rest: Omit<typeof props, 'textKey'> = props
-  let textKey: string | undefined = undefined
+	// This is a dirty hack to remove the textKey prop from the props object
+	let rest: Omit<typeof props, 'textKey'> = props
+	let textKey: string | undefined = undefined
 
-  if (props.use === 'form') ({ textKey, ...rest } = props)
+	if (props.use === 'form') ({ textKey, ...rest } = props)
 
 	// TODO: Add paste event and handle it
 
@@ -136,7 +132,7 @@ export function ItemsList({
 							handleRemoveItem={handleRemoveItem}
 							textKey={itemsTextKey}
 							idKey={itemsIdKey}
-              fieldName={name}
+							fieldName={name}
 						/>
 					</li>
 				))}

@@ -1,8 +1,8 @@
 'use client'
-import { Button } from '@/components/Button'
-import { Input } from '@/components/Input'
-import { Select } from '@/components/Select'
-import { UploadFile } from '@/components/UploadFile'
+import { Button } from '@/components/form/Button'
+import { Input } from '@/components/form/Input'
+import { Select } from '@/components/form/Select'
+import { UploadFile } from '@/components/form/UploadFile'
 import { useUser } from '@/states/useUser'
 import type { ProcessedErrors, UserUpdateProfileResponse } from '@/types/api'
 import type {
