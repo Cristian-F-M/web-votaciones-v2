@@ -11,7 +11,7 @@ export function Input({
 	error,
 	className,
 	type,
-	buttonShowPassword = false,
+	showTogglePassword = false,
 	...restProps
 }: InputTextProps) {
 	const [showPassword, setShowPassword] = useState(false)
@@ -41,7 +41,7 @@ export function Input({
 				>
 					{label}
 				</label>
-				{type === 'password' && buttonShowPassword && (
+				{type === 'password' && showTogglePassword && (
 					<button
 						className="size-fit p-0.5 rounded right-0 absolute  cursor-pointer hover:bg-gray-200
              active:bg-gray-200 dark:hover:bg-gray-800 dark:active:bg-gray-800 transition-colors duration-200"
