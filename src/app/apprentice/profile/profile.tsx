@@ -220,7 +220,6 @@ export default function ApprenticeProfilePage() {
 							onChange={handleInputChange}
 						/>
 						<Input
-							error={null}
 							label="Tipo de documento"
 							id="typeDocumentCode"
 							name="typeDocumentCode"
@@ -234,7 +233,6 @@ export default function ApprenticeProfilePage() {
 							name="shift"
 							id="shift"
 							type="text"
-							error={null}
 							defaultValue={user?.shiftType.name}
 							disabled
 						/>
@@ -243,7 +241,6 @@ export default function ApprenticeProfilePage() {
 							name="document"
 							id="document"
 							type="number"
-							error={null}
 							defaultValue={user?.document}
 							disabled
 						/>
@@ -271,7 +268,6 @@ export default function ApprenticeProfilePage() {
 							label="Rol"
 							name="role"
 							id="role"
-							error={null}
 							defaultValue={user?.role.name}
 						/>
 						<Button
