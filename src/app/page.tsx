@@ -20,8 +20,9 @@ export default function Home() {
 				message: response.message,
 				variant: 'info'
 			})
-			if ('urlRedirect' in response) return router.replace(response.urlRedirect)
-			router.replace('login')
+			if ('urlRedirect' in response)
+				return router.replace(response.urlRedirect + window.location.search)
+			router.replace(`login${window.location.search}`)
 
 			return
 		}
