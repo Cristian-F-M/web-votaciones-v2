@@ -13,6 +13,7 @@ export interface User {
 	shiftType: Pick<ShiftType, 'id' | 'name' | 'code'>
 	vote: Vote | null
 	deviceToken: DeviceToken | null
+	candidate: Candidate | null
 }
 
 export interface ResetPasswordFindUser {
