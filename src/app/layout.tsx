@@ -15,8 +15,6 @@ export default function RootLayout({
 }>) {
 	const primaryColor = '#ff8617'
 	const darkPrimaryColor = '#ba6213'
-	const primaryColorContrast = '#f7b272'
-	const darkPrimaryColorContrast = '#47280c'
 
 	return (
 		<html lang="es" suppressHydrationWarning className="scheme-light-dark">
@@ -25,9 +23,7 @@ export default function RootLayout({
 				<style>{`
           :root {
             --primary-color: ${primaryColor};
-            --primary-contrast-color: ${primaryColorContrast};
             --dark-primary-color: ${darkPrimaryColor};
-            --dark-primary-contrast-color: ${darkPrimaryColorContrast};
           }
         `}</style>
 			</head>
