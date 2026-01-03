@@ -15,7 +15,6 @@ export default function ApprenticeLayout({
 }: { children: React.ReactNode }) {
 	const router = useRouter()
 	const { user, setUser } = useUser()
-	const { getCandidate: getCandidateState, setCandidate } = useCandidate()
 
 	const getUser = useCallback(async () => {
 		const response = await doFetch<UserGetProfileResponse>({ url: '/user' })
@@ -23,18 +22,9 @@ export default function ApprenticeLayout({
 		setUser(response.data)
 	}, [setUser])
 
-	const getCandidate = useCallback(async () => {
-		const candidate = await getCandidateState(user?.id)
-		setCandidate(candidate)
-	}, [getCandidateState, setCandidate, user])
-
 	useEffect(() => {
 		getUser()
 	}, [getUser])
-
-	useEffect(() => {
-		getCandidate()
-	}, [getCandidate])
 
 	return (
 		<div className="overflow-x-hidden">
