@@ -205,10 +205,8 @@ export default function Login() {
 							</div>
 						</form>
 					</div>
-					<div className="information h-full hidden md:flex flex-col items-center justify-center relative">
-						<div className="hidden dark:block absolute inset-0 bg-gray-700 z-0" />
-						<div className="absolute inset-0 bg-primary-contrast dark:bg-dark-primary-contrast dark:text-dark-primary/60 z-10" />
-						<div className="size-full z-50 md:flex flex-col items-center justify-center ">
+					<div className="information h-full md:flex flex-col items-center justify-center relative bg-primary/40 dark:bg-dark-primary/30 dark:text-dark-primary/60">
+						<div className="size-full z-50 md:flex flex-col items-center justify-center bg-transparent">
 							<LogoSena className="size-28 text-primary dark:text-dark-primary" />
 							<h2 className="text-2xl bold text-gray-900 text-center dark:text-gray-300">
 								Centro de Gestión Agroempresarial del Oriente
