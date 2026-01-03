@@ -1,14 +1,14 @@
 @reference "../app/globals.css";
 
 .info-card {
-	@apply dark:bg-gray-700 bg-gray-100 p-3 rounded border border-gray-300 dark:border-gray-600/90 h-[-webkit-fill-available] flex flex-col gap-1;
+	@apply dark:bg-gray-700 bg-gray-100 p-3 rounded border border-gray-300 dark:border-gray-600/90 h-[-webkit-fill-available] flex gap-1 flex-row w-full;
 }
 
-.info-card header {
-	@apply flex flex-row items-center gap-1 [&_svg]:size-5 [&_svg]:text-primary [&_svg]:dark:text-dark-primary;
+.info-card > div {
+	@apply [&_svg]:size-5 [&_svg]:text-primary [&_svg]:dark:text-dark-primary mt-1;
 }
 
-.info-card header h4 {
+.info-card h4 {
 	@apply text-base font-semibold;
 }
 

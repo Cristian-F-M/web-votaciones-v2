@@ -64,11 +64,11 @@ export function NoElection() {
 
 					<div className="flex flex-col md:flex-row gap-3 items-center">
 						<article className="info-card">
-							<header>
+							<div>
 								<IconCheckbox />
-								<h4>Vota en tiempo real</h4>
-							</header>
+							</div>
 							<main>
+								<h4>Vota en tiempo real</h4>
 								<p>
 									Participa en votaciones activas y ve los resultado al
 									finalizar la votación
@@ -76,20 +76,20 @@ export function NoElection() {
 							</main>
 						</article>
 						<article className="info-card">
-							<header>
+							<div>
 								<IconDeviceMobile />
-								<h4>Vota desde el móvil</h4>
-							</header>
+							</div>
 							<main>
+								<h4>Vota desde el móvil</h4>
 								<p>Descarga la app y vota cómodamente desde tu teléfono</p>
 							</main>
 						</article>
 						<article className="info-card">
-							<header>
+							<div>
 								<IconLogs />
-								<h4>Historial completo</h4>
-							</header>
+							</div>
 							<main>
+								<h4>Historial completo</h4>
 								<p>Consulta todas tus votaciones anteriores y sus resultados</p>
 							</main>
 						</article>
