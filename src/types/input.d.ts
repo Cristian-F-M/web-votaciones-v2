@@ -21,16 +21,12 @@ export interface InputTextProps
 	buttonShowPassword?: boolean
 }
 
-export interface InputSelectWrapperProps {
-	items: () => Promise<{ [key: string]: SelectItem[] | any }>
-	dataKey: string
-	onErrorChange?: (error: string | null) => void
-}
-
-export interface SelectFullPropsProps extends InputBaseProps {
+export interface SelectBaseProps
+	extends React.SelectHTMLAttributes<HTMLSelectElement> {
 	selectedItem?: 'default-value' | (string & {})
 	items: SelectItem[] | null
 }
 
-export type SelectProps = SelectFullPropsProps &
-	React.SelectHTMLAttributes<HTMLSelectElement>
+export interface SelectProps extends InputBaseProps, SelectBaseProps {
+	required?: boolean
+}
