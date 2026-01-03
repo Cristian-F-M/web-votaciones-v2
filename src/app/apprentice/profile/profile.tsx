@@ -21,7 +21,6 @@ import { useCallback, useState, Activity } from 'react'
 import * as z from 'zod'
 import { UPDATE_PROFILE_SCHEME } from '@/zod-validations'
 import { Profile as CandidateProfile } from '@/components/candidate/Profile'
-import { useCandidate } from '@/states/useCandidate'
 import { IconX } from '@tabler/icons-react'
 
 export default function ApprenticeProfilePage() {
@@ -32,7 +31,6 @@ export default function ApprenticeProfilePage() {
 	const [errors, setErrors] = useState<Partial<UpdateProfileErrors>>({})
 	const imageUrlFallback =
 		'https://res.cloudinary.com/dp6ucd28f/image/upload/v1763591326/votaciones-v2/users/base_user.webp'
-	const { candidate } = useCandidate()
 
 	const handleChangeProfileImage = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -288,7 +286,7 @@ export default function ApprenticeProfilePage() {
 					</div>
 				</form>
 
-				{candidate && user?.role.code === 'CANDIDATE' && (
+				{user?.candidate && user?.role.code === 'CANDIDATE' && (
 					<div className="flex flex-col lg:grid grid-cols-2 space-y-10 gap-x-7 w-9/12 border border-gray-400/60 border-t-0 lg:border-t rounded-t-none lg:rounded-t lg:shadow rounded px-9 py-10 mb-10">
 						{/* <hr className="col-span-2 text-gray-400 mt-10 mb-6" /> */}
 

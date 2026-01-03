@@ -14,14 +14,14 @@ import { TextArea } from '../TextArea'
 import { snackbar } from '@/utils/dom'
 import type { CandidateUpdateProfileResponse } from '@/types/api'
 import { INPUTS_VALIDATIONS as IV } from '@/constants/form'
-import { useCandidate } from '@/states/useCandidate'
+import { useUser } from '@/states/useUser'
 
 export function Profile() {
+	const { user } = useUser()
 	const [errors, setErrors] = useState<
 		Partial<{ description: string; objectives: string }>
 	>({})
 	const [updatingProfile, setUpdatingProfile] = useState(false)
-	const { candidate } = useCandidate()
 
 	const handleSubmit = useCallback(
 		async (event: React.SyntheticEvent<HTMLFormElement>) => {
@@ -99,7 +99,7 @@ export function Profile() {
 							}}
 							placeholder="Hola, soy ......... tengo ... años estudiante de..."
 							limit={IV.description.max}
-							defaultValue={candidate?.description}
+							defaultValue={user?.candidate?.description}
 						/>
 					</div>
 
@@ -112,7 +112,9 @@ export function Profile() {
 							onChange={() => {
 								clearError('objectives')
 							}}
-							defaultItems={(candidate?.objectives as any as Item[]) ?? []}
+							defaultItems={
+								(user?.candidate?.objectives as any as Item[]) ?? []
+							}
 							name="objectives"
 							textKey="text"
 						/>
