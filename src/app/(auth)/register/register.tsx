@@ -247,7 +247,7 @@ export default function Register() {
 							id="password"
 							name="password"
 							type="password"
-							buttonShowPassword
+							showTogglePassword
 							required
 							onChange={() => {
 								clearError('password')
