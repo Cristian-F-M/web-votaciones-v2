@@ -46,8 +46,8 @@ export interface Election {
 	winnerVoteCount: Models.Election['winnerVoteCount']
 	winner: Candidate
 	candidates: Candidate[]
-	startDate: Models.Election['startDate']
-	endDate: Models.Election['endDate']
+	startAt: Models.Election['startAt']
+	endAt: Models.Election['endAt']
 	status: Models.Election['status']
 	shiftType: ShiftType
 }

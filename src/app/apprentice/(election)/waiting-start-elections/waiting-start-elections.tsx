@@ -23,16 +23,16 @@ export function WaitingStartElections() {
 	const buttonTriggerRef = useRef<HTMLButtonElement>(null)
 
 	if (!election) redirect('/apprentice/no-election')
-	if (election.startDate > new Date()) redirect('/apprentice/vote')
+	if (election.startAt > new Date()) redirect('/apprentice/vote')
 
 	useEffect(() => {
 		if (!election) return
-		const startDate = election.startDate
+		const startAt = election.startAt
 
 		const interval = setInterval(() => {
 			const now = new Date()
 
-			if (now >= startDate) {
+			if (now >= startAt) {
 				clearInterval(interval)
 				snackbar({ message: 'La votación ha comenzado', variant: 'success' })
 				setTimeout(() => {

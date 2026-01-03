@@ -15,7 +15,7 @@ function ElectionCard({ election }: { election: Election }) {
 	return (
 		<div className="min-w-[280px] w-auto max-w-[300px] rounded-lg overflow-hidden border border-gray-500/40 bg-page-contrast shadow dark:border-gray-600/50">
 			<header className="bg-primary dark:bg-dark-primary px-4 py-2 text-lg uppercase font-semibold">
-				<h2 className="text-center">Año {election.startDate.getFullYear()}</h2>
+				<h2 className="text-center">Año {election.startAt.getFullYear()}</h2>
 			</header>
 
 			<main className="p-4 flex flex-col items-center">

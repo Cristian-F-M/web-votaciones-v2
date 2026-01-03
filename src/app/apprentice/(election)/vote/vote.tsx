@@ -87,14 +87,14 @@ export function Vote() {
 	if (isThisCandidateVoted) buttonText = 'Tu voto'
 
 	if (!election) redirect('no-election')
-	if (election.startDate > new Date())
+	if (election.startAt > new Date())
 		redirect('apprentice/waiting-start-elections')
-	if (election.endDate < new Date()) redirect('apprentice/results')
+	if (election.endAt < new Date()) redirect('apprentice/results')
 
 	return (
 		<>
 			<div className="">
-				<CountDown targetDate={election.endDate} />
+				<CountDown targetDate={election.endAt} />
 
 				<div className="[&_svg]:size-5 dark:[&_svg]:text-yellow-400 [&_svg]:text-red-700 w-fit mx-auto mt-10 flex flex-row gap-1.5 items-center ">
 					<IconAlertCircle />

@@ -27,13 +27,13 @@ export default function IndexPage() {
 	useEffect(() => {
 		if (!election) return router.push('apprentice/no-election')
 
-		const startDate = new Date(election.startDate)
-		const endDate = new Date(election.endDate)
+		const startAt = new Date(election.startAt)
+		const endAt = new Date(election.endAt)
 
-		if (new Date() > startDate)
+		if (new Date() > startAt)
 			return router.push('apprentice/waiting-start-elections')
 
-		if (new Date() > endDate) {
+		if (new Date() > endAt) {
 			if (election.status !== 'finished')
 				return router.push('apprentice/waiting-election-result')
 			return router.push('apprentice/winner')

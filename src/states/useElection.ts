@@ -11,8 +11,8 @@ export const useElection = create<ElectionState>()((set) => ({
 	setElection: (election) => {
 		if (!election) return
 
-		election.startDate = new Date(election.startDate)
-		election.endDate = new Date(election.endDate)
+		election.startAt = new Date(election.startAt)
+		election.endAt = new Date(election.endAt)
 
 		set({ election })
 	}

@@ -128,9 +128,9 @@ export interface Election {
 	totalVotes: number
 	winnerVoteCount: number
 	winner: Candidate
-  candidates: Candidate[]
-	startDate: Date
-	endDate: Date
+	candidates: Candidate[]
+	startAt: Date
+	endAt: Date
 	status: 'active' | 'finished' | 'canceled'
 	shiftTypeId: string
 	createdAt?: Date

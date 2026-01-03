@@ -26,21 +26,21 @@ export function Results() {
 	const participationPercent =
 		(election.winnerVoteCount / (election.totalVotes || 1)) * 100
 
-	const endDate = new Date(election.endDate)
-	const endWinnerDate = new Date(endDate.setFullYear(endDate.getFullYear() + 1))
+	const endAt = new Date(election.endAt)
+	const endWinnerDate = new Date(endAt.setFullYear(endAt.getFullYear() + 1))
 	const endWinnerDateString = endWinnerDate.toLocaleDateString('es-CO', {
 		day: 'numeric',
 		month: 'long',
 		year: 'numeric'
 	})
 
-	const dateString = endDate.toLocaleDateString('es-CO', {
+	const dateString = endAt.toLocaleDateString('es-CO', {
 		day: 'numeric',
 		month: 'short',
 		year: 'numeric'
 	})
 
-	const timeString = endDate.toLocaleTimeString('es-CO', {
+	const timeString = endAt.toLocaleTimeString('es-CO', {
 		hour: '2-digit',
 		minute: '2-digit'
 	})
