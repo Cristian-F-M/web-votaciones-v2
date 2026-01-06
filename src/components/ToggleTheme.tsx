@@ -35,20 +35,20 @@ export function ToggleTheme({ className }: { className?: string }) {
 	return (
 		<div
 			ref={toggleThemeRef}
-			className="relative cursor-pointer size-6 p-1 rounded [&_svg]:size-4 flex flex-col items-center justify-center border border-gray-300/50 hover:bg-gray-200 dark:hover:bg-gray-700 [&_svg]:absolute"
+			className="theme-toggler relative cursor-pointer size-6 p-1 rounded [&_svg]:size-4 flex flex-col items-center justify-center border border-gray-300/50 hover:bg-gray-200 dark:hover:bg-gray-700 [&_svg]:absolute"
 		>
 			<style>
 				{`
-        svg {
+        .theme-toggler svg {
           transition: all 0.3s allow-discrete;
         }
 
-        svg.hidden {
+        .theme-toggler svg.hidden {
           scale: 0;
           opacity: 0;
         }
         
-        svg.block {
+        .theme-toggler svg.block {
           scale: 1;
           opacity: 1;
 
