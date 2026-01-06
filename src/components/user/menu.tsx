@@ -1,3 +1,4 @@
+'use client'
 import { useUser } from '@/states/useUser'
 import { UserAvatar } from './UserAvatar'
 import { useCallback, useEffect } from 'react'
