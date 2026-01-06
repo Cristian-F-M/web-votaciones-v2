@@ -107,7 +107,8 @@ export function SideMenu({ className }: SideMenuProps) {
 
 			<div
 				className={twMerge(
-					'menu-side bg-page-contrast size-full p-4 shadow-xl border-r border-gray-300/80 dark:border-gray-600/60',
+					'menu-side bg-page-contrast size-full p-4 shadow-xl border-r border-gray-300/80 dark:border-gray-600/60 custom-scroll [scrollbar-gutter:_stable] [&::-webkit-scrollbar]:!w-1',
+					open && 'overflow-auto',
 					className
 				)}
 			>
