@@ -63,6 +63,20 @@ export function SideMenu({ className }: SideMenuProps) {
 	}, [open])
 
 	useEffect(() => {
+		const menuSide = document.querySelector(
+			'.menu-side'
+		) as HTMLDivElement | null
+		if (!open || !menuSide) return
+
+		setTimeout(() => {
+			menuSide?.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			})
+		}, 100)
+	}, [open])
+
+	useEffect(() => {
 		const sideMenuWrapper = document.querySelector(
 			'.side-menu-wrapper'
 		) as HTMLDivElement | null
