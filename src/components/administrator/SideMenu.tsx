@@ -115,7 +115,12 @@ export function SideMenu({ className }: SideMenuProps) {
 				<header>
 					<h2 className="text-lg font-semibold">Panel de administrador</h2>
 				</header>
-				<ul className="space-y-2 mt-4">
+				<ul
+					className={twMerge(
+						'space-y-2 mt-4',
+						!open && '[&_*]:pointer-events-none'
+					)}
+				>
 					<MenuItem
 						href="/dashboard"
 						label="Dashboard"
