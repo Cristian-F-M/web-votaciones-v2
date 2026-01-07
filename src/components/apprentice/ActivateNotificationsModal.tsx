@@ -77,7 +77,7 @@ export function ActivateNotificationsModal({
 								<Button
 									showLoader={false}
 									type="button"
-									primary={false}
+									secondary
 									onClick={closeModal}
 								>
 									Cancelar

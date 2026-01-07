@@ -46,7 +46,7 @@ export function NoElection() {
 						<Button
 							type="button"
 							showLoader={false}
-							primary={false}
+							secondary
 							onClick={() => {
 								window.open(
 									`${API_URL}/app-mobile`,

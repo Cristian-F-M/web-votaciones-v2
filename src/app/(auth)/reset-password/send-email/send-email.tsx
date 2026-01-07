@@ -105,7 +105,7 @@ export function SendEmailPage() {
 			</div>
 
 			<div className="flex gap-2 mt-5">
-				<Button primary={false} onClick={handleChangeUser} showLoader={false}>
+				<Button secondary onClick={handleChangeUser} showLoader={false}>
 					Cambiar usuario
 				</Button>
 				<Button

@@ -177,7 +177,7 @@ export function WriteCodePage() {
 				<div className="flex items-center gap-3">
 					<Button
 						type="button"
-						primary={false}
+						secondary
 						showLoader={true}
 						onClick={handleSendEmail}
 						disabled={seconds > 0}
