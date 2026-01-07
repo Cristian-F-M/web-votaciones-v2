@@ -5,7 +5,7 @@ import { Loader } from '@/components/Loader'
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	loading?: boolean
 	showLoader?: boolean
-	primary?: boolean
+	secondary?: boolean
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -15,7 +15,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 			className,
 			loading,
 			showLoader = false,
-			primary = true,
+			secondary = false,
 			...props
 		}: ButtonProps,
 		ref
@@ -31,7 +31,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 			<button
 				className={twMerge([
 					'button',
-					primary ? 'primary-button' : 'secondary-button',
+					secondary ? 'secondary-button' : 'primary-button',
 					className,
 					loading && '!cursor-progress'
 				])}
