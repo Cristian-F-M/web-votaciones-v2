@@ -4,7 +4,7 @@ import { Loader } from '@/components/Loader'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	loading?: boolean
-	showLoader: boolean
+	showLoader?: boolean
 	primary?: boolean
 }
 
@@ -14,7 +14,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 			children,
 			className,
 			loading,
-			showLoader,
+			showLoader = false,
 			primary = true,
 			...props
 		}: ButtonProps,
