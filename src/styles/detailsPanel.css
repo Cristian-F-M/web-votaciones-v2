@@ -1,0 +1,45 @@
+@reference '../app/globals.css';
+
+.side-panel {
+	@apply fixed top-0 right-0 z-50 w-fit h-full min-w-[400px] max-w-screen border-l shadow-2xl border-gray-300 dark:border-gray-600 overflow-y-auto text-wrap p-4 hidden translate-x-full transition-all transition-discrete;
+}
+
+.side-panel.open {
+	@apply block translate-x-0 starting:translate-x-full;
+}
+
+.side-panel header {
+	@apply flex items-center justify-between;
+}
+
+.side-panel header h2 {
+	@apply text-xl font-semibold;
+}
+
+.side-panel header button {
+	@apply [&_svg]:size-5 text-gray-400 hover:bg-gray-600 hover:text-gray-200 p-1 size-fit rounded cursor-pointer;
+}
+
+.side-panel main {
+	@apply mt-5;
+}
+
+.side-panel main ul {
+	@apply rounded overflow-hidden;
+}
+
+.side-panel main ul li {
+	@apply p-2 flex flex-col gap-1 justify-center first:[&_span]:first:uppercase;
+}
+
+.route-indicator {
+	@apply w-fit flex flex-row items-center text-sm gap-0.5 text-gray-400;
+}
+
+.route-indicator div {
+	@apply flex flex-row items-center gap-0.5 [&_svg]:size-4;
+}
+
+.route-indicator span {
+	@apply hover:text-gray-300 transition-colors cursor-cell;
+}
