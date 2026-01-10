@@ -69,19 +69,6 @@ export function DetailsPanel({ className, ...props }: DetailsPanelProps) {
 		window.location.hash = newHash
 	}, [setEntityId, setKeys, setEntity, keys, entityId, entity])
 
-	const handleClickAnywhere = useCallback(
-		(event: MouseEvent) => {
-			if (!open) return
-
-			const target = event.target as HTMLElement
-			if (target?.closest('.side-panel')) return
-
-			event.preventDefault()
-			handleClose()
-		},
-		[handleClose, open]
-	)
-
 	const handleHashChange = useCallback(() => {
 		const currentHash = window.location.hash
 		if (!currentHash) return
@@ -98,11 +85,17 @@ export function DetailsPanel({ className, ...props }: DetailsPanelProps) {
 		setKeys(objectKeys)
 	}, [setEntityId, setKeys, entity, reset])
 
-	useEffect(() => {
-		document.addEventListener('click', handleClickAnywhere)
+	const handleBackdropClick = useCallback(
+		(event: React.MouseEvent<HTMLDivElement>) => {
+			event.preventDefault()
+			const target = event.target as HTMLElement
 
-		return () => document.removeEventListener('click', handleClickAnywhere)
-	}, [handleClickAnywhere])
+			if (target.closest('.side-panel')) return
+
+			handleClose()
+		},
+		[handleClose]
+	)
 
 	useEffect(() => {
 		getHeadersNames()
@@ -134,39 +127,47 @@ export function DetailsPanel({ className, ...props }: DetailsPanelProps) {
 
 	return (
 		<div
-			className={twMerge(
-				'side-panel bg-page-contrast custom-scroll',
-				className,
-				open && 'open'
-			)}
-			{...props}
+			className={twMerge('backdrop--side-panel ', open && 'open')}
+			onClick={handleBackdropClick}
+			title="Haz clic para cerrar el panel"
 		>
-			<div className="route-indicator">
-				<span>
-					{itemsName}[{entity?.id?.slice(0, 6)}
-					...]
-				</span>
-				{keys.map((k, index) => (
-					<div key={keysIds[index]}>
-						<IconChevronRight />
-						<span>{k}</span>
-					</div>
-				))}
-			</div>
-			<header>
-				<h2>{title}</h2>
-				<button type="button" onClick={handleClose} className="">
-					<IconX />
-				</button>
-			</header>
-
-			<main>
-				{isObject && <EntityDetails entity={item} />}
-
-				{isArray && (
-					<Table items={item as TableItems} modelName={lastKey ?? ''} />
+			<div
+				className={twMerge(
+					'side-panel bg-page-contrast custom-scroll',
+					className,
+					open && 'open',
+					isObject && '!max-w-[500px]'
 				)}
-			</main>
+				title=""
+				{...props}
+			>
+				<div className="route-indicator">
+					<span>
+						{itemsName}[{entity?.id?.slice(0, 6)}
+						...]
+					</span>
+					{keys.map((k, index) => (
+						<div key={keysIds[index]}>
+							<IconChevronRight />
+							<span>{k}</span>
+						</div>
+					))}
+				</div>
+				<header>
+					<h2>{title}</h2>
+					<button type="button" onClick={handleClose} className="">
+						<IconX />
+					</button>
+				</header>
+
+				<main>
+					{isObject && <EntityDetails entity={item} />}
+
+					{isArray && (
+						<Table items={item as TableItems} modelName={lastKey ?? ''} />
+					)}
+				</main>
+			</div>
 		</div>
 	)
 }

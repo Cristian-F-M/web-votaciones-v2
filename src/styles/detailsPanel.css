@@ -1,5 +1,9 @@
 @reference '../app/globals.css';
 
+.backdrop--side-panel {
+	@apply size-full fixed inset-0 bg-gray-900/50 backdrop-blur-xs hidden [&.open]:block transition-all transition-discrete opacity-0 [&.open]:opacity-100;
+}
+
 .side-panel {
 	@apply fixed top-0 right-0 z-50 w-fit h-full min-w-[400px] max-w-screen border-l shadow-2xl border-gray-300 dark:border-gray-600 overflow-y-auto text-wrap p-4 hidden translate-x-full transition-all transition-discrete;
 }
