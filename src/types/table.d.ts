@@ -7,7 +7,9 @@ export type TableItems = Record<string, TableSingleItem>[]
 export interface TableProps {
 	items: TableItems
 	modelName: string
-  allowEdit?: boolean
+	allowEdit?: boolean
+	modifyUrlOnSearch: boolean,
+  allowSearch?: boolean
 }
 
 interface TdBaseProps extends React.TdHTMLAttributes<HTMLTableCellElement> {
