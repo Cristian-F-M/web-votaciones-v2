@@ -1,7 +1,7 @@
 @reference '../app/globals.css';
 
 .table-container {
-	@apply w-full overflow-x-auto p-2 pb-5;
+	@apply w-full overflow-x-auto pb-5;
 }
 
 .table-container table {
@@ -22,5 +22,5 @@ td {
 }
 
 .container--search-input {
-  @apply ml-auto w-fit mb-2; 
+  @apply mr-auto w-fit mb-4; 
 }
