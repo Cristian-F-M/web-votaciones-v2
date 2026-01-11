@@ -1,0 +1,26 @@
+@reference '../app/globals.css';
+
+.table-container {
+	@apply w-full overflow-x-auto p-2 pb-5;
+}
+
+.table-container table {
+	@apply rounded overflow-hidden border-collapse;
+}
+
+.table-container table tr:first-child {
+	@apply [&_th]:border-b-2;
+}
+
+.table-container table th,
+td {
+	@apply border-gray-500/30 dark:border-gray-600 text-center text-nowrap px-4 py-2 bg-gray-200 odd:bg-gray-300/80 dark:bg-gray-700 dark:odd:bg-gray-700/90;
+}
+
+.table-container table td button {
+	@apply flex flex-row items-center gap-0.5 [&_svg]:size-6 p-1.5 size-fit;
+}
+
+.container--search-input {
+  @apply ml-auto w-fit mb-2; 
+}
