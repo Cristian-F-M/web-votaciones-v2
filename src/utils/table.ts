@@ -22,8 +22,14 @@ export function deepSearch(
 ): boolean {
 	const lowerQuery = query.toLowerCase().trim()
 	const lowerItem = typeof item === 'string' ? item.toLowerCase() : item
+	const booleanOptions = [
+		['false', 'Falso'],
+		['true', 'Verdadero']
+	]
 
-	if (!item) return false
+	if (item == null) return false
+	if (typeof item === 'boolean')
+		return booleanOptions[item ? 1 : 0].some(o => includes(o, query))
 	if (typeof lowerItem === 'string') return includes(lowerItem, lowerQuery)
 
 	const isArray = Array.isArray(item)
