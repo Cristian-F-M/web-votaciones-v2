@@ -95,7 +95,7 @@ export function SideMenu({ className }: SideMenuProps) {
 	return (
 		<div
 			className={twMerge(
-				'side-menu-wrapper h-screen w-76 fixed top-0 flex flex-row items-center transition-all [&.open]:translate-x-0 -translate-x-[calc(100%_-_var(--side-menu-indicator-width,_0px))] hover:-translate-x-10/12 cursor-pointer [&.open]:cursor-auto group',
+				'side-menu-wrapper h-screen w-76 fixed top-0 flex flex-row items-center transition-all [&.open]:translate-x-0 -translate-x-[calc(100%_-_var(--side-menu-indicator-width,_0px))] hover:-translate-x-10/12 cursor-pointer [&.open]:cursor-auto group z-100',
 				open && 'open'
 			)}
 			onClick={() => {
