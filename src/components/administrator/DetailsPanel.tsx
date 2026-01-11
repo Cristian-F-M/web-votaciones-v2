@@ -25,7 +25,7 @@ export function DetailsPanel({ className, ...props }: DetailsPanelProps) {
 	} = useModelDetails()
 	const [open, setOpen] = useState(false)
 	const [headersNames, setHeadersNames] = useState<string[]>([])
-	const lastKey = getLastKey(keys)
+	const lastKey = getLastKey()
 	const [modelName] = getModelsNames(lastKey)
 	const [item, setItem] = useState<CustomObject | undefined>(undefined)
 
@@ -171,7 +171,9 @@ export function DetailsPanel({ className, ...props }: DetailsPanelProps) {
 				</header>
 
 				<main>
-					{isObject && <EntityDetails entity={item} />}
+					{isObject && (
+						<EntityDetails entityKey={lastKey ?? ''} entity={item} />
+					)}
 
 					{isArray && (
 						<Table items={item as TableItems} modelName={lastKey ?? ''} />
