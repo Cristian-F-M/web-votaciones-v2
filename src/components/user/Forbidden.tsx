@@ -71,14 +71,14 @@ export function Forbidden() {
 				</div>
 
 				<a
-					className="bg-(--color) w-fit flex flex-row gap-1 items-center px-4 py-2 rounded [&_svg]:size-5 text-white mt-3 hover:bg-(--color)/80 transition-colors dark:bg-(--color)/90 hover:dark:bg-(--color)/70"
+					className="bg-primary w-fit flex flex-row gap-1 items-center px-4 py-2 rounded [&_svg]:size-5 text-white mt-3 hover:bg-primary/80 transition-colors dark:bg-dark-primary/90 hover:dark:bg-dark-primary/70"
 					href={`/?intented=${window.location.pathname}`}
 				>
 					<IconHome />
 					Ir a inicio
 				</a>
 
-				<div className="bg-(--color)/10 dark:bg-(--color)/10 border border-(--color) rounded px-4 py-3 mt-6 flex flex-col items-center">
+				<div className="bg-primary/10 dark:bg-dark-primary/10 border border-primary rounded px-4 py-3 mt-6 flex flex-col items-center">
 					<h4 className="text-lg text-red-800 font-semibold dark:text-red-700">
 						¿Necesitas acceso?
 					</h4>
