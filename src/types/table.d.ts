@@ -33,3 +33,6 @@ export interface OpenDetailsButtonProps
 	items: TableItems
 	children: React.ReactNode
 }
+
+export interface ThProps
+	extends React.HTMLAttributes<HTMLTableHeaderCellElement> {}
