@@ -1,7 +1,7 @@
 @reference '../app/globals.css';
 
 .backdrop--side-panel {
-	@apply size-full fixed inset-0 bg-gray-900/50 backdrop-blur-xs hidden [&.open]:block transition-all transition-discrete opacity-0 [&.open]:opacity-100;
+	@apply size-full fixed inset-0 bg-gray-800/50 dark:bg-gray-900/50 backdrop-blur-xs hidden [&.open]:block transition-all transition-discrete opacity-0 [&.open]:opacity-100;
 }
 
 .side-panel {
@@ -21,7 +21,7 @@
 }
 
 .side-panel header button {
-	@apply [&_svg]:size-5 text-gray-400 hover:bg-gray-600 hover:text-gray-200 p-1 size-fit rounded cursor-pointer;
+	@apply [&_svg]:size-5 text-gray-600 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-gray-600 p-1 size-fit rounded cursor-pointer transition-colors;
 }
 
 .side-panel main {
@@ -37,7 +37,7 @@
 }
 
 .route-indicator {
-	@apply w-fit flex flex-row items-center text-sm gap-0.5 text-gray-400;
+	@apply w-fit flex flex-row items-center text-sm gap-0.5 text-gray-600 dark:text-gray-400;
 }
 
 .route-indicator div {
@@ -45,5 +45,5 @@
 }
 
 .route-indicator span {
-	@apply hover:text-gray-300 transition-colors cursor-cell;
+	@apply hover:text-gray-700 dark:hover:text-gray-300 transition-colors cursor-cell;
 }
