@@ -8,8 +8,8 @@ export interface TableProps {
 	items: TableItems
 	modelName: string
 	allowEdit?: boolean
-	modifyUrlOnSearch: boolean,
-  allowSearch?: boolean
+	modifyUrlOnSearch: boolean
+	allowSearch?: boolean
 }
 
 interface TdBaseProps extends React.TdHTMLAttributes<HTMLTableCellElement> {
@@ -34,5 +34,4 @@ export interface OpenDetailsButtonProps
 	children: React.ReactNode
 }
 
-export interface ThProps
-	extends React.HTMLAttributes<HTMLTableHeaderCellElement> {}
+export interface ThProps extends React.HTMLAttributes<HTMLTableCellElement> {}
