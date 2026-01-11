@@ -53,8 +53,11 @@ export function DetailsPanel({ className, ...props }: DetailsPanelProps) {
 		setKeys(newKeys)
 		setEntity(newEntity)
 
-		if (!newEntityId && newKeys.length <= 0)
+		if (!newEntityId && newKeys.length <= 0) {
+      setHeadersNames([])
+      setItem(undefined)
 			return window.history.replaceState(null, '', window.location.pathname)
+		}
 
 		const newHash = `${newEntityId ?? ''}${newKeys.length > 0 ? ':' : ''}${newKeys.join(':')}`
 		window.location.hash = newHash
