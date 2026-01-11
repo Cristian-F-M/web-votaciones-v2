@@ -20,3 +20,5 @@ type TdValueProps = {
 }
 
 type TdProps = TdBaseProps & (TdValueProps | { children: React.ReactNode })
+
+export interface TrProps extends React.HTMLAttributes<HTMLTableRowElement> {}
