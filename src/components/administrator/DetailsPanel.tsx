@@ -4,7 +4,7 @@ import { getModelsNames } from '@/utils/table'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { IconChevronRight, IconX } from '@tabler/icons-react'
-import { Table } from './Table'
+import { Table } from './table/Table'
 import type { CustomObject } from '@/types'
 import type { TableItems } from '@/types/table'
 import { EntityDetails } from './EntityDetails'
@@ -56,28 +56,12 @@ export function DetailsPanel({ className, ...props }: DetailsPanelProps) {
 		if (!newEntityId && newKeys.length <= 0) {
 			setHeadersNames([])
 			setItem(undefined)
-			return window.history.replaceState(null, '', window.location.pathname)
+			return window.history.replaceState(null, '', window.location.pathname + window.location.search)
 		}
 
 		const newHash = `${newEntityId ?? ''}${newKeys.length > 0 ? ':' : ''}${newKeys.join(':')}`
 		window.location.hash = newHash
 	}, [setEntityId, setKeys, setEntity, keys, entityId, entity])
-
-	const handleHashChange = useCallback(() => {
-		const currentHash = window.location.hash
-		if (!currentHash) return
-
-		const [entityId, ...objectKeys] = currentHash.replace('#', '').split(':')
-
-		if (entity?.id !== entityId) {
-			window.history.pushState(null, '', window.location.pathname)
-			reset()
-			return
-		}
-
-		setEntityId(entityId)
-		setKeys(objectKeys)
-	}, [setEntityId, setKeys, entity, reset])
 
 	const handleBackdropClick = useCallback(
 		(event: React.MouseEvent<HTMLDivElement>) => {
@@ -116,17 +100,6 @@ export function DetailsPanel({ className, ...props }: DetailsPanelProps) {
 		setOpen(mustBeOpen)
 	}, [entity, item, keys])
 
-	useEffect(() => {
-		handleHashChange()
-	}, [handleHashChange])
-
-	useEffect(() => {
-		window.addEventListener('hashchange', handleHashChange)
-
-		return () => {
-			window.removeEventListener('hashchange', handleHashChange)
-		}
-	}, [handleHashChange])
 
 	const title = headersNames.at(-1) ?? modelName
 
