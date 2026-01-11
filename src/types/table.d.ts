@@ -7,6 +7,7 @@ export type TableItems = Record<string, TableSingleItem>[]
 export interface TableProps {
 	items: TableItems
 	modelName: string
+  allowEdit?: boolean
 }
 
 interface TdBaseProps extends React.TdHTMLAttributes<HTMLTableCellElement> {
@@ -22,3 +23,11 @@ type TdValueProps = {
 type TdProps = TdBaseProps & (TdValueProps | { children: React.ReactNode })
 
 export interface TrProps extends React.HTMLAttributes<HTMLTableRowElement> {}
+
+export interface OpenDetailsButtonProps
+	extends React.HTMLAttributes<HTMLButtonElement> {
+	objectKey: string
+	entityId: string
+	items: TableItems
+	children: React.ReactNode
+}
