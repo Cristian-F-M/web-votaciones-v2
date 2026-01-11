@@ -27,16 +27,7 @@ export function DetailsPanel({ className, ...props }: DetailsPanelProps) {
 	const [headersNames, setHeadersNames] = useState<string[]>([])
 	const lastKey = getLastKey(keys)
 	const [modelName] = getModelsNames(lastKey)
-
-	let item: CustomObject | undefined = entity as CustomObject
-
-	for (const k of keys) {
-		if (Array.isArray(item)) item = item[0]
-
-		if (!item || typeof item[k] === 'string') break
-
-		item = item[k]
-	}
+	const [item, setItem] = useState<CustomObject | undefined>(undefined)
 
 	const isArray = Array.isArray(item)
 	const isObject = !isArray && typeof item === 'object'
@@ -96,6 +87,22 @@ export function DetailsPanel({ className, ...props }: DetailsPanelProps) {
 		},
 		[handleClose]
 	)
+
+	useEffect(() => {
+		if (!entity) return
+
+		let item: CustomObject | undefined = entity
+
+		for (const k of keys) {
+			if (Array.isArray(item)) item = item[0]
+
+			if (!item || typeof item[k] === 'string') break
+
+			item = item[k]
+		}
+
+		setItem(item)
+	}, [entity, keys])
 
 	useEffect(() => {
 		getHeadersNames()
