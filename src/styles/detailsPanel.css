@@ -5,7 +5,7 @@
 }
 
 .side-panel {
-	@apply fixed top-0 right-0 z-50 w-fit h-full min-w-[400px] max-w-screen border-l shadow-2xl border-gray-300 dark:border-gray-600 overflow-y-auto text-wrap p-4 hidden translate-x-full transition-all transition-discrete;
+	@apply fixed top-0 right-0 z-50 w-fit h-full min-w-[400px] max-w-screen border-l shadow-2xl border-gray-300 dark:border-gray-600 overflow-y-auto text-wrap p-8 hidden translate-x-full transition-all transition-discrete;
 }
 
 .side-panel.open {
@@ -17,7 +17,7 @@
 }
 
 .side-panel header h2 {
-	@apply text-xl font-semibold;
+	@apply text-xl font-bold;
 }
 
 .side-panel header button {
@@ -33,7 +33,19 @@
 }
 
 .side-panel main ul li {
-	@apply p-2 flex flex-col gap-1 justify-center first:[&_span]:first:uppercase;
+	@apply flex flex-col gap-1 justify-center first:[&_span]:first:uppercase;
+}
+
+.side-panel main ul li h5 {
+	@apply font-semibold text-sm text-gray-900 dark:text-gray-50;
+}
+
+.side-panel main ul li span {
+	@apply text-sm text-gray-700 dark:text-gray-300;
+}
+
+.side-panel main ul hr {
+	@apply last:hidden;
 }
 
 .route-indicator {
