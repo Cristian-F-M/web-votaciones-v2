@@ -1,4 +1,4 @@
-import { useModelDetails } from '@/states/useModelDetails'
+import { useModelDetails } from '@/states/useEntityDetails'
 import { doFetch } from '@/utils/fetch'
 import { getModelsNames } from '@/utils/table'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -54,8 +54,8 @@ export function DetailsPanel({ className, ...props }: DetailsPanelProps) {
 		setEntity(newEntity)
 
 		if (!newEntityId && newKeys.length <= 0) {
-      setHeadersNames([])
-      setItem(undefined)
+			setHeadersNames([])
+			setItem(undefined)
 			return window.history.replaceState(null, '', window.location.pathname)
 		}
 
