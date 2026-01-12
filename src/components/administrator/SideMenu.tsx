@@ -3,11 +3,15 @@ import { IconChevronCompactLeft, IconUsers } from '@tabler/icons-react'
 import { useCallback, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { MenuItem } from './MenuItem'
-import { MENU_ITEMS_ADMINISTRATOR } from '@/constants/SideMenuAdmin'
 import type { SideMenuProps } from '@/types/SideMenu'
+import { Input } from '../form/Input'
+import { includes } from '@/utils/global'
+import { MENU_ITEMS_ADMINISTRATOR } from '@/constants/SideMenuAdmin'
 
 export function SideMenu({ className }: SideMenuProps) {
 	const [open, setOpen] = useState(false)
+	const [filteredItems, setFilteredItems] = useState(MENU_ITEMS_ADMINISTRATOR)
+	const [query, setQuery] = useState('')
 
 	useEffect(() => {
 		const toggleMenu = (event: MouseEvent) => {
@@ -52,6 +56,20 @@ export function SideMenu({ className }: SideMenuProps) {
 		[toggleMenu, open]
 	)
 
+	const handleSearchChange = useCallback(
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			const { value } = event.currentTarget
+			setQuery(value)
+		},
+		[]
+	)
+
+	useEffect(() => {
+		const filteredItems = MENU_ITEMS_ADMINISTRATOR.filter(({ label }) => includes(label, query))
+
+		setFilteredItems(filteredItems)
+	}, [query])
+
 	useEffect(() => {
 		document.addEventListener('click', handleClickAnywhere)
 
@@ -74,6 +92,8 @@ export function SideMenu({ className }: SideMenuProps) {
 				behavior: 'smooth'
 			})
 		}, 100)
+
+		setQuery('')
 	}, [open])
 
 	useEffect(() => {
@@ -128,6 +148,16 @@ export function SideMenu({ className }: SideMenuProps) {
 			>
 				<header>
 					<h2 className="text-lg font-semibold">Panel de administrador</h2>
+
+					<div className="mt-10">
+						<Input
+							onChange={handleSearchChange}
+							id="search-menu-item"
+							name="search-menu-item"
+							label="Busca en el menú"
+							value={query}
+						/>
+					</div>
 				</header>
 				<ul
 					className={twMerge(
@@ -135,16 +165,7 @@ export function SideMenu({ className }: SideMenuProps) {
 						!open && '[&_*]:pointer-events-none'
 					)}
 				>
-					<MenuItem
-						href="/dashboard"
-						label="Dashboard"
-						icon="IconDashboard"
-						prefix="/administrator"
-					>
-						<IconUsers /> Dashboard
-					</MenuItem>
-
-					{MENU_ITEMS_ADMINISTRATOR.map((item) => (
+					{filteredItems.map((item) => (
 						<li key={item.href}>
 							<MenuItem
 								href={item.href}
