@@ -13,7 +13,7 @@ import { includes } from '@/utils/global'
  * const items = [{ label: 'Home', href: '/home', icon?: 'IconHouse', prefix?: '/admin' }]
  * ```
  * @param id It's the id of the side menu
- * 
+ *
  * - You can add the following css selector `.side-menu-toggler--${id}` to all elements you want as toggler
  * - To each element with the selector will add/remove a data attribute (data-side-menu-open) you can use it to add styles to the element toggler
  *
@@ -46,7 +46,9 @@ export function SideMenu({ className, items, id }: SideMenuProps) {
 	}, [sideMenuTogglerSelector])
 
 	useEffect(() => {
-		const toggleMenuElements = document.querySelectorAll(sideMenuTogglerSelector)
+		const toggleMenuElements = document.querySelectorAll(
+			sideMenuTogglerSelector
+		)
 
 		for (const e of toggleMenuElements) {
 			if (open) e.setAttribute('data-side-menu-open', 'true')
@@ -135,7 +137,10 @@ export function SideMenu({ className, items, id }: SideMenuProps) {
 				setOpen(true)
 			}}
 		>
-			<div className="side-menu-indicator h-full order-2 flex items-center ml-1 justify-center w-fit" id={id}>
+			<div
+				className="side-menu-indicator h-full order-2 flex items-center ml-1 justify-center w-fit"
+				id={id}
+			>
 				<button
 					type="button"
 					className={twMerge(
