@@ -6,7 +6,20 @@ import { MenuItem } from './MenuItem'
 import type { SideMenuProps } from '@/types/SideMenu'
 import { Input } from '../form/Input'
 import { includes } from '@/utils/global'
-
+/**
+ * @param items A list of items to render
+ * @example
+ * ```js
+ * const items = [{ label: 'Home', href: '/home', icon?: 'IconHouse', prefix?: '/admin' }]
+ * ```
+ * @param id It's the id of the side menu
+ * 
+ * - You can add the following css selector `.side-menu-toggler--${id}` to all elements you want as toggler
+ * - To each element with the selector will add/remove a data attribute (data-side-menu-open) you can use it to add styles to the element toggler
+ *
+ *
+ * @returns `JSX.Element`
+ */
 export function SideMenu({ className, items, id }: SideMenuProps) {
 	const [open, setOpen] = useState(false)
 	const [filteredItems, setFilteredItems] = useState(items)
