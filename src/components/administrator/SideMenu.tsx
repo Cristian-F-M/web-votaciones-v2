@@ -7,10 +7,11 @@ import type { SideMenuProps } from '@/types/SideMenu'
 import { Input } from '../form/Input'
 import { includes } from '@/utils/global'
 
-export function SideMenu({ className, items }: SideMenuProps) {
+export function SideMenu({ className, items, id }: SideMenuProps) {
 	const [open, setOpen] = useState(false)
 	const [filteredItems, setFilteredItems] = useState(items)
 	const [query, setQuery] = useState('')
+	const sideMenuTogglerSelector = `.side-menu-toggler--${id}`
 
 	useEffect(() => {
 		const toggleMenu = (event: MouseEvent) => {
@@ -20,7 +21,7 @@ export function SideMenu({ className, items }: SideMenuProps) {
 		}
 
 		const toggleMenuElements = document.querySelectorAll(
-			'.side-menu-toggler'
+			sideMenuTogglerSelector
 		) as NodeListOf<HTMLElement>
 
 		for (const e of toggleMenuElements) e.addEventListener('click', toggleMenu)
@@ -29,16 +30,16 @@ export function SideMenu({ className, items }: SideMenuProps) {
 			for (const e of toggleMenuElements)
 				e.removeEventListener('click', toggleMenu)
 		}
-	}, [])
+	}, [sideMenuTogglerSelector])
 
 	useEffect(() => {
-		const toggleMenuElements = document.querySelectorAll('.side-menu-toggler')
+		const toggleMenuElements = document.querySelectorAll(sideMenuTogglerSelector)
 
 		for (const e of toggleMenuElements) {
 			if (open) e.setAttribute('data-side-menu-open', 'true')
 			else e.removeAttribute('data-side-menu-open')
 		}
-	}, [open])
+	}, [open, sideMenuTogglerSelector])
 
 	const toggleMenu = useCallback(() => {
 		setOpen((prev) => !prev)
@@ -121,7 +122,7 @@ export function SideMenu({ className, items }: SideMenuProps) {
 				setOpen(true)
 			}}
 		>
-			<div className="side-menu-indicator h-full order-2 flex items-center ml-1 justify-center w-fit">
+			<div className="side-menu-indicator h-full order-2 flex items-center ml-1 justify-center w-fit" id={id}>
 				<button
 					type="button"
 					className={twMerge(
