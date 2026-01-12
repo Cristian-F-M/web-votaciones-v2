@@ -1,6 +1,6 @@
 import { twMerge } from 'tailwind-merge'
 import type { InputTextProps } from '@/types/input'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { EyeAnimatedIcon } from '@/icons/EyeAnimatedIcon'
 
 export function Input({
@@ -12,9 +12,22 @@ export function Input({
 	className,
 	type,
 	showTogglePassword = false,
+	value,
+	defaultValue,
+	onChange,
 	...restProps
 }: InputTextProps) {
 	const [showPassword, setShowPassword] = useState(false)
+	const [inputValue, setInputValue] = useState(value ?? defaultValue ?? '')
+
+	const handleInputChange = useCallback(
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			if (onChange) onChange(event)
+
+			setInputValue(event.currentTarget.value)
+		},
+		[onChange]
+	)
 
 	return (
 		<div className="w-full">
@@ -29,10 +42,12 @@ export function Input({
 					type={showPassword ? 'text' : type}
 					required={required}
 					placeholder=" "
+					value={inputValue}
 					className={twMerge([
 						'w-full text-gray-8 00 text-sm border-b border-gray-400 border-solid outline-none dark:text-gray-200 focus:border-primary',
 						className
 					])}
+					onChange={handleInputChange}
 				/>
 				<label
 					id={`${id}-label`}
