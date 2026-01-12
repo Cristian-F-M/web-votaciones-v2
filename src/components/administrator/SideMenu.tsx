@@ -6,11 +6,10 @@ import { MenuItem } from './MenuItem'
 import type { SideMenuProps } from '@/types/SideMenu'
 import { Input } from '../form/Input'
 import { includes } from '@/utils/global'
-import { MENU_ITEMS_ADMINISTRATOR } from '@/constants/SideMenuAdmin'
 
-export function SideMenu({ className }: SideMenuProps) {
+export function SideMenu({ className, items }: SideMenuProps) {
 	const [open, setOpen] = useState(false)
-	const [filteredItems, setFilteredItems] = useState(MENU_ITEMS_ADMINISTRATOR)
+	const [filteredItems, setFilteredItems] = useState(items)
 	const [query, setQuery] = useState('')
 
 	useEffect(() => {
@@ -65,10 +64,10 @@ export function SideMenu({ className }: SideMenuProps) {
 	)
 
 	useEffect(() => {
-		const filteredItems = MENU_ITEMS_ADMINISTRATOR.filter(({ label }) => includes(label, query))
+		const filteredItems = items.filter(({ label }) => includes(label, query))
 
 		setFilteredItems(filteredItems)
-	}, [query])
+	}, [query, items])
 
 	useEffect(() => {
 		document.addEventListener('click', handleClickAnywhere)

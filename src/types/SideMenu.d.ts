@@ -1,4 +1,6 @@
-export interface SideMenuProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface SideMenuProps extends React.HTMLAttributes<HTMLDivElement> {
+	items: (MenuItemImperativeProps & MenuItemBaseProps)[]
+}
 
 export interface MenuItemImperativeProps {
 	label: string
