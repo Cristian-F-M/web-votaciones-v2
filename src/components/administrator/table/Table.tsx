@@ -13,6 +13,7 @@ import '@/styles/table.css'
 import { Input } from '@/components/form/Input'
 import { useSearchParams } from 'next/navigation'
 import { Th } from './Th'
+import { useDobounce } from '@/utils/global'
 
 export function Table({
 	items,
@@ -27,6 +28,7 @@ export function Table({
 	const [searchQuery, setSearchQuery] = useState('')
 	const tableId = useId()
 	const params = useSearchParams()
+	const debouncedSearchQuery = useDobounce(searchQuery, 400)
 
 	const tableIds = useMemo(() => {
 		if (!items) return []
@@ -78,16 +80,16 @@ export function Table({
 
 	useEffect(() => {
 		if (modifyUrlOnSearch) {
-			const queryText = searchQuery ? `?q=${searchQuery}` : ''
+			const queryText = debouncedSearchQuery ? `?q=${debouncedSearchQuery}` : ''
 			const newUrl = `${window.location.pathname}${queryText}${window.location.hash}`
 			window.history.replaceState(null, '', newUrl)
 		}
 
-		if (!searchQuery) return setFilteredItems(items)
+		if (!debouncedSearchQuery) return setFilteredItems(items)
 
-		const filteredItems = items.filter((i) => deepSearch(i, searchQuery))
+		const filteredItems = items.filter((i) => deepSearch(i, debouncedSearchQuery))
 		setFilteredItems(filteredItems)
-	}, [items, searchQuery, modifyUrlOnSearch])
+	}, [items, debouncedSearchQuery, modifyUrlOnSearch])
 
 	useEffect(() => {
 		if (!modelName) return
@@ -157,7 +159,7 @@ export function Table({
 												className="text-gray-300"
 												colSpan={tableHeaders?.length ?? 10}
 											>
-												{searchQuery
+												{debouncedSearchQuery
 													? 'No se encontró nada relacionado con la busqueda'
 													: 'No hay datos para mostrar en esta tabla'}
 											</Td>
