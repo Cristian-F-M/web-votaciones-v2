@@ -137,6 +137,7 @@ export function Table({
 									id={`input-search--${tableId}`}
 									onChange={handleInputSearch}
 									value={searchQuery}
+                  autoComplete='off'
 								/>
 							</div>
 						)}
