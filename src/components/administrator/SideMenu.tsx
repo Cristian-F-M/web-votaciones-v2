@@ -174,6 +174,7 @@ export function SideMenu({ className, items, id }: SideMenuProps) {
 							name="search-menu-item"
 							label="Busca en el menú"
 							value={query}
+              autoComplete='off'
 						/>
 					</div>
 				</header>
