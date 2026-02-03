@@ -1,19 +1,24 @@
-import { IconPencil } from '@tabler/icons-react'
-import { useCallback, useEffect, useMemo, useState, useId } from 'react'
-import { Button } from '@/components/form/Button'
-import { doFetch } from '@/utils/fetch'
-import { snackbar } from '@/utils/dom'
-import { useModelDetails } from '@/states/useEntityDetails'
-import { deepSearch, getModelsNames } from '@/utils/table'
 import { Loader } from '@/components/Loader'
 import { Td } from '@/components/administrator/table/Td'
 import { Tr } from '@/components/administrator/table/Tr'
-import type { TableProps } from '@/types/table'
+import { Button } from '@/components/form/Button'
+import { useModelDetails } from '@/states/useEntityDetails'
+import type { TableItems, TableProps } from '@/types/table'
+import { snackbar } from '@/utils/dom'
+import { doFetch } from '@/utils/fetch'
+import {
+	deepSearch,
+	getModelsNames,
+	getValueType,
+	sortData
+} from '@/utils/table'
+import { IconChevronDown, IconChevronUp, IconPencil } from '@tabler/icons-react'
+import { useCallback, useEffect, useId, useMemo, useState } from 'react'
 import '@/styles/table.css'
 import { Input } from '@/components/form/Input'
+import { useDobounce } from '@/utils/global'
 import { useSearchParams } from 'next/navigation'
 import { Th } from './Th'
-import { useDobounce } from '@/utils/global'
 
 export function Table({
 	items,
@@ -24,11 +29,27 @@ export function Table({
 }: TableProps) {
 	const { setEntity, entity, reset, setKeys, setEntityId } = useModelDetails()
 	const [tableHeaders, setTableHeaders] = useState<string[] | null>(null)
-	const [filteredItems, setFilteredItems] = useState<TableProps['items']>([])
 	const [searchQuery, setSearchQuery] = useState('')
+	const [originalTableHeaders, setOriginalTableHeaders] = useState<string[]>([])
 	const tableId = useId()
 	const params = useSearchParams()
 	const debouncedSearchQuery = useDobounce(searchQuery, 400)
+	const [orderData, setOrderData] = useState<{
+		key: string
+		order: 'ASC' | 'DESC'
+	} | null>(null)
+
+	const filteredItems = useMemo(() => {
+		if (!allowSearch) return items
+
+		return items.filter((i) => deepSearch(i, debouncedSearchQuery))
+	}, [items, debouncedSearchQuery, allowSearch])
+
+	const sortedItems = useMemo(() => {
+		if (!orderData) return filteredItems
+
+		return sortData(filteredItems, orderData.key, orderData.order)
+	}, [filteredItems, orderData])
 
 	const tableIds = useMemo(() => {
 		if (!items) return []
@@ -71,6 +92,38 @@ export function Table({
 		[]
 	)
 
+	const handleOrderBy = useCallback((key: string) => {
+		return (event: React.MouseEvent<HTMLTableCellElement>) => {
+			const target = event.currentTarget
+			const thead = target.closest('thead')
+
+			const allThs = thead?.querySelectorAll('th') ?? []
+
+			for (const th of allThs)
+				if (target !== th) th.removeAttribute('data-order')
+
+			const { order = 'DESC' } = target.dataset
+			const values = ['ASC', 'DESC']
+
+			const orderIndex = values.indexOf(order)
+			const newOrder = values[(orderIndex + 1) % values.length] as
+				| 'ASC'
+				| 'DESC'
+
+			setOrderData({ key, order: newOrder })
+			event.currentTarget.dataset.order = newOrder
+		}
+	}, [])
+
+	useEffect(() => {
+		if (!items || items.length === 0) return
+
+		const firstItem = items[0]
+		const headers = Object.keys(firstItem)
+
+		setOriginalTableHeaders(headers)
+	}, [items])
+
 	useEffect(() => {
 		if (!modifyUrlOnSearch) return
 
@@ -84,12 +137,7 @@ export function Table({
 			const newUrl = `${window.location.pathname}${queryText}${window.location.hash}`
 			window.history.replaceState(null, '', newUrl)
 		}
-
-		if (!debouncedSearchQuery) return setFilteredItems(items)
-
-		const filteredItems = items.filter((i) => deepSearch(i, debouncedSearchQuery))
-		setFilteredItems(filteredItems)
-	}, [items, debouncedSearchQuery, modifyUrlOnSearch])
+	}, [debouncedSearchQuery, modifyUrlOnSearch])
 
 	useEffect(() => {
 		if (!modelName) return
@@ -137,7 +185,7 @@ export function Table({
 									id={`input-search--${tableId}`}
 									onChange={handleInputSearch}
 									value={searchQuery}
-                  autoComplete='off'
+									autoComplete="off"
 								/>
 							</div>
 						)}
@@ -146,13 +194,26 @@ export function Table({
 								<thead>
 									<Tr>
 										{tableHeaders?.slice(0, -1)?.map((h, index) => (
-											<Th key={tableHeadersIds[index]}>{h}</Th>
+											<Th
+												key={tableHeadersIds[index]}
+												data-key={originalTableHeaders[index]}
+												onClick={handleOrderBy(originalTableHeaders[index])}
+												title={`Ordenar por ${h}`}
+											>
+												<span className="flex flex-row gap-2 items-center justify-center select-none">
+													{h}{' '}
+													<span className="flex flex-col [&_svg]:size-3 text-gray-500">
+														<IconChevronUp />
+														<IconChevronDown />
+													</span>
+												</span>
+											</Th>
 										))}
 										{allowEdit && <Th>&nbsp;</Th>}
 									</Tr>
 								</thead>
 								<tbody>
-									{filteredItems.length === 0 && (
+									{sortedItems.length === 0 && (
 										<Tr>
 											<Td
 												items={items}
@@ -167,7 +228,7 @@ export function Table({
 										</Tr>
 									)}
 
-									{filteredItems.map((item, rowIndex) => {
+									{sortedItems.map((item, rowIndex) => {
 										const rowEntries = Object.entries(item)
 
 										return (
