@@ -23,3 +23,15 @@ export function useDobounce<T>(value: T, delay: number) {
 
 	return debouncedValue
 }
+
+
+export function isISODate(dateString: string) {
+	if (typeof dateString !== "string") return false;
+	const isoRegex =
+		/^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})?)?$/;
+
+	if (/^\d+$/.test(dateString) || !isoRegex.test(dateString)) return false;
+
+	const date = new Date(dateString);
+	return !Number.isNaN(date.getTime());
+}
