@@ -1,5 +1,6 @@
 import type { TableSingleItem, TdProps } from '@/types/table'
 import { OpenDetailsButton } from '@/components/administrator/table/OpenDetailsButton'
+import { isISODate } from '@/utils/global'
 
 export function Td({ children, itemId, items, className, ...props }: TdProps) {
 	const isValue = 'value' in props
@@ -36,7 +37,7 @@ export function Td({ children, itemId, items, className, ...props }: TdProps) {
 					)
 				}
 
-				if (Date.parse(value)) {
+				if (isISODate(value)) {
 					return new Date(value).toLocaleDateString('es-ES', {
 						day: '2-digit',
 						month: '2-digit',
