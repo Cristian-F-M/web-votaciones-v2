@@ -1,6 +1,10 @@
 import type { ThProps } from '@/types/table'
-import { th } from 'zod/locales'
+import { twMerge } from 'tailwind-merge'
 
 export function Th({ className, children, ...props }: ThProps) {
-	return <th {...props}>{children}</th>
+	return (
+		<th className={twMerge(className)} {...props}>
+			{children}
+		</th>
+	)
 }
